@@ -1,0 +1,173 @@
+/**
+ * Luxure Nest - Responsive Architecture
+ * 
+ * Breakpoints:
+ * - Mobile: < 640px
+ * - Tablet: 640px – 1023px
+ * - Desktop: 1024px – 1279px
+ * - Large Desktop: >= 1280px
+ */
+
+/* ==========================================================================
+   1. TABLET BREAKPOINT (max-width: 1023px)
+   ========================================================================== */
+@media (max-width: 1023px) {
+  :root {
+    --container-padding: 1.25rem;
+    --space-3xl: 3.5rem;
+    --space-4xl: 4.5rem;
+  }
+
+  /* Hero Split stacks or balances */
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .form-card {
+    max-width: 760px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 4-column grids collapse to 2-column on tablet */
+  .grid--4-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 3-column grids collapse to 2-column or 1-column */
+  .grid--3-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer layout */
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  /* Header adjustments */
+  .site-logo__mark {
+    height: 58px;
+    max-width: 220px;
+  }
+}
+
+/* ==========================================================================
+   2. MOBILE BREAKPOINT (max-width: 639px)
+   ========================================================================== */
+@media (max-width: 639px) {
+  :root {
+    --container-padding: 1rem;
+    --space-2xl: 2rem;
+    --space-3xl: 2.75rem;
+    --space-4xl: 3.5rem;
+    --font-size-3xl: 1.75rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-xl: 1.25rem;
+  }
+
+  /* All multi-column grids collapse to single column */
+  .grid--2-col,
+  .grid--3-col,
+  .grid--4-col {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  /* Header adjustments */
+  .site-header {
+    height: auto;
+    min-height: 70px;
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-xs);
+  }
+
+  .site-logo {
+    font-size: var(--font-size-base);
+  }
+
+  .site-logo__mark {
+    height: 52px;
+    max-width: 190px;
+  }
+
+  .site-header__phone {
+    display: none; /* Hide phone text, keep primary CTA on small mobile */
+  }
+
+  /* Hero Mobile */
+  .section--hero {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .hero__headline {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+  }
+
+  .hero__subhead {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Form Card on Mobile */
+  .form-card {
+    padding: var(--space-lg);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  /* Buttons on mobile */
+  .btn--lg {
+    padding: 0.85rem 1.5rem;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Expert team section on mobile */
+  .expert-team-container {
+    padding: var(--space-lg);
+  }
+
+  .expert-team__avatars {
+    flex-wrap: wrap;
+  }
+
+  /* Footer on mobile */
+  .site-footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  /* Route inspector on mobile */
+  .route-inspector-bar__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   3. LARGE DESKTOP BREAKPOINT (min-width: 1280px)
+   ========================================================================== */
+@media (min-width: 1280px) {
+  :root {
+    --container-max-width: 1320px;
+    --space-3xl: 5rem;
+    --space-4xl: 7rem;
+  }
+
+  .hero-split {
+    grid-template-columns: 0.95fr 1.25fr;
+    gap: var(--space-3xl);
+  }
+}

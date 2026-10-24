@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/coworking/:city*", "destination": "/index.html" },
+    { "source": "/office/:city*", "destination": "/index.html" },
+    { "source": "/thank-you", "destination": "/thank-you.html" }
+  ]
+}

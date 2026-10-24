@@ -1,0 +1,4 @@
+# Netlify & Cloudflare Pages clean route rewrites
+/coworking/*    /index.html   200
+/office/*       /index.html   200
+/thank-you      /thank-you.html 200

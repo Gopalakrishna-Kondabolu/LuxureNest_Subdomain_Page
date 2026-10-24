@@ -1,0 +1,17 @@
+{
+  "name": "luxure-nest-landing-page",
+  "version": "1.0.0",
+  "description": "Luxure Nest Commercial Real Estate Landing Page System - Phase 1 Foundation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "commercial-real-estate",
+    "coworking",
+    "managed-offices",
+    "landing-page"
+  ],
+  "author": "Luxure Nest",
+  "license": "UNLICENSED"
+}

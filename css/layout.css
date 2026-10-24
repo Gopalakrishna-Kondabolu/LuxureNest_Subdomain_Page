@@ -1,0 +1,316 @@
+/**
+ * Luxure Nest - Layout Architecture
+ * 
+ * Provides structural containers, responsive grids, and section wrappers.
+ */
+
+/* ==========================================================================
+   1. CONTAINERS
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.container--fluid {
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   2. SECTION WRAPPERS
+   ========================================================================== */
+.section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+  position: relative;
+}
+
+.section--sm {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+.section--subtle {
+  background-color: var(--color-bg-subtle);
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.section--white {
+  background-color: var(--color-bg-surface);
+}
+
+.section--dark {
+  background-color: var(--color-brand-navy);
+  color: var(--color-text-inverse);
+}
+
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-text-inverse);
+}
+
+.section--dark p {
+  color: var(--color-text-light);
+}
+
+/* Hero Section Layout */
+.section--hero {
+  background-color: var(--color-brand-navy-dark);
+  color: var(--color-text-inverse);
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-4xl);
+  border-bottom: 1px solid var(--color-border-dark);
+  background-image: 
+    radial-gradient(ellipse at 85% 15%, rgba(197, 168, 128, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 15% 85%, rgba(30, 41, 59, 0.3) 0%, transparent 60%);
+}
+
+.section--hero h1,
+.section--hero h2 {
+  color: var(--color-text-inverse);
+}
+
+/* Section Header Typography Layout */
+.section-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.section-header--center {
+  text-align: center;
+  max-width: 740px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-header__tag {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.section-header__title {
+  margin-bottom: var(--space-sm);
+}
+
+.section-header__subhead {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: 0;
+}
+
+.section--dark .section-header__subhead {
+  color: var(--color-text-light);
+}
+
+/* ==========================================================================
+   3. GRIDS & FLEX LAYOUTS
+   ========================================================================== */
+.grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.grid--2-col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Hero 2-Column Split: Left Pitch, Right Form (Generous Form Width) */
+.hero-split {
+  display: grid;
+  grid-template-columns: 0.95fr 1.25fr;
+  gap: var(--space-2xl);
+  align-items: flex-start;
+}
+
+/* Flex Row & Columns */
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   4. SITE HEADER & NAVIGATION
+   ========================================================================== */
+.site-header {
+  min-height: var(--header-height);
+  background-color: var(--color-brand-navy-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.site-header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.site-logo:hover {
+  opacity: 0.92;
+  color: var(--color-text-inverse);
+}
+
+.site-logo__mark {
+  height: 68px;
+  width: auto;
+  max-width: 260px;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.site-logo:hover .site-logo__mark {
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.site-footer .site-logo__mark {
+  height: 76px;
+  max-width: 280px;
+  margin-bottom: var(--space-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.site-header__phone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.site-header__phone:hover {
+  color: var(--color-accent-gold);
+}
+
+/* ==========================================================================
+   5. SITE FOOTER
+   ========================================================================== */
+.site-footer {
+  margin-top: auto;
+  background-color: var(--color-brand-navy-dark);
+  color: var(--color-text-light);
+  border-top: 1px solid var(--color-border-dark);
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+  font-size: var(--font-size-sm);
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.site-footer__brand-p {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  max-width: 340px;
+  margin-top: var(--space-md);
+}
+
+.site-footer__col-title {
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.site-footer__links li {
+  margin-bottom: var(--space-xs);
+}
+
+.site-footer__links a {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+}
+
+.site-footer__links a:hover {
+  color: var(--color-accent-gold);
+}
+
+.site-footer__bottom {
+  border-top: 1px solid var(--color-border-dark);
+  padding-top: var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   6. NOTIFICATION / FALLBACK BANNERS
+   ========================================================================== */
+.notification-banner {
+  background-color: var(--color-warning-bg);
+  border-bottom: 1px solid #FDE68A;
+  color: #92400E;
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.notification-banner--fallback {
+  display: none; /* Controlled dynamically by JS */
+}

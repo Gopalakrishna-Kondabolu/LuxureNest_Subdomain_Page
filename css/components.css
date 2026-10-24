@@ -1,0 +1,774 @@
+/**
+ * Luxure Nest - Component System
+ * 
+ * Reusable, accessible UI components adhering to the premium commercial real estate design system.
+ */
+
+/* ==========================================================================
+   1. BUTTONS
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  min-height: 44px; /* Accessible touch target */
+}
+
+/* Primary Button: Champagne Gold */
+.btn--primary {
+  background-color: var(--color-accent-gold);
+  color: var(--color-brand-navy-dark);
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 2px 8px rgba(197, 168, 128, 0.25);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-gold-hover);
+  border-color: var(--color-accent-gold-hover);
+  color: var(--color-brand-navy-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(197, 168, 128, 0.35);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button: Navy */
+.btn--secondary {
+  background-color: var(--color-brand-navy);
+  color: var(--color-text-inverse);
+  border-color: var(--color-brand-navy);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-brand-charcoal);
+  border-color: var(--color-brand-charcoal);
+  color: var(--color-text-inverse);
+}
+
+/* Outline Button */
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-brand-navy);
+  border-color: var(--color-border-medium);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-bg-subtle);
+  border-color: var(--color-brand-navy);
+  color: var(--color-brand-navy);
+}
+
+/* Outline Light (for dark sections) */
+.btn--outline-light {
+  background-color: transparent;
+  color: var(--color-text-inverse);
+  border-color: var(--color-border-gold);
+}
+
+.btn--outline-light:hover {
+  background-color: rgba(197, 168, 128, 0.1);
+  color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+}
+
+/* Button Sizing */
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-xs);
+  min-height: 36px;
+}
+
+.btn--lg {
+  padding: 1rem 2rem;
+  font-size: var(--font-size-base);
+  min-height: 52px;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   2. BADGES & PILLS
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0.25rem 0.65rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+}
+
+.badge--gold {
+  background-color: var(--color-accent-gold-muted);
+  color: var(--color-accent-bronze);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+}
+
+.badge--gold-solid {
+  background-color: var(--color-accent-gold);
+  color: var(--color-brand-navy-dark);
+}
+
+.badge--dark {
+  background-color: var(--color-brand-slate);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-border-dark);
+}
+
+.badge--subtle {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/* ==========================================================================
+   3. CARDS
+   ========================================================================== */
+.card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  transition: all var(--transition-base);
+}
+
+.card--elevated {
+  box-shadow: var(--shadow-sm);
+}
+
+.card--elevated:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-medium);
+  transform: translateY(-2px);
+}
+
+.card--dark {
+  background-color: var(--color-brand-charcoal);
+  border-color: var(--color-border-dark);
+  color: var(--color-text-inverse);
+}
+
+/* ==========================================================================
+   4. HERO CONTENT ELEMENTS
+   ========================================================================== */
+.hero__badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.hero__headline {
+  margin-bottom: var(--space-md);
+}
+
+.hero__subhead {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xl);
+}
+
+.hero__highlights {
+  margin-top: var(--space-xl);
+}
+
+.hero__highlights-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.hero__highlight-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+}
+
+.hero__highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-accent-gold-muted);
+  color: var(--color-accent-gold);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   5. COMPLETE LEAD FORM (PHASE 2 - SINGLE COMPLETE VIEW)
+   ========================================================================== */
+.form-card {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-2xl);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+
+.form-card__header {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.form-card__badge {
+  margin-bottom: var(--space-2xs);
+}
+
+.form-card__title {
+  font-size: var(--font-size-xl);
+  color: var(--color-brand-navy-dark);
+  margin-bottom: var(--space-2xs);
+  letter-spacing: -0.015em;
+}
+
+.form-card__subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-base);
+  margin-bottom: 0;
+}
+
+/* 2-Column Responsive Form Field Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md) var(--space-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+  margin-bottom: 5px;
+}
+
+.form-label__req {
+  color: var(--color-accent-bronze);
+  margin-left: 2px;
+}
+
+/* Inputs & Selects */
+.form-control,
+.form-select {
+  width: 100%;
+  min-height: 48px; /* Roomy, accessible touch target */
+  padding: 0.75rem 1rem;
+  background-color: #FAFAFC;
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 14px;
+  padding-right: 2.2rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.25);
+  background-color: #FFFFFF;
+}
+
+/* Validation Error States */
+.form-control--error,
+.form-select--error {
+  border-color: var(--color-error) !important;
+  background-color: #FEF2F2 !important;
+}
+
+.form-control--error:focus,
+.form-select--error:focus {
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2) !important;
+}
+
+.form-error-msg {
+  display: none;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-error);
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.form-error-msg--visible {
+  display: block;
+}
+
+/* Alert Notification Banner (Submission Failure / Timeout) */
+.form-alert {
+  display: none;
+  background-color: var(--color-error-bg);
+  border: 1px solid rgba(185, 28, 28, 0.3);
+  border-radius: var(--radius-xs);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--space-md);
+  line-height: var(--line-height-base);
+}
+
+.form-alert--visible {
+  display: block;
+}
+
+/* Submit Button & Loading State */
+.form-submit-btn {
+  margin-top: var(--space-sm);
+  width: 100%;
+}
+
+.form-submit-btn.btn--loading {
+  pointer-events: none;
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(11, 19, 37, 0.3);
+  border-top-color: var(--color-brand-navy-dark);
+  border-radius: 50%;
+  animation: btnSpinnerRotate 0.65s linear infinite;
+  margin-right: var(--space-xs);
+  vertical-align: middle;
+}
+
+@keyframes btnSpinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Form Trust & Privacy Note */
+.form-trust-note {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   6. TRUST & VALUE SECTION
+   ========================================================================== */
+.trust-metric-card {
+  text-align: left;
+  border-left: 3px solid var(--color-accent-gold);
+}
+
+.trust-metric-card__number {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-navy);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-2xs);
+}
+
+.trust-metric-card__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-accent-bronze);
+  margin-bottom: var(--space-xs);
+}
+
+.trust-metric-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   7. AMENITIES SECTION
+   ========================================================================== */
+.amenity-card {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-lg);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.amenity-card__icon-box {
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-accent-gold-light);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-bronze);
+  flex-shrink: 0;
+}
+
+.amenity-card__title {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-2xs);
+}
+
+.amenity-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   8. WORKSPACE OPTIONS CARDS
+   ========================================================================== */
+.option-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-card__badge {
+  align-self: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.option-card__title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.option-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+  flex-grow: 1;
+}
+
+.option-card__action {
+  align-self: flex-start;
+}
+
+/* ==========================================================================
+   9. BUSINESS HUBS SECTION
+   ========================================================================== */
+.hub-card {
+  padding: var(--space-lg);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.hub-card:hover {
+  border-color: var(--color-accent-gold);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.hub-card__title {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-2xs);
+}
+
+.hub-card__landmark {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.hub-card__link {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-gold-dark);
+}
+
+.hub-card__link:hover {
+  color: var(--color-brand-navy);
+}
+
+/* ==========================================================================
+   10. EXPERT / TEAM SECTION FOUNDATION (SECTION 23)
+   ========================================================================== */
+.expert-team-container {
+  background-color: var(--color-brand-charcoal);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-dark);
+}
+
+.expert-team__avatars {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.expert-avatar-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-accent-gold);
+  background-color: var(--color-brand-slate);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-gold);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.expert-avatar-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  background-color: rgba(197, 168, 128, 0.15);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-gold);
+  margin-left: var(--space-xs);
+}
+
+.expert-team__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.expert-team__bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.expert-team__bullet-check {
+  color: var(--color-accent-gold);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ==========================================================================
+   11. HOW WE WORK (STEP PROGRESSION)
+   ========================================================================== */
+.step-card {
+  position: relative;
+  padding: var(--space-xl);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.step-card__num {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-gold);
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.step-card__title {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-xs);
+}
+
+.step-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   12. FAQ ACCORDION SKELETON
+   ========================================================================== */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq-item {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-surface);
+  overflow: hidden;
+}
+
+.faq-item__question {
+  width: 100%;
+  padding: var(--space-lg);
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: none;
+  border: none;
+}
+
+.faq-item__answer {
+  padding: 0 var(--space-lg) var(--space-lg) var(--space-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   13. CTA BANNERS
+   ========================================================================== */
+.cta-banner {
+  background-color: var(--color-brand-navy);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3xl) var(--space-2xl);
+  text-align: center;
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-dark);
+}
+
+.cta-banner h2 {
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-sm);
+}
+
+.cta-banner p {
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-xl);
+}
+
+/* ==========================================================================
+   14. ROUTE INSPECTOR / REVIEWER BAR (DEVELOPMENT & QA UTILITY)
+   ========================================================================== */
+.route-inspector-bar {
+  background-color: var(--color-brand-navy-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+  padding: 0.4rem var(--container-padding);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.route-inspector-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.route-inspector-bar__title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-gold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.route-inspector-bar__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.route-test-link {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-brand-slate);
+  color: var(--color-text-light);
+  font-size: 11px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.route-test-link:hover {
+  background-color: var(--color-brand-slate-light);
+  color: var(--color-text-inverse);
+}
+
+.route-test-link--active {
+  background-color: var(--color-accent-gold);
+  color: var(--color-brand-navy-dark);
+  font-weight: var(--font-weight-bold);
+  border-color: var(--color-accent-gold);
+}
+
+.route-test-link--invalid {
+  background-color: rgba(185, 28, 28, 0.2);
+  color: #FCA5A5;
+  border-color: rgba(185, 28, 28, 0.4);
+}

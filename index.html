@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <script>
+    // Ensure relative assets resolve to root on HTTP/S server with clean URL rewrites,
+    // while preserving relative paths when opened directly via file:// protocol
+    if (window.location.protocol.startsWith('http')) {
+      const baseEl = document.createElement('base');
+      baseEl.href = '/';
+      document.head.prepend(baseEl);
+    }
+  </script>
+
+  <!-- SEO Foundations (Dynamically updated via js/dynamic-content.js) -->
+  <title>Luxure Nest | Premium Commercial Real Estate & Workspace Solutions</title>
+  <meta name="description" content="Discover premium coworking spaces, managed offices, and commercial leasing across Gurugram, Noida, and Delhi with Luxure Nest.">
+  <link rel="canonical" href="https://luxurenest.com/">
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Luxure Nest | Commercial Real Estate Advisory">
+  <meta property="og:description" content="Verified commercial office spaces and flexible workspaces in Delhi NCR.">
+  <meta property="og:site_name" content="Luxure Nest">
+
+  <!-- Modular CSS System -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Accessible Skip Navigation Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Dev & QA Route Inspector (For Testing all 6 Routes & Fallbacks) -->
+  <aside class="route-inspector-bar" aria-label="Development Route Switcher">
+    <div class="route-inspector-bar__inner">
+      <span class="route-inspector-bar__title">Phase 1 Route Switcher:</span>
+      <nav class="route-inspector-bar__links" aria-label="Quick route switcher">
+        <a href="?service=coworking&city=gurugram" class="route-test-link" data-service="coworking" data-city="gurugram">/coworking/gurugram</a>
+        <a href="?service=coworking&city=noida" class="route-test-link" data-service="coworking" data-city="noida">/coworking/noida</a>
+        <a href="?service=coworking&city=delhi" class="route-test-link" data-service="coworking" data-city="delhi">/coworking/delhi</a>
+        <a href="?service=office&city=gurugram" class="route-test-link" data-service="office" data-city="gurugram">/office/gurugram</a>
+        <a href="?service=office&city=noida" class="route-test-link" data-service="office" data-city="noida">/office/noida</a>
+        <a href="?service=office&city=delhi" class="route-test-link" data-service="office" data-city="delhi">/office/delhi</a>
+        <a href="?service=unknown&city=unknown" class="route-test-link route-test-link--invalid" data-service="unknown" data-city="unknown">Test Fallback (Invalid)</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Route Fallback Notification (Only shown if unsupported path or parameters were provided) -->
+  <div id="route-fallback-banner" class="notification-banner notification-banner--fallback" role="status">
+    <p id="route-fallback-message"></p>
+  </div>
+
+  <!-- 1. HEADER FOUNDATION (Conversion-focused, minimal) -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__container">
+      <a href="./" class="site-logo" aria-label="Luxure Nest Home">
+        <img src="assets/logo/luxure-nest-logo.svg" alt="Luxure Nest" width="220" height="56" class="site-logo__mark">
+      </a>
+
+      <div class="site-header__actions">
+        <a href="tel:+919876543210" class="site-header__phone" aria-label="Call our commercial advisory desk">
+          <img src="assets/icons/phone.svg" alt="" width="16" height="16" aria-hidden="true">
+          <span>+91 98765 43210</span>
+        </a>
+        <a href="#lead-form-area" class="btn btn--primary btn--sm" id="header-cta-btn">Schedule Visit</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LANDING PAGE CONTENT -->
+  <main id="main-content" role="main">
+
+    <!-- 2. HERO FOUNDATION (2-Column Split: Dynamic Pitch + Lead Form Slot) -->
+    <section id="hero" class="section section--hero" aria-labelledby="hero-headline">
+      <div class="container">
+        <div class="hero-split">
+          
+          <!-- Hero Dynamic Pitch Column -->
+          <div class="hero__content">
+            <div class="hero__badges-row">
+              <span class="badge badge--gold-solid" id="hero-service-badge">Coworking</span>
+              <span class="badge badge--dark" id="hero-city-badge">Gurugram</span>
+              <span class="badge badge--gold" id="hero-micromarket-badge" style="display: none;"></span>
+            </div>
+
+            <h1 id="hero-headline" class="hero__headline">
+              Find the Right Coworking Space in Gurugram
+            </h1>
+
+            <p id="hero-subhead" class="hero__subhead">
+              Compare premium flexible workspaces, private cabins, and enterprise shared offices across prime business locations. Guided tours and zero brokerage.
+            </p>
+
+            <div class="hero__highlights">
+              <ul id="hero-highlights-list" class="hero__highlights-list" aria-label="Key Highlights">
+                <!-- Dynamically populated by js/dynamic-content.js -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3. LEAD FORM AREA (Phase 2 - Complete Single-View Lead Form) -->
+          <div id="lead-form-area" class="hero__form-slot">
+            <div class="form-card" role="region" aria-labelledby="form-card-title">
+              <div class="form-card__header">
+                <span class="badge badge--gold form-card__badge" id="form-service-badge">Coworking</span>
+                <span class="badge badge--dark form-card__badge" id="form-city-badge">Gurugram</span>
+                <h2 id="form-card-title" class="form-card__title">
+                  Inquire for <span id="form-service-name">Coworking Space</span> in <span id="form-city-name">Gurugram</span>
+                </h2>
+                <p class="form-card__subtitle">
+                  Direct landlord access &bull; Zero brokerage &bull; Guaranteed 48hr site visits
+                </p>
+              </div>
+
+              <!-- Top Form Submission Alert Banner (For Network / Server Errors) -->
+              <div id="form-submit-alert" class="form-alert" role="alert" tabindex="-1"></div>
+
+              <!-- COMPLETE SINGLE-VIEW LEAD FORM (ONE TAB / ONE VIEW) -->
+              <form id="lead-form" class="form-card__body" novalidate>
+                <div class="form-grid">
+                  
+                  <!-- Field 1: Name -->
+                  <div class="form-group">
+                    <label for="lead-name" class="form-label">
+                      <span>Name</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="lead-name" 
+                      name="fullName" 
+                      class="form-control" 
+                      placeholder="Enter your name" 
+                      autocomplete="name" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-name-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 2: Phone Number -->
+                  <div class="form-group">
+                    <label for="lead-phone" class="form-label">
+                      <span>Phone Number</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="tel" 
+                      id="lead-phone" 
+                      name="phone" 
+                      class="form-control" 
+                      placeholder="Enter 10-digit mobile number" 
+                      autocomplete="tel" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-phone-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 3: Work Email -->
+                  <div class="form-group">
+                    <label for="lead-email" class="form-label">
+                      <span>Work Email</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="email" 
+                      id="lead-email" 
+                      name="workEmail" 
+                      class="form-control" 
+                      placeholder="name@company.com" 
+                      autocomplete="email" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-email-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 4: Company Name -->
+                  <div class="form-group">
+                    <label for="lead-company" class="form-label">
+                      <span>Company Name</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="lead-company" 
+                      name="companyName" 
+                      class="form-control" 
+                      placeholder="Enter your company name" 
+                      autocomplete="organization" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-company-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 5: Service Dropdown -->
+                  <div class="form-group">
+                    <label for="lead-service" class="form-label">
+                      <span>Service</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <select 
+                      id="lead-service" 
+                      name="service" 
+                      class="form-select" 
+                      required 
+                      aria-required="true"
+                    >
+                      <!-- Dynamically populated from active services.js configuration -->
+                    </select>
+                    <div class="form-error-msg" id="lead-service-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 6: Team Size (Immediately after Service) -->
+                  <div class="form-group">
+                    <label for="lead-teamsize" class="form-label">
+                      <span>Team Size</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="number" 
+                      id="lead-teamsize" 
+                      name="teamSize" 
+                      class="form-control" 
+                      placeholder="e.g. 15" 
+                      min="1" 
+                      step="1" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-teamsize-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 7: Are you a Decision Maker? (Strictly Yes / No) -->
+                  <div class="form-group">
+                    <label for="lead-decision-maker" class="form-label">
+                      <span>Are you a Decision Maker?</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <select 
+                      id="lead-decision-maker" 
+                      name="isDecisionMaker" 
+                      class="form-select" 
+                      required 
+                      aria-required="true"
+                    >
+                      <option value="" disabled selected>Select an option</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                    <div class="form-error-msg" id="lead-decision-maker-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 8: Preferred Micro-market -->
+                  <div class="form-group">
+                    <label for="lead-micromarket" class="form-label">
+                      <span>Preferred Micro-market</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <select 
+                      id="lead-micromarket" 
+                      name="preferredMicroMarket" 
+                      class="form-select" 
+                      required 
+                      aria-required="true"
+                    >
+                      <!-- Dynamically populated from active city micromarkets.js configuration -->
+                    </select>
+                    <div class="form-error-msg" id="lead-micromarket-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 9: Date of Site Visit -->
+                  <div class="form-group">
+                    <label for="lead-visit-date" class="form-label">
+                      <span>Date of Site Visit</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <input 
+                      type="date" 
+                      id="lead-visit-date" 
+                      name="dateOfSiteVisit" 
+                      class="form-control" 
+                      required 
+                      aria-required="true"
+                    >
+                    <div class="form-error-msg" id="lead-visit-date-error" role="alert"></div>
+                  </div>
+
+                  <!-- Field 10: Time of Site Visit -->
+                  <div class="form-group">
+                    <label for="lead-visit-time" class="form-label">
+                      <span>Time of Site Visit</span>
+                      <span class="form-label__req" aria-hidden="true">*</span>
+                    </label>
+                    <select 
+                      id="lead-visit-time" 
+                      name="timeOfSiteVisit" 
+                      class="form-select" 
+                      required 
+                      aria-required="true"
+                    >
+                      <!-- Dynamically populated from approved time slots configuration -->
+                    </select>
+                    <div class="form-error-msg" id="lead-visit-time-error" role="alert"></div>
+                  </div>
+
+                  <!-- Single Submit Button (Full Width) -->
+                  <div class="form-group form-group--full">
+                    <button 
+                      type="submit" 
+                      id="lead-form-submit" 
+                      class="btn btn--primary btn--full btn--lg form-submit-btn"
+                    >
+                      Schedule a Workspace Tour
+                    </button>
+                  </div>
+
+                </div>
+              </form>
+
+              <div class="form-trust-note">
+                <img src="assets/icons/shield.svg" alt="" width="14" height="14" aria-hidden="true">
+                <span>100% Zero Brokerage Guaranteed &bull; Strict Commercial Privacy</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TRUST / VALUE SECTION -->
+    <section id="trust-value" class="section section--white" aria-labelledby="trust-section-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Why Choose Luxure Nest</span>
+          <h2 id="trust-section-title" class="section-header__title">Commercial Real Estate Made Transparent</h2>
+          <p class="section-header__subhead">We represent tenants with unbiased advisory, transparent pricing, and comprehensive local market coverage.</p>
+        </div>
+
+        <div class="grid grid--4-col">
+          <div class="card card--elevated trust-metric-card">
+            <div class="trust-metric-card__number">100%</div>
+            <div class="trust-metric-card__label">Verified Spaces</div>
+            <p class="trust-metric-card__desc">Direct landlord relations and verified physical inventory across prime hubs.</p>
+          </div>
+
+          <div class="card card--elevated trust-metric-card">
+            <div class="trust-metric-card__number">0%</div>
+            <div class="trust-metric-card__label">Zero Brokerage</div>
+            <p class="trust-metric-card__desc">Tenant-side advisory is 100% complimentary without hidden service fees.</p>
+          </div>
+
+          <div class="card card--elevated trust-metric-card">
+            <div class="trust-metric-card__number">48 Hrs</div>
+            <div class="trust-metric-card__label">Tour Turnaround</div>
+            <p class="trust-metric-card__desc">Receive customized shortlists and begin guided physical site visits in 48 hours.</p>
+          </div>
+
+          <div class="card card--elevated trust-metric-card">
+            <div class="trust-metric-card__number">1-on-1</div>
+            <div class="trust-metric-card__label">Dedicated Advisor</div>
+            <p class="trust-metric-card__desc">Single point of contact from requirement brief through lease execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. AMENITIES SECTION -->
+    <section id="amenities" class="section section--subtle" aria-labelledby="amenities-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Grade-A Infrastructure</span>
+          <h2 id="amenities-title" class="section-header__title">Enterprise-Grade Workspace Amenities</h2>
+          <p class="section-header__subhead">Every property curated by Luxure Nest meets demanding corporate infrastructure standards.</p>
+        </div>
+
+        <div class="grid grid--3-col">
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/wifi.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">High-Speed Enterprise Internet</h3>
+              <p class="amenity-card__desc">Redundant high-bandwidth fiber optic connectivity with 99.9% uptime SLAs.</p>
+            </div>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/building.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Equipped Conference Suites</h3>
+              <p class="amenity-card__desc">State-of-the-art audiovisual tech, conference tables, and video calling gear.</p>
+            </div>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/shield.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">24/7 Multi-Tier Security</h3>
+              <p class="amenity-card__desc">Biometric access control, CCTV monitoring, and round-the-clock security staff.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. WORKSPACE / SERVICE OPTIONS SECTION (Dynamic based on service) -->
+    <section id="workspace-options" class="section section--white" aria-labelledby="options-section-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Flexible Workspace Models</span>
+          <h2 id="options-section-title" class="section-header__title">Workspace Solutions</h2>
+          <p id="options-section-subhead" class="section-header__subhead">Tailored space types suited for agile teams and growing enterprises.</p>
+        </div>
+
+        <div id="workspace-options-grid" class="grid grid--3-col">
+          <!-- Dynamically populated by js/dynamic-content.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. BUSINESS HUBS SECTION (Dynamic based on city) -->
+    <section id="business-hubs" class="section section--subtle" aria-labelledby="business-hubs-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Prime Locations</span>
+          <h2 id="business-hubs-title" class="section-header__title">
+            Key Commercial Hubs in <span id="business-hubs-city-name">City</span>
+          </h2>
+          <p id="business-hubs-subhead" class="section-header__subhead">
+            Explore commercial corridors and tech parks (Approved business hubs configuration placeholder).
+          </p>
+        </div>
+
+        <div id="business-hubs-grid" class="grid grid--3-col">
+          <!-- Dynamically populated by js/dynamic-content.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. WHY LUXURE NEST SECTION -->
+    <section id="why-luxure-nest" class="section section--white" aria-labelledby="why-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">The Luxure Nest Advantage</span>
+          <h2 id="why-title" class="section-header__title">Tenant-First Commercial Advisory</h2>
+          <p class="section-header__subhead">Navigating commercial workspace leases requires specialized local expertise and strong negotiation power.</p>
+        </div>
+
+        <div class="grid grid--3-col">
+          <div class="card card--elevated">
+            <h3 class="option-card__title">Direct Landlord Access</h3>
+            <p class="option-card__desc">Cut through layers of intermediaries. We connect you directly with prime institutional landlords and top-tier operators.</p>
+          </div>
+
+          <div class="card card--elevated">
+            <h3 class="option-card__title">Commercial Negotiation</h3>
+            <p class="option-card__desc">Our advisors leverage market transaction benchmarks to secure optimal rentals, rent-free fitout periods, and lock-in flexibility.</p>
+          </div>
+
+          <div class="card card--elevated">
+            <h3 class="option-card__title">Complete Legal Due Diligence</h3>
+            <p class="option-card__desc">From letter of intent (LOI) to lease deed vetting, our team ensures complete contractual clarity and risk mitigation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. EXPERT / TEAM SECTION FOUNDATION (Section 23 - Approved Visual Reference Foundation) -->
+    <section id="expert-team" class="section section--dark" aria-labelledby="expert-team-heading">
+      <div class="container">
+        <div class="expert-team-container">
+          <div class="section-header">
+            <span class="section-header__tag">Advisory Team</span>
+            <h2 id="expert-team-heading" class="section-header__title">
+              Our CRE Experts Help You Find, Tour & Negotiate Your Workspace
+            </h2>
+            <p id="expert-team-subhead" class="section-header__subhead">
+              Dedicated local commercial advisors assisting enterprise leaders with customized property shortlists and site tours.
+            </p>
+          </div>
+
+          <!-- Team Avatars Structural Placeholder (Circular Avatars) -->
+          <div class="expert-team__avatars" aria-label="Advisory Team Members Placeholder">
+            <div class="expert-avatar-circle" title="Senior CRE Consultant">
+              <img src="assets/images/team-avatar-1.svg" alt="Advisor 1" width="58" height="58">
+            </div>
+            <div class="expert-avatar-circle" title="Leasing Manager">
+              <img src="assets/images/team-avatar-2.svg" alt="Advisor 2" width="58" height="58">
+            </div>
+            <div class="expert-avatar-circle" title="Tenant Representative">
+              <img src="assets/images/team-avatar-3.svg" alt="Advisor 3" width="58" height="58">
+            </div>
+            <div class="expert-avatar-badge">
+              <span>+15 Advisory Specialists</span>
+            </div>
+          </div>
+
+          <!-- Advisory Service Bullets -->
+          <div class="expert-team__bullets">
+            <div class="expert-team__bullet-item">
+              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
+              <span>Personalized workspace shortlists matching your seat count, budget, and location preference.</span>
+            </div>
+            <div class="expert-team__bullet-item">
+              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
+              <span>Chauffeur-assisted physical site visit coordination across shortlisted buildings.</span>
+            </div>
+            <div class="expert-team__bullet-item">
+              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
+              <span>Benchmarked lease negotiation saving up to 15-20% on published rack rates.</span>
+            </div>
+          </div>
+
+          <a href="#lead-form-area" class="btn btn--primary btn--lg" id="expert-team-cta">
+            Talk to a Commercial Advisor
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. HOW WE WORK (Step Progression) -->
+    <section id="how-we-work" class="section section--white" aria-labelledby="how-we-work-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Simple 4-Step Process</span>
+          <h2 id="how-we-work-title" class="section-header__title">How We Help You Find Workspace</h2>
+          <p class="section-header__subhead">Streamlined commercial real estate acquisition from initial brief to move-in day.</p>
+        </div>
+
+        <div class="grid grid--4-col">
+          <div class="step-card">
+            <div class="step-card__num">01</div>
+            <h3 class="step-card__title">Share Your Brief</h3>
+            <p class="step-card__desc">Tell us your team size, target micro-market, and budget parameters.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card__num">02</div>
+            <h3 class="step-card__title">Curated Shortlist</h3>
+            <p class="step-card__desc">Receive a personalized matrix of 3–5 verified workspace options in 24 hours.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card__num">03</div>
+            <h3 class="step-card__title">Guided Site Tours</h3>
+            <p class="step-card__desc">Our local CRE specialist accompanies you on comprehensive physical walkthroughs.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card__num">04</div>
+            <h3 class="step-card__title">Negotiate & Move In</h3>
+            <p class="step-card__desc">We negotiate optimal terms and finalize agreements with zero brokerage.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. SECONDARY CTA -->
+    <section id="secondary-cta" class="section section--subtle" aria-labelledby="secondary-cta-title">
+      <div class="container">
+        <div class="cta-banner">
+          <h2 id="secondary-cta-title">Ready to Inspect Available Commercial Workspaces?</h2>
+          <p>Get in touch with our commercial real estate specialists today for tailored options and private walkthroughs.</p>
+          <a href="#lead-form-area" class="btn btn--primary btn--lg">Request Workspace Proposal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. FAQ SECTION -->
+    <section id="faq" class="section section--white" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="section-header__tag">Got Questions?</span>
+          <h2 id="faq-title" class="section-header__title">Frequently Asked Questions</h2>
+          <p class="section-header__subhead">Everything you need to know about our commercial workspace advisory.</p>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-item__question">
+              <span>Is your workspace advisory service really zero brokerage?</span>
+            </div>
+            <div class="faq-item__answer">
+              Yes. Our tenant representation and workspace consulting services are 100% complimentary for occupiers. We are remunerated directly by institutional developers and property operators.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-item__question">
+              <span>How quickly can we tour spaces?</span>
+            </div>
+            <div class="faq-item__answer">
+              Once you submit your requirement, our advisory team shares a curated comparison within 24 hours and arranges coordinated physical site tours at your convenience within 48 hours.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-item__question">
+              <span>Can you accommodate customized enterprise build-outs?</span>
+            </div>
+            <div class="faq-item__answer">
+              Yes. We assist enterprise clients with turnkey managed offices, build-to-suit configurations, and branded fit-outs customized to exact corporate IT and design guidelines.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. FINAL CTA -->
+    <section id="final-cta" class="section section--hero" aria-labelledby="final-cta-title">
+      <div class="container" style="text-align: center;">
+        <span class="section-header__tag">Take The Next Step</span>
+        <h2 id="final-cta-title" style="margin-bottom: var(--space-md);">Find Your Ideal Workspace Today</h2>
+        <p style="color: var(--color-text-light); max-width: 600px; margin-left: auto; margin-right: auto; margin-bottom: var(--space-xl);">
+          Join forward-thinking companies that found their ideal workspaces through Luxure Nest.
+        </p>
+        <a href="#lead-form-area" class="btn btn--primary btn--lg">Schedule Your Site Visit Now</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 14. FOOTER FOUNDATION -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a href="./" class="site-logo" aria-label="Luxure Nest Home">
+            <img src="assets/logo/luxure-nest-logo.svg" alt="Luxure Nest" width="240" height="64" class="site-logo__mark">
+          </a>
+          <p class="site-footer__brand-p">
+            Luxure Nest is a premier commercial real estate advisory firm specializing in Grade-A managed offices, enterprise leasing, and flexible coworking solutions across Delhi NCR.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="site-footer__col-title">Primary Markets</h4>
+          <ul class="site-footer__links">
+            <li><a href="?service=coworking&city=gurugram">Gurugram Workspaces</a></li>
+            <li><a href="?service=coworking&city=noida">Noida Workspaces</a></li>
+            <li><a href="?service=coworking&city=delhi">Delhi Workspaces</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="site-footer__col-title">Commercial Services</h4>
+          <ul class="site-footer__links">
+            <li><a href="?service=coworking&city=gurugram">Coworking Spaces</a></li>
+            <li><a href="?service=office&city=gurugram">Managed Offices</a></li>
+            <li><a href="?service=office&city=delhi">Commercial Leasing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="site-footer__col-title">Contact Advisory</h4>
+          <ul class="site-footer__links">
+            <li><span>Mon – Sat: 9:00 AM – 7:30 PM</span></li>
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="mailto:advisory@luxurenest.com">advisory@luxurenest.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <p>&copy; 2026 Luxure Nest Commercial Real Estate Pvt. Ltd. All rights reserved.</p>
+        <p>Phase 1 Foundational Architecture &bull; Clean Vanilla HTML5/CSS3/ES6+</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Architecture: Loaded with defer in dependency order -->
+  <script src="data/services.js" defer></script>
+  <script src="data/cities.js" defer></script>
+  <script src="data/micromarkets.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/routing.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/dynamic-content.js" defer></script>
+  <script src="js/app.js" defer></script>
+
+</body>
+</html>
