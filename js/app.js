@@ -123,6 +123,48 @@
     });
   }
 
+  /**
+   * Smoothly scroll to the form and focus the first input when in-page CTA links are clicked.
+   */
+  function initFormAnchorLinks() {
+    document.addEventListener('click', function (e) {
+      const cta = e.target.closest('a[href="#lead-form-area"]');
+      if (cta) {
+        const formArea = document.getElementById('lead-form-area');
+        if (formArea) {
+          e.preventDefault();
+          formArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            const firstInput = document.getElementById('lead-name');
+            if (firstInput) firstInput.focus();
+          }, 450);
+        }
+      }
+    });
+  }
+
+  /**
+   * Smoothly scroll to sections when navigation links are clicked.
+   */
+  function initNavAnchorLinks() {
+    document.addEventListener('click', function (e) {
+      const navLink = e.target.closest('.site-nav__link');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (history.pushState) {
+              history.pushState(null, null, href);
+            }
+          }
+        }
+      }
+    });
+  }
+
   // Public API exposed on window.LuxureNest
   root.LuxureNest.app = {
     bootstrap,
@@ -137,10 +179,14 @@
       document.addEventListener('DOMContentLoaded', () => {
         bootstrap();
         initRouteInspector();
+        initFormAnchorLinks();
+        initNavAnchorLinks();
       });
     } else {
       bootstrap();
       initRouteInspector();
+      initFormAnchorLinks();
+      initNavAnchorLinks();
     }
   }
 

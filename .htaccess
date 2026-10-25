@@ -1,0 +1,30 @@
+# ==============================================================================
+# Luxure Nest - Apache / cPanel / Hostinger URL Rewrites (.htaccess)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Thank You page rewrite
+  RewriteRule ^thank-you/?$ thank-you.html [L,QSA]
+
+  # 3. Clean routes for all 6 target workspace URLs:
+  #    /coworking/gurugram, /coworking/noida, /coworking/delhi
+  #    /office/gurugram, /office/noida, /office/delhi
+  RewriteRule ^(coworking|office)(/.*)?$ index.html [L,QSA]
+
+  # 4. If requested resource is not an existing file or directory, serve index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Caching & Compression Optimization
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>

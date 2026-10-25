@@ -12,50 +12,51 @@
    1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
    ========================================================================== */
 :root {
-  /* --- Brand Color Palette: Deep Navy & Charcoal --- */
-  --color-brand-navy-dark: #070D18;
-  --color-brand-navy: #0B1325;
-  --color-brand-charcoal: #141B2D;
-  --color-brand-slate: #1E293B;
-  --color-brand-slate-light: #334155;
+  /* --- Brand Foundation: Minimal Near-Black & Soft Greys --- */
+  --color-brand-navy-dark: #111827;
+  --color-brand-navy: #1F2937;
+  --color-brand-charcoal: #374151;
+  --color-brand-slate: #F3F4F6;
+  --color-brand-slate-light: #E5E7EB;
 
-  /* --- Brand Accents: Restrained Champagne Gold & Bronze --- */
+  /* --- Brand Accents: Restrained Champagne Gold (Used Sparingly) --- */
   --color-accent-gold: #C5A880;
   --color-accent-gold-hover: #B39569;
   --color-accent-gold-dark: #9E7D4E;
-  --color-accent-gold-light: #F7F3EE;
-  --color-accent-gold-muted: rgba(197, 168, 128, 0.15);
-  --color-accent-bronze: #846743;
+  --color-accent-gold-light: #FAF5EE;
+  --color-accent-gold-muted: rgba(197, 168, 128, 0.12);
+  --color-accent-bronze: #8C6D3F;
 
-  /* --- Surface & Background Colors --- */
-  --color-bg-body: #FAFAFC;
+  /* --- Surface & Background Colors (White Dominant) --- */
+  --color-bg-body: #FFFFFF;
   --color-bg-surface: #FFFFFF;
-  --color-bg-subtle: #F1F5F9;
-  --color-bg-dark: #0B1325;
-  --color-bg-dark-surface: #141B2D;
+  --color-bg-subtle: #F8F8F6;
+  --color-bg-subtle-alt: #F3F4F6;
+  --color-bg-dark: #111827;
+  --color-bg-dark-surface: #1F2937;
 
-  /* --- Text Colors --- */
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  --color-text-muted: #64748B;
-  --color-text-light: #94A3B8;
+  /* --- Text Colors (Refined High Contrast) --- */
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #6B7280;
+  --color-text-light: #9CA3AF;
   --color-text-inverse: #FFFFFF;
-  --color-text-gold: #A27E4B;
+  --color-text-gold: #8C6D3F;
 
-  /* --- Borders & Dividers --- */
-  --color-border-subtle: #E2E8F0;
-  --color-border-medium: #CBD5E1;
-  --color-border-dark: #27354E;
-  --color-border-gold: rgba(197, 168, 128, 0.4);
+  /* --- Borders & Dividers (Subtle, Clean Light Greys) --- */
+  --color-border-subtle: #E5E7EB;
+  --color-border-medium: #D1D5DB;
+  --color-border-dark: #374151;
+  --color-border-gold: rgba(197, 168, 128, 0.35);
 
   /* --- Functional / Status Colors --- */
-  --color-success: #15803D;
+  --color-success: #16A34A;
   --color-success-bg: #F0FDF4;
-  --color-warning: #B45309;
+  --color-warning: #D97706;
   --color-warning-bg: #FFFBEB;
-  --color-error: #B91C1C;
+  --color-error: #DC2626;
   --color-error-bg: #FEF2F2;
-  --color-info: #0369A1;
+  --color-info: #0284C7;
   --color-info-bg: #F0F9FF;
 
   /* --- Typography Stack --- */
@@ -105,18 +106,18 @@
   --radius-lg: 12px;
   --radius-full: 9999px;
 
-  /* --- Shadows (Subtle, Refined Elevation) --- */
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 2px 5px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.1);
-  --shadow-dark: 0 10px 30px rgba(7, 13, 24, 0.35);
+  /* --- Shadows (Subtle, Soft, Low-Opacity Elevation) --- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.06);
 
   /* --- Layout Boundaries --- */
   --container-max-width: 1320px;
   --container-narrow: 880px;
   --container-padding: 1.5rem;
-  --header-height: 88px;
+  --header-height: 64px;
 
   /* --- Transitions --- */
   --transition-fast: 150ms ease;
@@ -141,6 +142,12 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible Smooth Scroll Offset for Sticky Header */
+section[id],
+#lead-form-area {
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
 }
 
 body {

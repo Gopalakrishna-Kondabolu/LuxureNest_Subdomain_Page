@@ -20,7 +20,7 @@
       singularName: 'Coworking Space',
       shortLabel: 'Coworking',
       tagline: 'Flexible Desks, Private Cabins & Collaborative Workspaces',
-      heroTitleTemplate: 'Find the Right Coworking Space in {city}',
+      heroTitleTemplate: 'Delivering best {service} in {location} according to your requirements',
       heroSubtitleTemplate: 'Compare premium flexible workspaces, private cabins, and enterprise shared offices across prime business locations in {city}. Guided tours and zero brokerage.',
       ctaText: 'Schedule a Workspace Tour',
       secondaryCtaText: 'Explore Available Spaces',
@@ -34,9 +34,9 @@
 
       // Key value pillars relevant to flexible coworking
       valueHighlights: [
-        'Verified plug-and-play flexible workspaces',
-        'End-to-end site visit coordination with zero brokerage',
-        'Flexible month-to-month and annual commitment options'
+        'Zero Brokerage',
+        'Metro, airport & highway Connectivity',
+        'Whole NCR or {location} coverage'
       ],
 
       // Placeholder for workspace/service options section
@@ -73,7 +73,7 @@
       singularName: 'Office Space',
       shortLabel: 'Office',
       tagline: 'Customized Managed Offices & Grade-A Commercial Leasing',
-      heroTitleTemplate: 'Find the Right Office Space in {city}',
+      heroTitleTemplate: 'Delivering best {service} in {location} according to your requirements',
       heroSubtitleTemplate: 'End-to-end commercial real estate advisory for managed enterprise suites and conventional office leasing across Grade-A IT parks in {city}.',
       ctaText: 'Request Office Space Proposal',
       secondaryCtaText: 'Schedule Expert Consultation',
@@ -86,9 +86,9 @@
 
       // Key value pillars relevant to enterprise office leasing
       valueHighlights: [
-        'Grade-A IT parks and independent commercial towers',
-        'Turnkey fit-out management or flexible lease terms',
-        'Dedicated corporate real estate advisor to negotiate best rates'
+        'Zero Brokerage',
+        'Metro, airport & highway Connectivity',
+        'Whole NCR or {location} coverage'
       ],
 
       // Placeholder for workspace/service options section

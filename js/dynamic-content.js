@@ -51,6 +51,25 @@
 
     let ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.content = resolved.text.seoDescription;
+
+    // 5. OpenGraph Image Tag (Route-aware)
+    if (root.LuxureNest.images && typeof root.LuxureNest.images.getImage === 'function') {
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      if (!ogImage) {
+        ogImage = document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImage);
+      }
+      const heroImageObj = root.LuxureNest.images.getImage({
+        cityId: resolved.city.id,
+        serviceId: resolved.service.id,
+        section: 'hero',
+        micromarketSlug: resolved.micromarket ? resolved.micromarket.slug : ''
+      });
+      if (heroImageObj && heroImageObj.src) {
+        ogImage.content = `${currentOrigin}/${heroImageObj.src}`;
+      }
+    }
   }
 
   /**
@@ -95,6 +114,21 @@
         micromarketBadge.style.display = 'none';
       }
     }
+
+    // Render Route-Aware Primary Hero Section Background
+    const heroSection = document.getElementById('hero');
+    if (heroSection && root.LuxureNest.images && typeof root.LuxureNest.images.getImage === 'function') {
+      const heroImg = root.LuxureNest.images.getImage({
+        cityId: resolved.city.id,
+        serviceId: resolved.service.id,
+        section: 'hero',
+        micromarketSlug: resolved.micromarket ? resolved.micromarket.slug : ''
+      });
+
+      if (heroImg && heroImg.src) {
+        heroSection.style.backgroundImage = `url("${heroImg.src}")`;
+      }
+    }
   }
 
   /**
@@ -113,56 +147,28 @@
   }
 
   /**
-   * Render Workspace Options / Service Types section placeholder.
+   * Render Brand Network section (Attachment 2).
    */
-  function renderWorkspaceOptions(resolved) {
-    utils.setText('#options-section-title', `${resolved.service.singularName} Options in ${resolved.city.name}`);
+  function renderBrandNetwork(resolved) {
+    const serviceLabel = resolved.service.singularName ? resolved.service.singularName.toLowerCase() : 'coworking';
     utils.setText(
-      '#options-section-subhead',
-      `Customized space solutions suited for startups, SMEs, and large corporate enterprises across ${resolved.city.name}.`
+      '#brand-network-headline',
+      `Leading ${serviceLabel} operators in ${resolved.city.name}. One enquiry away.`
     );
-
-    const grid = document.getElementById('workspace-options-grid');
-    if (grid) {
-      grid.textContent = '';
-      resolved.optionsPlaceholder.forEach(opt => {
-        const card = document.createElement('div');
-        card.className = 'card card--elevated option-card';
-
-        const badge = document.createElement('span');
-        badge.className = 'badge badge--gold option-card__badge';
-        badge.textContent = opt.badge;
-
-        const heading = document.createElement('h3');
-        heading.className = 'option-card__title';
-        heading.textContent = opt.title;
-
-        const p = document.createElement('p');
-        p.className = 'option-card__desc';
-        p.textContent = opt.description;
-
-        const actionBtn = document.createElement('a');
-        actionBtn.className = 'btn btn--outline btn--sm option-card__action';
-        actionBtn.href = '#lead-form-area';
-        actionBtn.textContent = 'Inquire About This';
-
-        card.appendChild(badge);
-        card.appendChild(heading);
-        card.appendChild(p);
-        card.appendChild(actionBtn);
-        grid.appendChild(card);
-      });
-    }
+    utils.setText(
+      '#brand-network-subhead',
+      `Seamless access to premier ${serviceLabel} partners and Grade-A business centres across ${resolved.city.name}.`
+    );
   }
 
   /**
-   * Render Business Hubs placeholder list for the active city.
+   * Render Business Hubs list with route-aware micro-market & city imagery.
    */
   function renderBusinessHubs(resolved) {
     utils.setText('#business-hubs-city-name', resolved.city.name);
     utils.setText(
       '#business-hubs-subhead',
-      `Explore premier corporate micro-markets and commercial corridors across ${resolved.city.name}. (Approved hubs configuration placeholder).`
+      `Explore premier corporate micro-markets and commercial corridors across ${resolved.city.name}.`
     );
 
     const list = document.getElementById('business-hubs-grid');
@@ -171,6 +177,29 @@
       resolved.businessHubs.forEach(hub => {
         const card = document.createElement('div');
         card.className = 'card hub-card';
+
+        // Add visual hub/micro-market image
+        if (root.LuxureNest.images && typeof root.LuxureNest.images.getBusinessHubImage === 'function') {
+          const hubImg = root.LuxureNest.images.getBusinessHubImage(resolved.city.id, hub.id);
+          if (hubImg) {
+            const imgWrap = document.createElement('div');
+            imgWrap.className = 'hub-card__image-wrap';
+
+            const imgEl = document.createElement('img');
+            imgEl.className = 'hub-card__img';
+            imgEl.src = hubImg.src;
+            imgEl.alt = hubImg.alt || hub.name;
+            imgEl.loading = 'lazy';
+            imgEl.width = 400;
+            imgEl.height = 250;
+
+            imgWrap.appendChild(imgEl);
+            card.appendChild(imgWrap);
+          }
+        }
+
+        const body = document.createElement('div');
+        body.className = 'hub-card__body';
 
         const hubName = document.createElement('h3');
         hubName.className = 'hub-card__title';
@@ -185,28 +214,52 @@
         link.href = '#lead-form-area';
         link.textContent = `Explore ${resolved.service.shortLabel} Spaces →`;
 
-        card.appendChild(hubName);
-        card.appendChild(landmark);
-        card.appendChild(link);
+        body.appendChild(hubName);
+        body.appendChild(landmark);
+        body.appendChild(link);
+        card.appendChild(body);
         list.appendChild(card);
       });
     }
   }
 
   /**
-   * Render Expert / Team Section Foundation (Section 23).
+   * Render Expert / Team Section Foundation (Attachment 3).
    */
   function renderExpertTeam(resolved) {
-    utils.setText('#expert-team-city-name', resolved.city.name);
-    utils.setText(
-      '#expert-team-heading',
-      `Our CRE Experts Help You Find, Tour & Negotiate Your Workspace in ${resolved.city.name}`
-    );
+    utils.setText('#expert-team-heading', 'Our Experts are eager to help you!');
     utils.setText(
       '#expert-team-subhead',
-      `Dedicated local commercial advisors assisting enterprise leaders and business founders with personalized site visits, lease negotiations, and legal paperwork.`
+      `Our team has helped more than 10,000 businesses & professionals find their perfect office across ${resolved.city.name}. Our experts will help you with:`
     );
-    utils.setText('#expert-team-cta', `Talk to a ${resolved.city.name} CRE Expert`);
+  }
+
+  /**
+   * Render Why Luxure Nest Section (Attachment 4).
+   */
+  function renderWhyLuxureNest(resolved) {
+    if (typeof document !== 'undefined') {
+      const cityEls = document.querySelectorAll('.why-city-target');
+      cityEls.forEach(el => {
+        el.textContent = resolved.city.name;
+      });
+
+      // Update landmark image dynamically based on city
+      const landmarkImg = document.getElementById('why-us-landmark-img');
+      if (landmarkImg && root.LuxureNest.images && typeof root.LuxureNest.images.getWhyUsLandmarkImage === 'function') {
+        const landmark = root.LuxureNest.images.getWhyUsLandmarkImage(resolved.city.id);
+        if (landmark && landmark.src) {
+          landmarkImg.src = landmark.src;
+          landmarkImg.alt = landmark.alt || `${resolved.city.name} Commercial Landmark`;
+        }
+      }
+
+      // Update CTA banner city target
+      const ctaCityEls = document.querySelectorAll('.process-cta-city');
+      ctaCityEls.forEach(el => {
+        el.textContent = resolved.city.name;
+      });
+    }
   }
 
   /**
@@ -241,9 +294,10 @@
       updateSEOMetadata(resolved);
       renderHero(resolved);
       renderLeadForm(resolved);
-      renderWorkspaceOptions(resolved);
-      renderBusinessHubs(resolved);
+      renderBrandNetwork(resolved);
       renderExpertTeam(resolved);
+      renderBusinessHubs(resolved);
+      renderWhyLuxureNest(resolved);
       renderFallbackNotice(resolved);
 
       utils.logger.info(`Page rendered successfully for ${resolved.service.id} in ${resolved.city.id}.`);

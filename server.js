@@ -9,12 +9,14 @@
  */
 
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
+const GOOGLE_SHEET_WEBHOOK_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbxuJ31ptHdf-L_mCay2ZleRnCISmmzJnxV5VCIeTj5Cx15PYjwGZNRgz7RcbLodY_8N/exec';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=UTF-8',
@@ -63,6 +65,53 @@ const server = http.createServer((req, res) => {
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: false, error: 'Missing required lead fields' }));
           return;
+        }
+
+        // If Google Sheet Webhook URL is configured, forward the lead to Google Apps Script
+        if (GOOGLE_SHEET_WEBHOOK_URL) {
+          try {
+            const webhookUrl = new URL(GOOGLE_SHEET_WEBHOOK_URL);
+            const postData = JSON.stringify(payload);
+            const reqOptions = {
+              hostname: webhookUrl.hostname,
+              path: webhookUrl.pathname + (webhookUrl.search || ''),
+              method: 'POST',
+              headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+                'Content-Length': Buffer.byteLength(postData)
+              }
+            };
+
+            const gasReq = https.request(reqOptions, (gasRes) => {
+              let gasBody = '';
+              gasRes.on('data', chunk => { gasBody += chunk; });
+              gasRes.on('end', () => {
+                console.log(`[Server] Forwarded lead to Google Sheet. Status: ${gasRes.statusCode}`);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({
+                  success: true,
+                  message: 'Lead recorded and forwarded to Google Sheet',
+                  leadId: 'LN-' + Date.now()
+                }));
+              });
+            });
+
+            gasReq.on('error', (gasErr) => {
+              console.error('[Server] Warning: Failed to forward to Google Sheet:', gasErr.message);
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({
+                success: true,
+                message: 'Lead recorded locally (remote webhook warning)',
+                leadId: 'LN-' + Date.now()
+              }));
+            });
+
+            gasReq.write(postData);
+            gasReq.end();
+            return;
+          } catch (forwardErr) {
+            console.error('[Server] Webhook forward error:', forwardErr);
+          }
         }
 
         res.writeHead(200, { 'Content-Type': 'application/json' });

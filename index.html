@@ -26,6 +26,11 @@
   <meta property="og:description" content="Verified commercial office spaces and flexible workspaces in Delhi NCR.">
   <meta property="og:site_name" content="Luxure Nest">
 
+  <!-- Google Fonts for Luxury Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
   <!-- Modular CSS System -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -62,8 +67,21 @@
   <header class="site-header" role="banner">
     <div class="container site-header__container">
       <a href="./" class="site-logo" aria-label="Luxure Nest Home">
-        <img src="assets/logo/luxure-nest-logo.svg" alt="Luxure Nest" width="220" height="56" class="site-logo__mark">
+        <img src="assets/logo/luxure-nest-logo.svg" alt="" width="36" height="36" class="site-logo__mark">
+        <span class="site-logo__text">Luxure Nest</span>
       </a>
+
+      <!-- Main Navigation Menu (In-page Section Smooth Scrolling) -->
+      <nav class="site-nav" aria-label="Main Navigation">
+        <ul class="site-nav__list">
+          <li><a href="#amenities" class="site-nav__link">Amenities</a></li>
+          <li><a href="#brand-network" class="site-nav__link">Brands</a></li>
+          <li><a href="#expert-team" class="site-nav__link">Advisors</a></li>
+          <li><a href="#business-hubs" class="site-nav__link">Locations</a></li>
+          <li><a href="#why-luxure-nest" class="site-nav__link">Why Us</a></li>
+          <li><a href="#how-it-works" class="site-nav__link">Process</a></li>
+        </ul>
+      </nav>
 
       <div class="site-header__actions">
         <a href="tel:+919876543210" class="site-header__phone" aria-label="Call our commercial advisory desk">
@@ -92,7 +110,7 @@
             </div>
 
             <h1 id="hero-headline" class="hero__headline">
-              Find the Right Coworking Space in Gurugram
+              Delivering best Coworking Space in Gurugram according to your requirements
             </h1>
 
             <p id="hero-subhead" class="hero__subhead">
@@ -101,7 +119,18 @@
 
             <div class="hero__highlights">
               <ul id="hero-highlights-list" class="hero__highlights-list" aria-label="Key Highlights">
-                <!-- Dynamically populated by js/dynamic-content.js -->
+                <li class="hero__highlight-item">
+                  <span class="hero__highlight-icon" aria-hidden="true">&#10003;</span>
+                  <span class="hero__highlight-text">Zero Brokerage</span>
+                </li>
+                <li class="hero__highlight-item">
+                  <span class="hero__highlight-icon" aria-hidden="true">&#10003;</span>
+                  <span class="hero__highlight-text">Metro, airport & highway Connectivity</span>
+                </li>
+                <li class="hero__highlight-item">
+                  <span class="hero__highlight-icon" aria-hidden="true">&#10003;</span>
+                  <span class="hero__highlight-text">Whole NCR or Gurugram coverage</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -339,53 +368,18 @@
       </div>
     </section>
 
-    <!-- 4. TRUST / VALUE SECTION -->
-    <section id="trust-value" class="section section--white" aria-labelledby="trust-section-title">
-      <div class="container">
-        <div class="section-header section-header--center">
-          <span class="section-header__tag">Why Choose Luxure Nest</span>
-          <h2 id="trust-section-title" class="section-header__title">Commercial Real Estate Made Transparent</h2>
-          <p class="section-header__subhead">We represent tenants with unbiased advisory, transparent pricing, and comprehensive local market coverage.</p>
-        </div>
-
-        <div class="grid grid--4-col">
-          <div class="card card--elevated trust-metric-card">
-            <div class="trust-metric-card__number">100%</div>
-            <div class="trust-metric-card__label">Verified Spaces</div>
-            <p class="trust-metric-card__desc">Direct landlord relations and verified physical inventory across prime hubs.</p>
-          </div>
-
-          <div class="card card--elevated trust-metric-card">
-            <div class="trust-metric-card__number">0%</div>
-            <div class="trust-metric-card__label">Zero Brokerage</div>
-            <p class="trust-metric-card__desc">Tenant-side advisory is 100% complimentary without hidden service fees.</p>
-          </div>
-
-          <div class="card card--elevated trust-metric-card">
-            <div class="trust-metric-card__number">48 Hrs</div>
-            <div class="trust-metric-card__label">Tour Turnaround</div>
-            <p class="trust-metric-card__desc">Receive customized shortlists and begin guided physical site visits in 48 hours.</p>
-          </div>
-
-          <div class="card card--elevated trust-metric-card">
-            <div class="trust-metric-card__number">1-on-1</div>
-            <div class="trust-metric-card__label">Dedicated Advisor</div>
-            <p class="trust-metric-card__desc">Single point of contact from requirement brief through lease execution.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 5. AMENITIES SECTION -->
     <section id="amenities" class="section section--subtle" aria-labelledby="amenities-title">
       <div class="container">
-        <div class="section-header section-header--center">
+        <div class="section-header" style="max-width: 820px;">
           <span class="section-header__tag">Grade-A Infrastructure</span>
           <h2 id="amenities-title" class="section-header__title">Enterprise-Grade Workspace Amenities</h2>
           <p class="section-header__subhead">Every property curated by Luxure Nest meets demanding corporate infrastructure standards.</p>
         </div>
 
         <div class="grid grid--3-col">
+          <!-- 1. Internet -->
           <div class="amenity-card">
             <div class="amenity-card__icon-box">
               <img src="assets/icons/wifi.svg" alt="" width="22" height="22" aria-hidden="true">
@@ -396,45 +390,398 @@
             </div>
           </div>
 
+          <!-- 2. Meeting & Conference Rooms -->
           <div class="amenity-card">
             <div class="amenity-card__icon-box">
-              <img src="assets/icons/building.svg" alt="" width="22" height="22" aria-hidden="true">
+              <img src="assets/icons/meeting.svg" alt="" width="22" height="22" aria-hidden="true">
             </div>
             <div>
-              <h3 class="amenity-card__title">Equipped Conference Suites</h3>
-              <p class="amenity-card__desc">State-of-the-art audiovisual tech, conference tables, and video calling gear.</p>
+              <h3 class="amenity-card__title">Meeting & Conference Rooms</h3>
+              <p class="amenity-card__desc">Fully equipped spaces with HD audiovisual systems, video calling gear, and presentation displays.</p>
             </div>
           </div>
 
+          <!-- 3. Private Phone Booths -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/phone-booth.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Private Phone Booths</h3>
+              <p class="amenity-card__desc">Acoustically insulated privacy booths for confidential phone calls and client video conferences.</p>
+            </div>
+          </div>
+
+          <!-- 4. Reception for Mail & Delivery -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/mail.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Reception & Mail Handling</h3>
+              <p class="amenity-card__desc">Dedicated front-desk team managing visitor concierge, incoming mail, and courier dispatches.</p>
+            </div>
+          </div>
+
+          <!-- 5. Printing and Scanning -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/printer.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Printing & Scanning</h3>
+              <p class="amenity-card__desc">Enterprise-grade multi-function laser printers, wireless document scanning, and copying facilities.</p>
+            </div>
+          </div>
+
+          <!-- 6. 24/7 Power Supply -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/power.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">24/7 Power Supply</h3>
+              <p class="amenity-card__desc">100% uninterrupted power backup with dual-grid infrastructure and seamless automatic DG backup.</p>
+            </div>
+          </div>
+
+          <!-- 7. Housekeeping & Cleaning -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/sparkles.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Housekeeping & Cleaning</h3>
+              <p class="amenity-card__desc">Trained housekeeping staff ensuring continuous desk sanitization, waste disposal, and immaculate upkeep.</p>
+            </div>
+          </div>
+
+          <!-- 8. Pantry -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/utensils.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Fully Equipped Pantry</h3>
+              <p class="amenity-card__desc">Spacious breakout kitchen equipped with microwave ovens, refrigerators, and comfortable dining seating.</p>
+            </div>
+          </div>
+
+          <!-- 9. Free Tea & Coffee -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/coffee.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Free Tea & Coffee</h3>
+              <p class="amenity-card__desc">Unlimited complimentary freshly brewed gourmet coffee, curated tea blends, and chilled RO water.</p>
+            </div>
+          </div>
+
+          <!-- 10. Storages -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/lock.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Secure Storage & Lockers</h3>
+              <p class="amenity-card__desc">Individually assigned locking lockers and dedicated team storage units for equipment and files.</p>
+            </div>
+          </div>
+
+          <!-- 11. 24/7 Security and Access -->
           <div class="amenity-card">
             <div class="amenity-card__icon-box">
               <img src="assets/icons/shield.svg" alt="" width="22" height="22" aria-hidden="true">
             </div>
             <div>
-              <h3 class="amenity-card__title">24/7 Multi-Tier Security</h3>
-              <p class="amenity-card__desc">Biometric access control, CCTV monitoring, and round-the-clock security staff.</p>
+              <h3 class="amenity-card__title">24/7 Security & Access</h3>
+              <p class="amenity-card__desc">Round-the-clock smart card access, round-the-clock CCTV surveillance, and verified on-site security guards.</p>
             </div>
+          </div>
+
+          <!-- 12. Parking -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/parking.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Reserved & Visitor Parking</h3>
+              <p class="amenity-card__desc">Ample multi-level basement parking bays for four-wheelers and two-wheelers, plus dedicated visitor slots.</p>
+            </div>
+          </div>
+
+          <!-- 13. Networking and Community Events -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/users.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <div>
+              <h3 class="amenity-card__title">Networking & Community Events</h3>
+              <p class="amenity-card__desc">Regularly hosted founder mixers, industry panel talks, masterclasses, and vibrant business community gatherings.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities Section Bottom CTA Link (Reference Attachment Style) -->
+        <div style="margin-top: var(--space-xl); text-align: left;">
+          <a href="#lead-form-area" class="amenities-cta-link" id="amenities-bottom-cta">
+            <span>VIEW ALL AMENITIES</span>
+            <span class="amenities-cta-link__arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. OUR NETWORK OF BRANDS (Attachment 2) -->
+    <section id="brand-network" class="section section--white" aria-labelledby="brand-network-headline">
+      <div class="container">
+        <div class="section-header" style="max-width: 820px; margin-bottom: var(--space-2xl);">
+          <span class="section-header__tag">Our Network of Brands</span>
+          <h2 id="brand-network-headline" class="section-header__title">
+            Leading coworking operators in Noida. One enquiry away.
+          </h2>
+          <p id="brand-network-subhead" class="section-header__subhead">
+            Seamless access to premier managed workspace partners and Grade-A business centres across Delhi NCR.
+          </p>
+        </div>
+
+        <div class="brand-card__grid">
+          <!-- 1. Regus -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore Regus workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="12" r="3.5" fill="#E02424"/>
+                <path d="M10 18C10 18 10 24 16 24C20 24 22 21 22 18" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="22" cy="10" r="3" fill="#E02424"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Regus</h3>
+              <p class="brand-card__explore">Explore 11 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 2. Awfis -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore Awfis workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <text x="6" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="24" fill="#E02424">a</text>
+                <circle cx="23" cy="11" r="2.5" fill="#E02424"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Awfis</h3>
+              <p class="brand-card__explore">Explore 18 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 3. Smartworks -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore Smartworks workspaces">
+            <div class="brand-card__logo-wrap">
+              <div class="brand-badge brand-badge--dark">SW</div>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Smartworks</h3>
+              <p class="brand-card__explore">Explore 8 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 4. 91springboard -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore 91springboard workspaces">
+            <div class="brand-card__logo-wrap">
+              <div class="brand-badge brand-badge--purple">91S</div>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">91springboard</h3>
+              <p class="brand-card__explore">Explore 6 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 5. IndiQube -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore IndiQube workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="4" width="20" height="20" rx="3" stroke="#0284C7" stroke-width="2.5" fill="none"/>
+                <path d="M4 4L24 24" stroke="#0284C7" stroke-width="2"/>
+                <rect x="4" y="4" width="10" height="10" fill="#0284C7" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">IndiQube</h3>
+              <p class="brand-card__explore">Explore 8 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 6. WeWork -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore WeWork workspaces">
+            <div class="brand-card__logo-wrap">
+              <div class="brand-badge brand-badge--black">w</div>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">WeWork</h3>
+              <p class="brand-card__explore">Explore 6 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 7. COWRKS -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore COWRKS workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="14" cy="14" r="9" stroke="#EA580C" stroke-width="2.5" stroke-dasharray="8 6"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">COWRKS</h3>
+              <p class="brand-card__explore">Explore 5 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 8. Incuspaze -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore Incuspaze workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 21C7 21 8 10 20 8C20 8 19 19 7 21Z" fill="#F97316"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Incuspaze</h3>
+              <p class="brand-card__explore">Explore 5 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 9. Spaces -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore Spaces workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M14 4L22.66 9V19L14 24L5.34 19V9L14 4Z" fill="#18181B"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Spaces</h3>
+              <p class="brand-card__explore">Explore 4 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 10. India Accelerator -->
+          <a href="#lead-form-area" class="brand-card" aria-label="Explore India Accelerator workspaces">
+            <div class="brand-card__logo-wrap">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="7" y="10" width="3" height="13" fill="#DC2626"/>
+                <path d="M12 7L21 21" stroke="#4B5563" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="8.5" cy="6.5" r="1.5" fill="#DC2626"/>
+              </svg>
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">India Accelerator</h3>
+              <p class="brand-card__explore">Explore 4 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ADVISORY TEAM (Attachment 3) -->
+    <section id="expert-team" class="section section--subtle" aria-labelledby="expert-team-heading">
+      <div class="container">
+        <div class="expert-team-card">
+          <div class="expert-team-layout">
+            
+            <!-- Left Column: Content, Points & CTA -->
+            <div class="expert-team__left">
+              <h2 id="expert-team-heading" class="expert-team__heading">
+                Our Experts are eager to help you!
+              </h2>
+              <p id="expert-team-subhead" class="expert-team__subhead">
+                Our team has helped more than 10,000 businesses &amp; professionals find their perfect office. Our experts will help you with:
+              </p>
+
+              <div class="expert-team__checklist">
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Space shortlisting</span>
+                </div>
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Space tours</span>
+                </div>
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Price negotiation</span>
+                </div>
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Contract negotiations &amp; understanding</span>
+                </div>
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Timely Handover</span>
+                </div>
+                <div class="expert-team__check-item">
+                  <span class="expert-team__bullet-dot" aria-hidden="true">&#9679;</span>
+                  <span>Onboarding &amp; Settling</span>
+                </div>
+              </div>
+
+              <div>
+                <a href="#lead-form-area" class="expert-team__callback-btn" id="expert-team-cta">
+                  <span>Request Callback</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Column: Visual Team Banner (Attachment 1 style) -->
+            <div class="expert-team__right">
+              <div class="expert-team__showcase">
+                <div class="expert-team__avatars-row" aria-label="Luxure Nest Workspace Consultants">
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-1.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-2.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-3.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-4.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-5.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-6.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                  <div class="expert-team__avatar-item">
+                    <img src="assets/images/team/member-7.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                  </div>
+                </div>
+                <p class="expert-team__caption">
+                  100+ Workspace consultants with more than 10+ years of experience
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. WORKSPACE / SERVICE OPTIONS SECTION (Dynamic based on service) -->
-    <section id="workspace-options" class="section section--white" aria-labelledby="options-section-title">
+    <!-- 5. SECONDARY CTA BANNER (Attachment 2 style) -->
+    <section id="secondary-cta" class="section section--white cta-bar-section" aria-labelledby="secondary-cta-title">
       <div class="container">
-        <div class="section-header section-header--center">
-          <span class="section-header__tag">Flexible Workspace Models</span>
-          <h2 id="options-section-title" class="section-header__title">Workspace Solutions</h2>
-          <p id="options-section-subhead" class="section-header__subhead">Tailored space types suited for agile teams and growing enterprises.</p>
-        </div>
-
-        <div id="workspace-options-grid" class="grid grid--3-col">
-          <!-- Dynamically populated by js/dynamic-content.js -->
+        <div class="cta-ribbon-bar">
+          <h2 id="secondary-cta-title" class="cta-ribbon-bar__title">Ready to Inspect Available Commercial Workspaces?</h2>
+          <a href="#lead-form-area" class="cta-ribbon-bar__btn" aria-label="Request a callback to inspect available commercial workspaces">
+            <span>REQUEST A CALLBACK</span>
+            <span class="cta-ribbon-bar__arrow" aria-hidden="true">&#8599;</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- 7. BUSINESS HUBS SECTION (Dynamic based on city) -->
+    <!-- 6. KEY COMMERCIAL HUBS SECTION (Dynamic based on city) -->
     <section id="business-hubs" class="section section--subtle" aria-labelledby="business-hubs-title">
       <div class="container">
         <div class="section-header section-header--center">
@@ -443,251 +790,237 @@
             Key Commercial Hubs in <span id="business-hubs-city-name">City</span>
           </h2>
           <p id="business-hubs-subhead" class="section-header__subhead">
-            Explore commercial corridors and tech parks (Approved business hubs configuration placeholder).
+            Explore commercial corridors and tech parks.
           </p>
         </div>
 
         <div id="business-hubs-grid" class="grid grid--3-col">
-          <!-- Dynamically populated by js/dynamic-content.js -->
+          <!-- Dynamically populated by js/dynamic-content.js with unique images -->
         </div>
       </div>
     </section>
 
-    <!-- 8. WHY LUXURE NEST SECTION -->
+    <!-- 7. WHY LUXURE NEST (Attachment 4) -->
     <section id="why-luxure-nest" class="section section--white" aria-labelledby="why-title">
       <div class="container">
-        <div class="section-header section-header--center">
-          <span class="section-header__tag">The Luxure Nest Advantage</span>
-          <h2 id="why-title" class="section-header__title">Tenant-First Commercial Advisory</h2>
-          <p class="section-header__subhead">Navigating commercial workspace leases requires specialized local expertise and strong negotiation power.</p>
-        </div>
-
-        <div class="grid grid--3-col">
-          <div class="card card--elevated">
-            <h3 class="option-card__title">Direct Landlord Access</h3>
-            <p class="option-card__desc">Cut through layers of intermediaries. We connect you directly with prime institutional landlords and top-tier operators.</p>
-          </div>
-
-          <div class="card card--elevated">
-            <h3 class="option-card__title">Commercial Negotiation</h3>
-            <p class="option-card__desc">Our advisors leverage market transaction benchmarks to secure optimal rentals, rent-free fitout periods, and lock-in flexibility.</p>
-          </div>
-
-          <div class="card card--elevated">
-            <h3 class="option-card__title">Complete Legal Due Diligence</h3>
-            <p class="option-card__desc">From letter of intent (LOI) to lease deed vetting, our team ensures complete contractual clarity and risk mitigation.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 9. EXPERT / TEAM SECTION FOUNDATION (Section 23 - Approved Visual Reference Foundation) -->
-    <section id="expert-team" class="section section--dark" aria-labelledby="expert-team-heading">
-      <div class="container">
-        <div class="expert-team-container">
-          <div class="section-header">
-            <span class="section-header__tag">Advisory Team</span>
-            <h2 id="expert-team-heading" class="section-header__title">
-              Our CRE Experts Help You Find, Tour & Negotiate Your Workspace
+        <div class="why-us-split">
+          
+          <!-- Left Column: Tag, Headline, 4 Numbered Points -->
+          <div class="why-us__left">
+            <span class="why-us__tag"><span class="why-us__slash">/</span> WHY LUXURE NEST</span>
+            <h2 id="why-title" class="why-us__headline">
+              Obsessed with getting it right for you.
             </h2>
-            <p id="expert-team-subhead" class="section-header__subhead">
-              Dedicated local commercial advisors assisting enterprise leaders with customized property shortlists and site tours.
-            </p>
+
+            <div class="why-us__items">
+              <!-- Item 01 -->
+              <div class="why-us__item">
+                <span class="why-us__num">01</span>
+                <div>
+                  <h3 class="why-us__title">Compare the whole market</h3>
+                  <p class="why-us__desc">
+                    We check every major coworking and managed-office operator in <span class="why-city-target">your location</span>, so you don't have to call each one yourself.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 02 -->
+              <div class="why-us__item">
+                <span class="why-us__num">02</span>
+                <div>
+                  <h3 class="why-us__title">Get matched to your requirement</h3>
+                  <p class="why-us__desc">
+                    We understand your team size, location, and budget requirement first and then find the best operators suitable for you and your team.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 03 -->
+              <div class="why-us__item">
+                <span class="why-us__num">03</span>
+                <div>
+                  <h3 class="why-us__title">We negotiate on your behalf</h3>
+                  <p class="why-us__desc">
+                    Our consultants handle the back-and-forth on pricing and commercial terms across every shortlisted option.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 04 -->
+              <div class="why-us__item">
+                <span class="why-us__num">04</span>
+                <div>
+                  <h3 class="why-us__title">Zero brokerage</h3>
+                  <p class="why-us__desc">
+                    We will not charge you a single rupee for any of this. Transparent advice and 100% complimentary tenant representation.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Team Avatars Structural Placeholder (Circular Avatars) -->
-          <div class="expert-team__avatars" aria-label="Advisory Team Members Placeholder">
-            <div class="expert-avatar-circle" title="Senior CRE Consultant">
-              <img src="assets/images/team-avatar-1.svg" alt="Advisor 1" width="58" height="58">
-            </div>
-            <div class="expert-avatar-circle" title="Leasing Manager">
-              <img src="assets/images/team-avatar-2.svg" alt="Advisor 2" width="58" height="58">
-            </div>
-            <div class="expert-avatar-circle" title="Tenant Representative">
-              <img src="assets/images/team-avatar-3.svg" alt="Advisor 3" width="58" height="58">
-            </div>
-            <div class="expert-avatar-badge">
-              <span>+15 Advisory Specialists</span>
-            </div>
-          </div>
-
-          <!-- Advisory Service Bullets -->
-          <div class="expert-team__bullets">
-            <div class="expert-team__bullet-item">
-              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
-              <span>Personalized workspace shortlists matching your seat count, budget, and location preference.</span>
-            </div>
-            <div class="expert-team__bullet-item">
-              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
-              <span>Chauffeur-assisted physical site visit coordination across shortlisted buildings.</span>
-            </div>
-            <div class="expert-team__bullet-item">
-              <span class="expert-team__bullet-check" aria-hidden="true">&#10003;</span>
-              <span>Benchmarked lease negotiation saving up to 15-20% on published rack rates.</span>
+          <!-- Right Column: Visual Architectural Image with Badge -->
+          <div class="why-us__right">
+            <div class="why-us__image-wrap">
+              <img 
+                src="assets/images/about/why-luxure-nest.png" 
+                alt="Grade-A Commercial Glass Skyscraper" 
+                class="why-us__img"
+                id="why-us-landmark-img"
+                width="480" 
+                height="600" 
+                loading="lazy"
+              >
+              <div class="why-us__badge">
+                <span class="why-us__badge-title">Zero brokerage</span>
+                <span class="why-us__badge-sub">&mdash; ALWAYS. THAT'S THE PROMISE.</span>
+              </div>
             </div>
           </div>
 
-          <a href="#lead-form-area" class="btn btn--primary btn--lg" id="expert-team-cta">
-            Talk to a Commercial Advisor
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- 10. HOW WE WORK (Step Progression) -->
-    <section id="how-we-work" class="section section--white" aria-labelledby="how-we-work-title">
+    <!-- 8. HOW WE HELP YOU FIND WORKSPACE (Attachment 5) -->
+    <section id="how-it-works" class="section section--subtle" aria-labelledby="how-it-works-title">
       <div class="container">
-        <div class="section-header section-header--center">
-          <span class="section-header__tag">Simple 4-Step Process</span>
-          <h2 id="how-we-work-title" class="section-header__title">How We Help You Find Workspace</h2>
-          <p class="section-header__subhead">Streamlined commercial real estate acquisition from initial brief to move-in day.</p>
-        </div>
-
-        <div class="grid grid--4-col">
-          <div class="step-card">
-            <div class="step-card__num">01</div>
-            <h3 class="step-card__title">Share Your Brief</h3>
-            <p class="step-card__desc">Tell us your team size, target micro-market, and budget parameters.</p>
+        <div class="how-it-works-split">
+          
+          <!-- Left Column: Team Collaboration Image -->
+          <div class="how-it-works__left">
+            <div class="how-it-works__image-wrap">
+              <img 
+                src="assets/images/workspace/coworking.png" 
+                alt="Workspace Collaboration and Consulting" 
+                class="how-it-works__img"
+                width="560" 
+                height="400" 
+                loading="lazy"
+              >
+            </div>
           </div>
 
-          <div class="step-card">
-            <div class="step-card__num">02</div>
-            <h3 class="step-card__title">Curated Shortlist</h3>
-            <p class="step-card__desc">Receive a personalized matrix of 3–5 verified workspace options in 24 hours.</p>
+          <!-- Right Column: Title, 5 Steps & Link -->
+          <div class="how-it-works__right">
+            <h2 id="how-it-works-title" class="how-it-works__title">
+              How it works?
+            </h2>
+
+            <div class="how-it-works__steps">
+              <!-- Step 1 -->
+              <div class="how-it-works__step">
+                <div class="how-it-works__step-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="how-it-works__step-title">Share your requirements</h3>
+                  <p class="how-it-works__step-desc">
+                    Provide details like property type, size, locations and any specific requirements. Your consultant will connect with you to understand your requirements (property type, location, non-negotiables, etc.)
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="how-it-works__step">
+                <div class="how-it-works__step-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="how-it-works__step-title">Get personalized consultancy</h3>
+                  <p class="how-it-works__step-desc">
+                    Your account manager will curate a list of properties that match your preferences and give you a complete rundown on every single one.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="how-it-works__step">
+                <div class="how-it-works__step-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="how-it-works__step-title">Visit &amp; evaluate with account manager</h3>
+                  <p class="how-it-works__step-desc">
+                    Visit selected properties with our on-ground account manager to get the look and feel of the space and gain deeper insights.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="how-it-works__step">
+                <div class="how-it-works__step-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="how-it-works__step-title">Finalize terms and close negotiations</h3>
+                  <p class="how-it-works__step-desc">
+                    Your account manager will negotiate with landlords to secure favorable lease terms and the best deal for you.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Step 5 -->
+              <div class="how-it-works__step">
+                <div class="how-it-works__step-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="how-it-works__step-title">Notary &amp; lease registration and move-in Support</h3>
+                  <p class="how-it-works__step-desc">
+                    Get full support for notary services, lease documentation, LOI, registration and move-in settling.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <a href="#lead-form-area" class="how-it-works__cta-link">
+                <span>Connect with us for end-to-end support</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </div>
 
-          <div class="step-card">
-            <div class="step-card__num">03</div>
-            <h3 class="step-card__title">Guided Site Tours</h3>
-            <p class="step-card__desc">Our local CRE specialist accompanies you on comprehensive physical walkthroughs.</p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-card__num">04</div>
-            <h3 class="step-card__title">Negotiate & Move In</h3>
-            <p class="step-card__desc">We negotiate optimal terms and finalize agreements with zero brokerage.</p>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- 11. SECONDARY CTA -->
-    <section id="secondary-cta" class="section section--subtle" aria-labelledby="secondary-cta-title">
+    <!-- 9. POST-PROCESS CTA BANNER -->
+    <section id="process-cta" class="section section--white" aria-labelledby="process-cta-title">
       <div class="container">
         <div class="cta-banner">
-          <h2 id="secondary-cta-title">Ready to Inspect Available Commercial Workspaces?</h2>
-          <p>Get in touch with our commercial real estate specialists today for tailored options and private walkthroughs.</p>
-          <a href="#lead-form-area" class="btn btn--primary btn--lg">Request Workspace Proposal</a>
+          <h2 id="process-cta-title">Find Your Ideal Workspace With Zero Brokerage</h2>
+          <p>Get unbiased expert guidance, curated property shortlists, and exclusive negotiated commercial terms in <span class="process-cta-city">your location</span>.</p>
+          <a href="#lead-form-area" class="btn btn--primary btn--lg">Talk to an Expert Now</a>
         </div>
-      </div>
-    </section>
-
-    <!-- 12. FAQ SECTION -->
-    <section id="faq" class="section section--white" aria-labelledby="faq-title">
-      <div class="container">
-        <div class="section-header section-header--center">
-          <span class="section-header__tag">Got Questions?</span>
-          <h2 id="faq-title" class="section-header__title">Frequently Asked Questions</h2>
-          <p class="section-header__subhead">Everything you need to know about our commercial workspace advisory.</p>
-        </div>
-
-        <div class="faq-list">
-          <div class="faq-item">
-            <div class="faq-item__question">
-              <span>Is your workspace advisory service really zero brokerage?</span>
-            </div>
-            <div class="faq-item__answer">
-              Yes. Our tenant representation and workspace consulting services are 100% complimentary for occupiers. We are remunerated directly by institutional developers and property operators.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-item__question">
-              <span>How quickly can we tour spaces?</span>
-            </div>
-            <div class="faq-item__answer">
-              Once you submit your requirement, our advisory team shares a curated comparison within 24 hours and arranges coordinated physical site tours at your convenience within 48 hours.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-item__question">
-              <span>Can you accommodate customized enterprise build-outs?</span>
-            </div>
-            <div class="faq-item__answer">
-              Yes. We assist enterprise clients with turnkey managed offices, build-to-suit configurations, and branded fit-outs customized to exact corporate IT and design guidelines.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 13. FINAL CTA -->
-    <section id="final-cta" class="section section--hero" aria-labelledby="final-cta-title">
-      <div class="container" style="text-align: center;">
-        <span class="section-header__tag">Take The Next Step</span>
-        <h2 id="final-cta-title" style="margin-bottom: var(--space-md);">Find Your Ideal Workspace Today</h2>
-        <p style="color: var(--color-text-light); max-width: 600px; margin-left: auto; margin-right: auto; margin-bottom: var(--space-xl);">
-          Join forward-thinking companies that found their ideal workspaces through Luxure Nest.
-        </p>
-        <a href="#lead-form-area" class="btn btn--primary btn--lg">Schedule Your Site Visit Now</a>
       </div>
     </section>
 
   </main>
 
-  <!-- 14. FOOTER FOUNDATION -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container">
-      <div class="site-footer__grid">
-        <div>
-          <a href="./" class="site-logo" aria-label="Luxure Nest Home">
-            <img src="assets/logo/luxure-nest-logo.svg" alt="Luxure Nest" width="240" height="64" class="site-logo__mark">
-          </a>
-          <p class="site-footer__brand-p">
-            Luxure Nest is a premier commercial real estate advisory firm specializing in Grade-A managed offices, enterprise leasing, and flexible coworking solutions across Delhi NCR.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="site-footer__col-title">Primary Markets</h4>
-          <ul class="site-footer__links">
-            <li><a href="?service=coworking&city=gurugram">Gurugram Workspaces</a></li>
-            <li><a href="?service=coworking&city=noida">Noida Workspaces</a></li>
-            <li><a href="?service=coworking&city=delhi">Delhi Workspaces</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="site-footer__col-title">Commercial Services</h4>
-          <ul class="site-footer__links">
-            <li><a href="?service=coworking&city=gurugram">Coworking Spaces</a></li>
-            <li><a href="?service=office&city=gurugram">Managed Offices</a></li>
-            <li><a href="?service=office&city=delhi">Commercial Leasing</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="site-footer__col-title">Contact Advisory</h4>
-          <ul class="site-footer__links">
-            <li><span>Mon – Sat: 9:00 AM – 7:30 PM</span></li>
-            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
-            <li><a href="mailto:advisory@luxurenest.com">advisory@luxurenest.com</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="site-footer__bottom">
-        <p>&copy; 2026 Luxure Nest Commercial Real Estate Pvt. Ltd. All rights reserved.</p>
-        <p>Phase 1 Foundational Architecture &bull; Clean Vanilla HTML5/CSS3/ES6+</p>
-      </div>
-    </div>
-  </footer>
-
   <!-- Script Architecture: Loaded with defer in dependency order -->
   <script src="data/services.js" defer></script>
   <script src="data/cities.js" defer></script>
   <script src="data/micromarkets.js" defer></script>
+  <script src="data/images.js" defer></script>
   <script src="js/utils.js" defer></script>
   <script src="js/config.js" defer></script>
   <script src="js/routing.js" defer></script>

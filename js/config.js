@@ -26,7 +26,7 @@
    * In production, this can be set to the authorized Google Apps Script Web App / Webhook URL.
    * NOTE: Private credentials or API keys must NEVER be exposed here.
    */
-  const SUBMISSION_ENDPOINT = '/api/submit-lead';
+  const SUBMISSION_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuJ31ptHdf-L_mCay2ZleRnCISmmzJnxV5VCIeTj5Cx15PYjwGZNRgz7RcbLodY_8N/exec';
 
   /**
    * Approved Site Visit Inspection Time Slots
@@ -210,6 +210,7 @@
     // Dynamic text synthesis using templates
     const tokens = {
       city: city.name,
+      location: city.name,
       service: service.singularName,
       servicePlural: service.name,
       micromarket: matchedMicromarket ? matchedMicromarket.name : city.name
@@ -224,6 +225,11 @@
     const heroSubtitle = utils.formatTemplate(service.heroSubtitleTemplate, tokens);
     const seoTitle = utils.formatTemplate(service.seo.titleTemplate, tokens);
     const seoDescription = utils.formatTemplate(service.seo.metaDescriptionTemplate, tokens);
+
+    // Format value highlights dynamically with resolved tokens (e.g. location/city)
+    const valueHighlights = (service.valueHighlights || []).map(highlight =>
+      utils.formatTemplate(highlight, tokens)
+    );
 
     // Business hubs for this city
     const businessHubs = city.businessHubsPlaceholder || [];
@@ -248,7 +254,7 @@
       },
       businessHubs,
       formOptions: service.formRequirementOptions || [],
-      valueHighlights: service.valueHighlights || [],
+      valueHighlights,
       optionsPlaceholder: service.optionsPlaceholder || []
     };
   }

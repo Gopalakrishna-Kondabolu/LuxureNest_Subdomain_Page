@@ -41,16 +41,71 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Footer layout */
-  .site-footer__grid {
-    grid-template-columns: 1fr 1fr;
+  /* Brand Network on Tablet */
+  .brand-card__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* 2-Column Split Sections Collapse on Tablet */
+  .expert-team-layout,
+  .why-us-split,
+  .how-it-works-split {
+    grid-template-columns: 1fr;
     gap: var(--space-xl);
   }
 
-  /* Header adjustments */
+  /* Header adjustments on tablet */
   .site-logo__mark {
-    height: 58px;
-    max-width: 220px;
+    height: 34px;
+    width: 34px;
+  }
+
+  .site-logo__text {
+    font-size: 1.3rem;
+  }
+
+  .site-nav__list {
+    gap: var(--space-md);
+  }
+}
+
+/* Tablet & Mobile Nav Wrap (< 860px) */
+@media (max-width: 860px) {
+  .site-header {
+    height: auto;
+    min-height: auto;
+    padding-top: 0.35rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .site-header__container {
+    flex-wrap: wrap;
+    row-gap: 0.35rem;
+  }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0 0;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav__list {
+    gap: var(--space-md);
+    padding: 0 0.15rem;
+  }
+
+  .site-nav__link {
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    padding: 0.2rem 0.3rem;
   }
 }
 
@@ -76,21 +131,37 @@
     gap: var(--space-md);
   }
 
-  /* Header adjustments */
-  .site-header {
-    height: auto;
-    min-height: 70px;
-    padding-top: var(--space-xs);
-    padding-bottom: var(--space-xs);
+  /* Brand Network on Mobile */
+  .brand-card__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
   }
 
+  .brand-card {
+    padding: 1rem 0.85rem;
+  }
+
+  .expert-team-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .expert-team__checklist {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  /* Header adjustments */
   .site-logo {
     font-size: var(--font-size-base);
   }
 
   .site-logo__mark {
-    height: 52px;
-    max-width: 190px;
+    height: 30px;
+    width: 30px;
+  }
+
+  .site-logo__text {
+    font-size: 1.15rem;
   }
 
   .site-header__phone {
@@ -110,6 +181,15 @@
   .hero__subhead {
     font-size: var(--font-size-base);
     margin-bottom: var(--space-lg);
+  }
+
+  .section--hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 255, 255, 0.93) 45%,
+      rgba(255, 255, 255, 0.96) 100%
+    );
   }
 
   /* Form Card on Mobile */
