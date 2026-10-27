@@ -23,15 +23,15 @@
   --color-accent-gold: #C5A880;
   --color-accent-gold-hover: #B39569;
   --color-accent-gold-dark: #9E7D4E;
-  --color-accent-gold-light: #FAF5EE;
+  --color-accent-gold-light: #F3F4F6;
   --color-accent-gold-muted: rgba(197, 168, 128, 0.12);
   --color-accent-bronze: #8C6D3F;
 
-  /* --- Surface & Background Colors (White Dominant) --- */
+  /* --- Surface & Background Colors (Crisp White Dominant, No Cream) --- */
   --color-bg-body: #FFFFFF;
   --color-bg-surface: #FFFFFF;
-  --color-bg-subtle: #F8F8F6;
-  --color-bg-subtle-alt: #F3F4F6;
+  --color-bg-subtle: #F8F9FA;
+  --color-bg-subtle-alt: #F1F5F9;
   --color-bg-dark: #111827;
   --color-bg-dark-surface: #1F2937;
 
@@ -64,17 +64,17 @@
   --font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* --- Font Sizes & Responsive Hierarchy --- */
+  /* --- Font Sizes & Responsive Hierarchy (Refined Compact Scale) --- */
   --font-size-xs: 0.75rem;    /* 12px */
   --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-md: 1.125rem;   /* 18px */
-  --font-size-lg: 1.25rem;    /* 20px */
-  --font-size-xl: 1.5rem;     /* 24px */
-  --font-size-2xl: 1.875rem;  /* 30px */
-  --font-size-3xl: 2.25rem;   /* 36px */
-  --font-size-4xl: 3rem;      /* 48px */
-  --font-size-h1: clamp(2rem, 3.5vw + 1rem, 3.25rem);
+  --font-size-base: 0.95rem;  /* ~15px */
+  --font-size-md: 1.05rem;    /* ~17px */
+  --font-size-lg: 1.15rem;    /* ~18px */
+  --font-size-xl: 1.35rem;    /* ~22px */
+  --font-size-2xl: 1.55rem;   /* ~25px */
+  --font-size-3xl: 1.85rem;   /* ~30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-h1: clamp(1.65rem, 2.2vw + 0.5rem, 2.35rem);
 
   /* --- Font Weights --- */
   --font-weight-regular: 400;
@@ -84,20 +84,20 @@
 
   /* --- Line Heights --- */
   --line-height-tight: 1.15;
-  --line-height-snug: 1.3;
-  --line-height-base: 1.6;
-  --line-height-relaxed: 1.75;
+  --line-height-snug: 1.25;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.65;
 
-  /* --- Spacing Scale --- */
+  /* --- Spacing Scale (Tight, One-Scroll Section Flow) --- */
   --space-2xs: 0.25rem; /* 4px */
   --space-xs: 0.5rem;   /* 8px */
   --space-sm: 0.75rem;  /* 12px */
   --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-  --space-2xl: 3rem;    /* 48px */
-  --space-3xl: 4.5rem;  /* 72px */
-  --space-4xl: 6rem;    /* 96px */
+  --space-lg: 1.25rem;  /* 20px */
+  --space-xl: 1.5rem;   /* 24px */
+  --space-2xl: 2rem;    /* 32px */
+  --space-3xl: 2.5rem;  /* 40px */
+  --space-4xl: 3.5rem;  /* 56px */
 
   /* --- Border Radii (Crisp, Architectural) --- */
   --radius-xs: 2px;

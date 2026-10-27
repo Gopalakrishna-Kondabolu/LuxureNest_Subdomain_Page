@@ -18,14 +18,22 @@
     --space-4xl: 4.5rem;
   }
 
-  /* Hero Split stacks or balances */
+  /* Hero Split maintains 2-columns on 13"/14" laptops & medium viewports */
   .hero-split {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    grid-template-columns: 1fr 480px;
+    gap: var(--space-md);
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .hero__form-slot {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   .form-card {
-    max-width: 760px;
+    max-width: 520px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -66,6 +74,27 @@
 
   .site-nav__list {
     gap: var(--space-md);
+  }
+}
+
+/* Hero Split collapses to 1-column on narrow screens (<= 880px) */
+@media (max-width: 880px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .hero__form-slot {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .form-card {
+    max-width: 520px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -123,12 +152,15 @@
     --font-size-xl: 1.25rem;
   }
 
-  /* All multi-column grids collapse to single column */
   .grid--2-col,
-  .grid--3-col,
-  .grid--4-col {
+  .grid--3-col {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+
+  .grid--4-col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
   }
 
   /* Brand Network on Mobile */
@@ -247,7 +279,11 @@
   }
 
   .hero-split {
-    grid-template-columns: 0.95fr 1.25fr;
-    gap: var(--space-3xl);
+    grid-template-columns: 1fr 520px;
+    gap: 2.75rem;
+    align-items: center;
+    max-width: 1220px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

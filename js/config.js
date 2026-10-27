@@ -117,6 +117,7 @@
       'Time of Site Visit': safeForm.timeOfSiteVisit || '',
       'Requirement': safeForm.service || '',
       'Company Name': safeForm.companyName || '',
+      'Team Size': safeForm.teamSize || '',
       'Assigned To': GOOGLE_SHEET_SCHEMA.defaultAssignedTo,
       'Status': GOOGLE_SHEET_SCHEMA.defaultStatus
     };
@@ -127,7 +128,7 @@
       workEmail: safeForm.workEmail || '',
       companyName: safeForm.companyName || '',
       service: safeForm.service || '',
-      teamSize: Number(safeForm.teamSize) || 1,
+      teamSize: safeForm.teamSize || '',
       isDecisionMaker: safeForm.isDecisionMaker || '',
       preferredMicroMarket: safeForm.preferredMicroMarket || '',
       dateOfSiteVisit: safeForm.dateOfSiteVisit || '',

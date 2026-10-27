@@ -24,18 +24,26 @@
   max-width: 100%;
 }
 
+/* Smooth Scroll Snap & Base Layout */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
 /* ==========================================================================
    2. SECTION WRAPPERS
    ========================================================================== */
 .section {
-  padding-top: var(--space-3xl);
-  padding-bottom: var(--space-3xl);
+  padding-top: 1.85rem;
+  padding-bottom: 1.85rem;
   position: relative;
+  scroll-margin-top: calc(var(--header-height) + 8px);
+  scroll-snap-align: start;
 }
 
 .section--sm {
-  padding-top: var(--space-xl);
-  padding-bottom: var(--space-xl);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
 }
 
 .section--subtle {
@@ -49,7 +57,6 @@
 }
 
 .section--dark {
-  /* Backwards compatibility - aligned to refined light neutral */
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
@@ -64,18 +71,25 @@
   color: var(--color-text-secondary);
 }
 
-/* Hero Section Layout - Minimal + Pure White Dominant with Route-Aware Workspace Background */
+/* Hero Section Layout - Full-viewport height to ensure subsequent sections stay cleanly below the fold */
 .section--hero {
   position: relative;
   background-color: var(--color-bg-body);
   color: var(--color-text-primary);
-  padding-top: var(--space-4xl);
-  padding-bottom: var(--space-4xl);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
   border-bottom: 1px solid var(--color-border-subtle);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: scroll;
+  scroll-margin-top: 0;
+  scroll-snap-align: start;
+  box-sizing: border-box;
 }
 
 /* Semi-transparent pure white scrim to guarantee pristine contrast, readability, and minimalism */
@@ -96,6 +110,7 @@
 .section--hero > .container {
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .section--hero h1,
@@ -103,13 +118,13 @@
   color: var(--color-text-primary);
 }
 
-/* Final CTA Section Layout - Subtle Light Neutral */
+/* Final CTA Section Layout */
 .section--final-cta {
   background-color: var(--color-bg-subtle);
   border-top: 1px solid var(--color-border-subtle);
   border-bottom: 1px solid var(--color-border-subtle);
-  padding-top: var(--space-3xl);
-  padding-bottom: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
 }
 
 .section--final-cta h2 {
@@ -122,7 +137,7 @@
 
 /* Section Header Typography Layout */
 .section-header {
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
 }
 
 .section-header--center {
@@ -143,14 +158,15 @@
 }
 
 .section-header__title {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
   color: var(--color-text-primary);
+  font-size: clamp(1.2rem, 1.4vw + 0.3rem, 1.55rem);
 }
 
 .section-header__subhead {
-  font-size: var(--font-size-md);
+  font-size: 0.925rem;
   color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: var(--line-height-base);
   margin-bottom: 0;
 }
 
@@ -163,7 +179,7 @@
    ========================================================================== */
 .grid {
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .grid--2-col {
@@ -178,12 +194,25 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* Hero 2-Column Split: Left Pitch, Right Form (Generous Form Width) */
+/* Hero 2-Column Split: Balanced Hero Layout */
 .hero-split {
   display: grid;
-  grid-template-columns: 0.95fr 1.25fr;
-  gap: var(--space-2xl);
-  align-items: flex-start;
+  grid-template-columns: 1fr 520px;
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero__content {
+  max-width: 600px;
+}
+
+.hero__form-slot {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 /* Flex Row & Columns */

@@ -155,10 +155,6 @@
       '#brand-network-headline',
       `Leading ${serviceLabel} operators in ${resolved.city.name}. One enquiry away.`
     );
-    utils.setText(
-      '#brand-network-subhead',
-      `Seamless access to premier ${serviceLabel} partners and Grade-A business centres across ${resolved.city.name}.`
-    );
   }
 
   /**
@@ -166,17 +162,18 @@
    */
   function renderBusinessHubs(resolved) {
     utils.setText('#business-hubs-city-name', resolved.city.name);
-    utils.setText(
-      '#business-hubs-subhead',
-      `Explore premier corporate micro-markets and commercial corridors across ${resolved.city.name}.`
-    );
 
     const list = document.getElementById('business-hubs-grid');
     if (list) {
       list.textContent = '';
       resolved.businessHubs.forEach(hub => {
         const card = document.createElement('div');
-        card.className = 'card hub-card';
+        card.className = 'card hub-card hub-card--clickable open-lead-modal-btn';
+        card.setAttribute('data-hub-name', hub.name);
+        card.setAttribute('data-hub-city', resolved.city.name);
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Explore workspaces in ${hub.name}, ${resolved.city.name}`);
 
         // Add visual hub/micro-market image
         if (root.LuxureNest.images && typeof root.LuxureNest.images.getBusinessHubImage === 'function') {
@@ -209,15 +206,34 @@
         landmark.className = 'hub-card__landmark';
         landmark.textContent = hub.landmark;
 
-        const link = document.createElement('a');
+        const link = document.createElement('span');
         link.className = 'hub-card__link';
-        link.href = '#lead-form-area';
         link.textContent = `Explore ${resolved.service.shortLabel} Spaces →`;
 
         body.appendChild(hubName);
         body.appendChild(landmark);
         body.appendChild(link);
         card.appendChild(body);
+
+        // Click & keyboard handlers to open customized location modal
+        const triggerLocationModal = () => {
+          if (root.LuxureNest.form && typeof root.LuxureNest.form.openLeadModal === 'function') {
+            root.LuxureNest.form.openLeadModal({
+              hubName: hub.name,
+              cityName: resolved.city.name,
+              serviceId: resolved.service.id
+            });
+          }
+        };
+
+        card.addEventListener('click', triggerLocationModal);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerLocationModal();
+          }
+        });
+
         list.appendChild(card);
       });
     }
@@ -263,21 +279,22 @@
   }
 
   /**
-   * Render Fallback Notification if an unsupported route was requested.
+   * Render Fallback Notification (disabled so default note never appears).
    */
   function renderFallbackNotice(resolved) {
     const banner = document.getElementById('route-fallback-banner');
-    if (!banner) return;
-
-    if (resolved.isFallback) {
-      banner.style.display = 'block';
-      utils.setText(
-        '#route-fallback-message',
-        `Note: The requested location or service path was not recognized. Showing default verified ${resolved.service.name} in ${resolved.city.name}.`
-      );
-    } else {
+    if (banner) {
       banner.style.display = 'none';
     }
+  }
+
+  /**
+   * Render Sticky Bottom Footer Bar text dynamically based on resolved location.
+   */
+  function renderStickyFooter(resolved) {
+    const textEl = document.getElementById('sticky-footer-text');
+    if (!textEl || !resolved || !resolved.city) return;
+    textEl.textContent = `Book a Free Workspace Consult in ${resolved.city.name} & Unlock Zero Brokerage Rates!`;
   }
 
   /**
@@ -298,6 +315,7 @@
       renderExpertTeam(resolved);
       renderBusinessHubs(resolved);
       renderWhyLuxureNest(resolved);
+      renderStickyFooter(resolved);
       renderFallbackNotice(resolved);
 
       utils.logger.info(`Page rendered successfully for ${resolved.service.id} in ${resolved.city.id}.`);

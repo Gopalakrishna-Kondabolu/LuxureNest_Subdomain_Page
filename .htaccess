@@ -5,6 +5,7 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  Options -MultiViews
 
   # 1. Force HTTPS
   RewriteCond %{HTTPS} off
@@ -28,3 +29,11 @@
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
 </IfModule>
+
+# Content Security Policy (Allow Google Apps Script on GoDaddy)
+<IfModule mod_headers.c>
+  Header always unset Content-Security-Policy
+  Header unset Content-Security-Policy
+  Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self' https: data:;"
+</IfModule>
+

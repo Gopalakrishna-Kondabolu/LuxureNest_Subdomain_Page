@@ -50,31 +50,45 @@
   };
 
   /**
-   * Initialize Route Switcher & Inspection Helper.
-   * Enables seamless in-browser verification of all 6 target routes + fallbacks.
+   * Enforces a clean production URL in the address bar:
+   * e.g. https://spaces.luxurenest.com/coworking/gurugram
+   * Strips ?service= and ?city= parameters while preserving any UTM/advertising tracking query parameters.
    */
-  function initRouteInspector() {
-    const navLinks = document.querySelectorAll('.route-test-link');
-    if (!navLinks || navLinks.length === 0) return;
+  function enforceCleanUrl(serviceId, cityId) {
+    if (typeof window === 'undefined' || !window.history || !window.history.replaceState) {
+      return;
+    }
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', function (e) {
-        const targetService = this.getAttribute('data-service');
-        const targetCity = this.getAttribute('data-city');
+    // Do not alter URL when loaded directly via file://
+    if (window.location.protocol === 'file:') {
+      return;
+    }
 
-        if (!targetService || !targetCity) return;
+    const expectedPath = `/${serviceId}/${cityId}`;
+    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
 
-        // In static environment or test mode, update query params cleanly
-        e.preventDefault();
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set('service', targetService);
-        newUrl.searchParams.set('city', targetCity);
-        window.history.pushState({}, '', newUrl.toString());
+    // Parse query params to check and remove legacy route parameters
+    const searchParams = new URLSearchParams(window.location.search);
+    const hadServiceParam = searchParams.has('service');
+    const hadCityParam = searchParams.has('city');
 
-        // Re-resolve and re-render without full page reload
-        bootstrap();
-      });
-    });
+    searchParams.delete('service');
+    searchParams.delete('city');
+
+    const remainingQuery = searchParams.toString();
+    const cleanSearch = remainingQuery ? `?${remainingQuery}` : '';
+    const hash = window.location.hash || '';
+
+    // If on root, or if path doesn't match the clean path, or if service/city query params were in the URL
+    if (currentPath !== expectedPath || hadServiceParam || hadCityParam) {
+      const cleanUrl = `${expectedPath}${cleanSearch}${hash}`;
+      try {
+        window.history.replaceState({ serviceId, cityId }, document.title, cleanUrl);
+        utils.logger.info(`Address bar synchronized to clean URL: ${cleanUrl}`);
+      } catch (e) {
+        utils.logger.warn('Could not update browser history state:', e);
+      }
+    }
   }
 
   /**
@@ -99,28 +113,13 @@
       // 3. Render dynamic content into the DOM
       dynamicContent.renderPage(currentResolution);
 
-      // 4. Update active states on inspector links if present
-      updateInspectorActiveState(routeInfo.serviceId, routeInfo.cityId);
+      // 4. Enforce clean production URL in the address bar (no ?service= or ?city= query headers)
+      enforceCleanUrl(routeInfo.serviceId, routeInfo.cityId);
 
       utils.logger.info('Luxure Nest Landing Page initialized successfully.');
     } catch (err) {
       utils.logger.error('Fatal initialization error:', err);
     }
-  }
-
-  function updateInspectorActiveState(activeService, activeCity) {
-    const links = document.querySelectorAll('.route-test-link');
-    links.forEach(link => {
-      const s = link.getAttribute('data-service');
-      const c = link.getAttribute('data-city');
-      if (s === activeService && c === activeCity) {
-        link.classList.add('route-test-link--active');
-        link.setAttribute('aria-current', 'page');
-      } else {
-        link.classList.remove('route-test-link--active');
-        link.removeAttribute('aria-current');
-      }
-    });
   }
 
   /**
@@ -165,6 +164,111 @@
     });
   }
 
+  /**
+   * Automatically displays the sticky footer when scrolling downwards past the hero section,
+   * and hides it smoothly when scrolling upwards or when at the top.
+   */
+  function initStickyFooterScrollBehavior() {
+    const stickyFooter = document.getElementById('sticky-footer-bar');
+    if (!stickyFooter) return;
+
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    let ticking = false;
+    const threshold = 180; // Only activate after scrolling past the top hero banner
+
+    function onScroll() {
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      // When user is scrolling downwards and past the initial threshold: show
+      if (currentScrollY > lastScrollY && currentScrollY > threshold) {
+        stickyFooter.classList.add('sticky-footer-bar--visible');
+      }
+      // When user is scrolling upwards or near the top: hide
+      else if (currentScrollY < lastScrollY || currentScrollY <= threshold) {
+        stickyFooter.classList.remove('sticky-footer-bar--visible');
+      }
+
+      lastScrollY = Math.max(0, currentScrollY);
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  /**
+   * Initializes the Case Studies Carousel/Slider controls.
+   * Handles Next/Prev buttons, slide index cycling, and dot indicator clicks.
+   */
+  function initCaseStudiesSlider() {
+    const slider = document.getElementById('case-studies-slider');
+    if (!slider) return;
+
+    const slides = slider.querySelectorAll('.case-study-slide');
+    const dots = document.querySelectorAll('#case-studies-dots .case-studies-dot');
+    const prevBtn = document.getElementById('case-study-prev-btn');
+    const nextBtn = document.getElementById('case-study-next-btn');
+
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+
+    function goToSlide(targetIndex) {
+      if (slides.length <= 1) return;
+      currentIndex = (targetIndex + slides.length) % slides.length;
+
+      slides.forEach((slide, idx) => {
+        if (idx === currentIndex) {
+          slide.style.display = 'block';
+          slide.classList.add('case-study-slide--active');
+          slide.setAttribute('aria-hidden', 'false');
+        } else {
+          slide.style.display = 'none';
+          slide.classList.remove('case-study-slide--active');
+          slide.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.classList.add('case-studies-dot--active');
+          dot.setAttribute('aria-selected', 'true');
+        } else {
+          dot.classList.remove('case-studies-dot--active');
+          dot.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToSlide(currentIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToSlide(currentIndex + 1);
+      });
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        const slideIdx = parseInt(dot.getAttribute('data-index'), 10);
+        if (!isNaN(slideIdx)) {
+          goToSlide(slideIdx);
+        }
+      });
+    });
+  }
+
   // Public API exposed on window.LuxureNest
   root.LuxureNest.app = {
     bootstrap,
@@ -173,20 +277,29 @@
     getCurrentResolution: () => currentResolution
   };
 
+  // Listen for browser back/forward history navigation between routes
+  if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', () => {
+      bootstrap();
+    });
+  }
+
   // Run on DOM ready
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         bootstrap();
-        initRouteInspector();
         initFormAnchorLinks();
         initNavAnchorLinks();
+        initStickyFooterScrollBehavior();
+        initCaseStudiesSlider();
       });
     } else {
       bootstrap();
-      initRouteInspector();
       initFormAnchorLinks();
       initNavAnchorLinks();
+      initStickyFooterScrollBehavior();
+      initCaseStudiesSlider();
     }
   }
 

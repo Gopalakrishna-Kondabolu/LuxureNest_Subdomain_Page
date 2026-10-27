@@ -171,9 +171,9 @@ function doPost(e) {
       'email address': lead.workEmail || lead.email || '',
 
       // 10. Team Size
-      'team size': lead.teamSize || lead.teamsize || '',
-      'seats': lead.teamSize || lead.teamsize || '',
-      'team': lead.teamSize || lead.teamsize || '',
+      'team size': lead.teamSize || lead.teamsize || sheetRow['Team Size'] || '',
+      'seats': lead.teamSize || lead.teamsize || sheetRow['Team Size'] || '',
+      'team': lead.teamSize || lead.teamsize || sheetRow['Team Size'] || '',
 
       // 11. Decision Maker
       'decision maker': lead.isDecisionMaker || lead.decisionMaker || '',

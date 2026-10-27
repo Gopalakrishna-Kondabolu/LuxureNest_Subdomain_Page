@@ -1,19 +1,14 @@
 /**
  * Luxure Nest - Lead Generation Form UX, Validation & Submission Engine
  * 
- * PHASE 2 SPECIFICATION:
- * - One complete form in one view / one tab.
- * - Exactly 10 fields in specified order.
- * - Service is a configuration-driven dropdown.
- * - Team Size is a validated number immediately after Service.
- * - Decision Maker is a dropdown containing strictly 'Yes' and 'No'.
- * - Preferred Micro-market is populated based on active city from allowlist.
- * - Date and Time of Site Visit are visitor-entered without fabricated values.
- * - Client-side inline validation with accessible error messaging.
- * - Duplicate submission protection with loading state.
- * - Failed submission preserves entered data and allows retry.
- * - Successful submission redirects to /thank-you.
- * - Google Sheet payload mapping without frontend credential exposure.
+ * SPECIFICATION:
+ * - Minimal high-converting lead capture (Name, Phone, Work Email, Team Size dropdown).
+ * - Workspace Type pill selector: 'Coworking' and 'Managed Office' (Attachment 1).
+ * - Team Size dropdown: '1-5', '6-20', '21-50', '50+' (Attachment 2).
+ * - Universal Lead Modal popup for in-page CTAs and location cards.
+ * - Dynamic location customization when triggered from Prime Location cards.
+ * - Zero external dependencies, pure vanilla JS.
+ * - Safe payload mapping compatible with Google Sheet lead capture endpoint.
  */
 
 (function (root) {
@@ -29,6 +24,9 @@
 
   // Active page resolution context
   let activeResolution = null;
+
+  // Single-binding initialization guard
+  let isFormInitialized = false;
 
   /**
    * Validation Rules Configuration
@@ -53,7 +51,7 @@
         // Match Indian phone number: optional +91 or 0 followed by 10 digits starting with 6-9
         return /^(?:\+?91|0)?[6-9]\d{9}$/.test(cleanDigits);
       },
-      errorMessage: 'Please enter a valid phone number.'
+      errorMessage: 'Please enter a valid 10-digit mobile number.'
     },
 
     workEmail: {
@@ -61,86 +59,31 @@
       validate: (val) => {
         if (!val || typeof val !== 'string') return false;
         const trimmed = val.trim();
-        // Standard email regex
         return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmed);
       },
       errorMessage: 'Please enter your work email.'
     },
 
-    companyName: {
-      required: true,
-      validate: (val) => {
-        if (!val || typeof val !== 'string') return false;
-        return val.trim().length >= 2;
-      },
-      errorMessage: 'Please enter your company name.'
-    },
-
-    service: {
+    teamSize: {
       required: true,
       validate: (val) => {
         return Boolean(val && typeof val === 'string' && val.trim().length > 0);
       },
-      errorMessage: 'Please select a service.'
-    },
-
-    teamSize: {
-      required: true,
-      validate: (val) => {
-        if (val === '' || val === null || val === undefined) return false;
-        const num = Number(val);
-        // Minimum 1, positive integer, no NaN, no decimals
-        return !isNaN(num) && Number.isInteger(num) && num >= 1;
-      },
-      errorMessage: 'Please enter your team size.'
+      errorMessage: 'Please select your team size.'
     },
 
     isDecisionMaker: {
       required: true,
       validate: (val) => {
-        // STRICT REQUIREMENT: Exactly 'Yes' or 'No'
-        return val === 'Yes' || val === 'No';
+        return Boolean(val && typeof val === 'string' && (val === 'Yes' || val === 'No'));
       },
-      errorMessage: 'Please select Yes or No.'
-    },
-
-    preferredMicroMarket: {
-      required: true,
-      validate: (val) => {
-        return Boolean(val && typeof val === 'string' && val.trim().length > 0);
-      },
-      errorMessage: 'Please select a preferred micro-market.'
-    },
-
-    dateOfSiteVisit: {
-      required: true,
-      validate: (val) => {
-        if (!val || typeof val !== 'string') return false;
-        // Verify format YYYY-MM-DD
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return false;
-        // Verify date is not in the past
-        const selectedDate = new Date(val + 'T00:00:00');
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return !isNaN(selectedDate.getTime()) && selectedDate >= today;
-      },
-      errorMessage: 'Please select a valid date for your site visit.'
-    },
-
-    timeOfSiteVisit: {
-      required: true,
-      validate: (val) => {
-        return Boolean(val && typeof val === 'string' && val.trim().length > 0);
-      },
-      errorMessage: 'Please select a time of site visit.'
+      errorMessage: 'Please indicate if you are a decision maker.'
     }
   };
 
   /**
    * Submission Service Abstraction
-   * Handles dispatching lead payload to the configured submission endpoint.
-   * 
-   * SECURITY RULE: Never embed private Google Service Account keys or spreadsheet secrets here.
+   * Handles dispatching lead payload to configured endpoint.
    */
   const submissionService = {
     async submitLead(payload) {
@@ -159,7 +102,9 @@
         leadSummary: {
           name: payload.completeLeadRecord.fullName,
           service: payload.completeLeadRecord.service,
-          city: payload.completeLeadRecord.city
+          city: payload.completeLeadRecord.city,
+          teamSize: payload.completeLeadRecord.teamSize,
+          microMarket: payload.completeLeadRecord.preferredMicroMarket
         }
       });
 
@@ -175,36 +120,21 @@
           body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
-          try {
-            const data = await response.json();
-            return data;
-          } catch (jsonErr) {
-            // Google Apps Script sometimes returns plain text or redirect HTML
-            return {
-              success: true,
-              message: 'Lead received successfully',
-              leadId: 'LN-' + Date.now()
-            };
-          }
+        // Handle Google Apps Script 302 redirects or opaque CORS responses
+        if (isGoogleAppsScript && response.type === 'opaque') {
+          return { success: true, message: 'Submission accepted by Google Apps Script', status: 200 };
         }
 
-        // If local static server (e.g. VS Code Live Server on port 5500/5501) returned 404 Not Found for /api/submit-lead:
-        const isLocalHost = typeof window !== 'undefined' && (
-          window.location.hostname === 'localhost' ||
-          window.location.hostname === '127.0.0.1' ||
-          window.location.hostname === ''
-        );
-
-        if (isLocalHost && (response.status === 404 || response.status === 405)) {
-          utils.logger.warn('[Local Dev Preview] Endpoint returned ' + response.status + ' on static dev server. Simulating successful submission for local testing:', payload);
-          await new Promise(resolve => setTimeout(resolve, 400));
-          return { success: true, message: 'Local dev simulation: lead recorded', leadId: 'LN-DEV-' + Date.now() };
+        if (!response.ok) {
+          const errorBody = await response.text().catch(() => '');
+          throw new Error(`Server returned HTTP ${response.status}: ${errorBody || response.statusText}`);
         }
 
-        throw new Error(`Submission failed with HTTP ${response.status}: ${response.statusText}`);
+        const data = await response.json().catch(() => ({ success: true }));
+        return data;
+
       } catch (networkErr) {
-        // If network fetch threw an error (connection refused, offline, or static server without POST support)
+        // Fallback for local development if server script is not running
         const isLocalHost = typeof window !== 'undefined' && (
           window.location.hostname === 'localhost' ||
           window.location.hostname === '127.0.0.1' ||
@@ -223,36 +153,59 @@
   };
 
   /**
-   * Extract current values of all 10 form fields from the DOM.
+   * Extract values from either the hero form or modal form.
+   * @param {boolean} isModal 
    * @returns {object} Form field key-value pairs
    */
-  function getFormData() {
+  function getFormData(isModal = false) {
+    const prefix = isModal ? 'modal-lead-' : 'lead-';
+    const teamsizeEl = document.getElementById(`${prefix}teamsize`);
+    const serviceEl = document.getElementById(`${prefix}service`);
+    const microMarketEl = document.getElementById(`${prefix}micromarket`);
+
+    const selectedService = (serviceEl && serviceEl.value) || (
+      activeResolution && activeResolution.service && activeResolution.service.singularName
+        ? activeResolution.service.singularName
+        : 'Coworking'
+    );
+
+    const selectedMicroMarket = (microMarketEl && microMarketEl.value) || (
+      activeResolution && activeResolution.micromarket
+        ? activeResolution.micromarket.name
+        : ''
+    );
+
+    const decisionMakerEl = document.getElementById(`${prefix}decisionmaker`);
+    const decisionMakerVal = (decisionMakerEl && decisionMakerEl.value) ? decisionMakerEl.value.trim() : 'Yes';
+
     return {
-      fullName: (document.getElementById('lead-name')?.value || '').trim(),
-      phone: (document.getElementById('lead-phone')?.value || '').trim(),
-      workEmail: (document.getElementById('lead-email')?.value || '').trim(),
-      companyName: (document.getElementById('lead-company')?.value || '').trim(),
-      service: (document.getElementById('lead-service')?.value || '').trim(),
-      teamSize: (document.getElementById('lead-teamsize')?.value || '').trim(),
-      isDecisionMaker: (document.getElementById('lead-decision-maker')?.value || '').trim(),
-      preferredMicroMarket: (document.getElementById('lead-micromarket')?.value || '').trim(),
-      dateOfSiteVisit: (document.getElementById('lead-visit-date')?.value || '').trim(),
-      timeOfSiteVisit: (document.getElementById('lead-visit-time')?.value || '').trim()
+      fullName: (document.getElementById(`${prefix}name`)?.value || '').trim(),
+      phone: (document.getElementById(`${prefix}phone`)?.value || '').trim(),
+      workEmail: (document.getElementById(`${prefix}email`)?.value || '').trim(),
+      teamSize: (teamsizeEl?.value || '').trim(),
+      service: selectedService,
+      companyName: '',
+      isDecisionMaker: decisionMakerVal,
+      preferredMicroMarket: selectedMicroMarket,
+      dateOfSiteVisit: '',
+      timeOfSiteVisit: ''
     };
   }
 
   /**
    * Validate a single form field by name and display/clear its inline error message.
-   * 
-   * @param {string} fieldName - Field identifier
-   * @param {any} value - Field input value
-   * @returns {boolean} True if valid, false if invalid
    */
-  function validateField(fieldName, value) {
+  function validateField(fieldName, value, isModal = false) {
     const rule = VALIDATION_RULES[fieldName];
     if (!rule) return true;
 
-    const inputId = getElementIdForField(fieldName);
+    const prefix = isModal ? 'modal-lead-' : 'lead-';
+    let inputId = `${prefix}name`;
+    if (fieldName === 'phone') inputId = `${prefix}phone`;
+    if (fieldName === 'workEmail') inputId = `${prefix}email`;
+    if (fieldName === 'teamSize') inputId = `${prefix}teamsize`;
+    if (fieldName === 'isDecisionMaker') inputId = `${prefix}decisionmaker`;
+
     const inputEl = document.getElementById(inputId);
     const errorEl = document.getElementById(`${inputId}-error`);
 
@@ -288,35 +241,26 @@
 
   /**
    * Validate all form fields.
-   * 
-   * @returns {{ isValid: boolean, firstInvalidEl: HTMLElement|null, data: object }}
    */
-  function validateCompleteForm() {
-    const data = getFormData();
+  function validateCompleteForm(isModal = false) {
+    const data = getFormData(isModal);
     let isAllValid = true;
     let firstInvalidEl = null;
 
-    // Validate in exact visual order
-    const fieldOrder = [
-      'fullName',
-      'phone',
-      'workEmail',
-      'companyName',
-      'service',
-      'teamSize',
-      'isDecisionMaker',
-      'preferredMicroMarket',
-      'dateOfSiteVisit',
-      'timeOfSiteVisit'
-    ];
+    const prefix = isModal ? 'modal-lead-' : 'lead-';
+    const fields = ['fullName', 'phone', 'workEmail', 'teamSize', 'isDecisionMaker'];
 
-    fieldOrder.forEach((fieldName) => {
-      const isValid = validateField(fieldName, data[fieldName]);
+    fields.forEach((fieldName) => {
+      const isValid = validateField(fieldName, data[fieldName], isModal);
       if (!isValid) {
         isAllValid = false;
         if (!firstInvalidEl) {
-          const id = getElementIdForField(fieldName);
-          firstInvalidEl = document.getElementById(id);
+          let inputId = `${prefix}name`;
+          if (fieldName === 'phone') inputId = `${prefix}phone`;
+          if (fieldName === 'workEmail') inputId = `${prefix}email`;
+          if (fieldName === 'teamSize') inputId = `${prefix}teamsize`;
+          if (fieldName === 'isDecisionMaker') inputId = `${prefix}decisionmaker`;
+          firstInvalidEl = document.getElementById(inputId);
         }
       }
     });
@@ -329,134 +273,11 @@
   }
 
   /**
-   * Map field name to HTML element ID.
-   */
-  function getElementIdForField(fieldName) {
-    const map = {
-      fullName: 'lead-name',
-      phone: 'lead-phone',
-      workEmail: 'lead-email',
-      companyName: 'lead-company',
-      service: 'lead-service',
-      teamSize: 'lead-teamsize',
-      isDecisionMaker: 'lead-decision-maker',
-      preferredMicroMarket: 'lead-micromarket',
-      dateOfSiteVisit: 'lead-visit-date',
-      timeOfSiteVisit: 'lead-visit-time'
-    };
-    return map[fieldName] || fieldName;
-  }
-
-  /**
-   * Set minimum date on the date picker to today (YYYY-MM-DD).
-   */
-  function setMinVisitDate() {
-    const dateInput = document.getElementById('lead-visit-date');
-    if (!dateInput) return;
-
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const minDateStr = `${year}-${month}-${day}`;
-
-    dateInput.min = minDateStr;
-  }
-
-  /**
-   * Populate the Service dropdown dynamically from active service configuration.
-   */
-  function populateServiceDropdown(resolved) {
-    const selectEl = document.getElementById('lead-service');
-    if (!selectEl) return;
-
-    selectEl.textContent = ''; // Clear previous options
-
-    // Default unselected placeholder option
-    const defaultOpt = document.createElement('option');
-    defaultOpt.value = '';
-    defaultOpt.disabled = true;
-    defaultOpt.selected = true;
-    defaultOpt.textContent = `Select ${resolved.service.shortLabel} Option`;
-    selectEl.appendChild(defaultOpt);
-
-    // Options from services.js
-    const options = resolved.service.formRequirementOptions || [];
-    options.forEach((opt) => {
-      const optionEl = document.createElement('option');
-      optionEl.value = opt.label;
-      optionEl.textContent = `${opt.label} — ${opt.description}`;
-      selectEl.appendChild(optionEl);
-    });
-  }
-
-  /**
-   * Populate the Preferred Micro-market dropdown dynamically from active city configuration.
-   */
-  function populateMicromarketDropdown(resolved) {
-    const selectEl = document.getElementById('lead-micromarket');
-    if (!selectEl) return;
-
-    selectEl.textContent = ''; // Clear previous options
-
-    // Default unselected placeholder option
-    const defaultOpt = document.createElement('option');
-    defaultOpt.value = '';
-    defaultOpt.disabled = true;
-    defaultOpt.selected = true;
-    defaultOpt.textContent = `Select Micro-Market in ${resolved.city.name}`;
-    selectEl.appendChild(defaultOpt);
-
-    // Fetch allowlisted micro-markets for active city
-    const micromarketsModule = root.LuxureNest.micromarkets;
-    const cityMicromarkets = micromarketsModule
-      ? micromarketsModule.getForCity(resolved.city.id)
-      : [];
-
-    cityMicromarkets.forEach((item) => {
-      const optionEl = document.createElement('option');
-      optionEl.value = item.name;
-      optionEl.textContent = item.name;
-      selectEl.appendChild(optionEl);
-    });
-  }
-
-  /**
-   * Populate the Time of Site Visit dropdown from approved slots.
-   */
-  function populateTimeSlotsDropdown() {
-    const selectEl = document.getElementById('lead-visit-time');
-    if (!selectEl) return;
-
-    selectEl.textContent = ''; // Clear
-
-    const defaultOpt = document.createElement('option');
-    defaultOpt.value = '';
-    defaultOpt.disabled = true;
-    defaultOpt.selected = true;
-    defaultOpt.textContent = 'Select Inspection Time Slot';
-    selectEl.appendChild(defaultOpt);
-
-    const timeSlots = (config && config.VISIT_TIME_SLOTS) || [
-      '10:00 AM – 12:00 PM',
-      '12:00 PM – 02:00 PM',
-      '02:00 PM – 04:00 PM',
-      '04:00 PM – 06:00 PM'
-    ];
-
-    timeSlots.forEach((slot) => {
-      const optionEl = document.createElement('option');
-      optionEl.value = slot;
-      optionEl.textContent = slot;
-      selectEl.appendChild(optionEl);
-    });
-  }
-
-  /**
    * Display or hide top-level form submission alert banner.
    */
-  function showFormAlert(message) {
-    const alertEl = document.getElementById('form-submit-alert');
+  function showFormAlert(message, isModal = false) {
+    const alertId = isModal ? 'modal-form-submit-alert' : 'form-submit-alert';
+    const alertEl = document.getElementById(alertId);
     if (!alertEl) return;
 
     if (message) {
@@ -472,9 +293,10 @@
   /**
    * Set submit button loading and duplicate-protection state.
    */
-  function setSubmittingState(submitting, originalCtaText) {
+  function setSubmittingState(submitting, isModal = false, originalText = 'Get Free Shortlist') {
     isSubmitting = submitting;
-    const submitBtn = document.getElementById('lead-form-submit');
+    const btnId = isModal ? 'modal-lead-form-submit' : 'lead-form-submit';
+    const submitBtn = document.getElementById(btnId);
     if (!submitBtn) return;
 
     if (submitting) {
@@ -493,27 +315,24 @@
     } else {
       submitBtn.disabled = false;
       submitBtn.classList.remove('btn--loading');
-      submitBtn.textContent = originalCtaText || 'Schedule Workspace Tour';
+      submitBtn.textContent = originalText || 'Get Free Shortlist';
     }
   }
 
   /**
-   * Handle form submission event.
+   * Handle form submission event (shared logic for in-page and modal forms).
    */
-  async function handleFormSubmit(event) {
+  async function handleFormSubmit(event, isModal = false) {
     if (event) event.preventDefault();
 
-    // 1. Prevent duplicate submission while already submitting
     if (isSubmitting) {
       utils.logger.warn('Submission already in progress. Ignoring duplicate click.');
       return;
     }
 
-    // Hide any previous alert banner
-    showFormAlert(null);
+    showFormAlert(null, isModal);
 
-    // 2. Validate complete form
-    const validation = validateCompleteForm();
+    const validation = validateCompleteForm(isModal);
     if (!validation.isValid) {
       utils.logger.warn('Form validation failed. Please correct highlighted fields.');
       if (validation.firstInvalidEl) {
@@ -522,17 +341,17 @@
       return;
     }
 
-    const ctaBtn = document.getElementById('lead-form-submit');
-    const originalText = ctaBtn ? ctaBtn.textContent : '';
+    const btnId = isModal ? 'modal-lead-form-submit' : 'lead-form-submit';
+    const ctaBtn = document.getElementById(btnId);
+    const originalText = ctaBtn ? ctaBtn.textContent : 'Get Free Shortlist';
 
-    // 3. Initiate submission state
-    setSubmittingState(true, originalText);
+    setSubmittingState(true, isModal, originalText);
 
     try {
-      // 4. Construct complete lead payload with Google Sheet mapping
+      const activeCity = activeResolution ? activeResolution.city.name : '';
       const contextData = {
-        city: activeResolution ? activeResolution.city.name : '',
-        landingMicroMarket: activeResolution && activeResolution.micromarket ? activeResolution.micromarket.name : '',
+        city: activeCity,
+        landingMicroMarket: validation.data.preferredMicroMarket || (activeResolution && activeResolution.micromarket ? activeResolution.micromarket.name : ''),
         attribution: (activeResolution && activeResolution.originalRequest && activeResolution.originalRequest.attribution) || utils.getAttributionParams()
       };
 
@@ -541,10 +360,11 @@
         : {
             googleSheetRow: {
               'Name': validation.data.fullName,
-              'Date of Site Visit': validation.data.dateOfSiteVisit,
-              'Time of Site Visit': validation.data.timeOfSiteVisit,
+              'Date of Site Visit': '',
+              'Time of Site Visit': '',
               'Requirement': validation.data.service,
-              'Company Name': validation.data.companyName,
+              'Company Name': '',
+              'Team Size': validation.data.teamSize || '',
               'Assigned To': '',
               'Status': 'New Lead'
             },
@@ -555,12 +375,10 @@
             }
           };
 
-      // 5. Send to submission endpoint
       const response = await submissionService.submitLead(payload);
 
       if (response && response.success) {
         utils.logger.info('Lead submission confirmed successful. Redirecting to Thank You page...');
-        // REDIRECT TO THANK YOU PAGE ONLY AFTER CONFIRMED SUCCESS
         const isStaticDevEnvironment = typeof window !== 'undefined' && (
           window.location.protocol === 'file:' ||
           window.location.pathname.endsWith('.html') ||
@@ -579,12 +397,231 @@
 
     } catch (err) {
       utils.logger.error('Lead submission failed:', err);
-      // PRESERVE ENTERED DATA: do not reset form!
       showFormAlert(
-        'Unable to submit your inquiry at this moment. Please check your connection and try again.'
+        'Unable to submit your inquiry at this moment. Please check your connection and try again.',
+        isModal
       );
-      // Restore submit button to allow retry
-      setSubmittingState(false, originalText);
+      setSubmittingState(false, isModal, originalText);
+    }
+  }
+
+  /**
+   * Setup Workspace Type Pill Selectors (Attachment 1 style)
+   */
+  function setupWorkspacePills() {
+    const pillGroups = [
+      { containerId: 'hero-workspace-pills', hiddenInputId: 'lead-service' },
+      { containerId: 'modal-workspace-pills', hiddenInputId: 'modal-lead-service' }
+    ];
+
+    pillGroups.forEach(({ containerId, hiddenInputId }) => {
+      const container = document.getElementById(containerId);
+      const hiddenInput = document.getElementById(hiddenInputId);
+      if (!container || !hiddenInput) return;
+
+      const buttons = container.querySelectorAll('.workspace-pill');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          if (e) e.preventDefault();
+          buttons.forEach(b => {
+            b.classList.remove('workspace-pill--active');
+            b.setAttribute('aria-checked', 'false');
+          });
+          btn.classList.add('workspace-pill--active');
+          btn.setAttribute('aria-checked', 'true');
+
+          const val = btn.getAttribute('data-service-value') || btn.textContent.trim();
+          hiddenInput.value = val;
+
+          // Sync both forms so they stay consistent
+          pillGroups.forEach(otherGroup => {
+            const otherHidden = document.getElementById(otherGroup.hiddenInputId);
+            if (otherHidden) otherHidden.value = val;
+            const otherContainer = document.getElementById(otherGroup.containerId);
+            if (otherContainer) {
+              const otherButtons = otherContainer.querySelectorAll('.workspace-pill');
+              otherButtons.forEach(ob => {
+                const oval = ob.getAttribute('data-service-value') || ob.textContent.trim();
+                if (oval.toLowerCase() === val.toLowerCase()) {
+                  ob.classList.add('workspace-pill--active');
+                  ob.setAttribute('aria-checked', 'true');
+                } else {
+                  ob.classList.remove('workspace-pill--active');
+                  ob.setAttribute('aria-checked', 'false');
+                }
+              });
+            }
+          });
+        });
+      });
+    });
+  }
+
+  /**
+   * Synchronize active workspace pills with the route service.
+   */
+  function syncPillsWithRoute(resolved) {
+    if (!resolved || !resolved.service) return;
+    const isManaged = resolved.service.id === 'managed-office';
+    const targetVal = isManaged ? 'Managed Office' : 'Coworking';
+
+    ['lead-service', 'modal-lead-service'].forEach(id => {
+      const input = document.getElementById(id);
+      if (input) input.value = targetVal;
+    });
+
+    ['hero-workspace-pills', 'modal-workspace-pills'].forEach(id => {
+      const container = document.getElementById(id);
+      if (!container) return;
+      const buttons = container.querySelectorAll('.workspace-pill');
+      buttons.forEach(btn => {
+        const val = btn.getAttribute('data-service-value') || btn.textContent.trim();
+        if (val.toLowerCase() === targetVal.toLowerCase()) {
+          btn.classList.add('workspace-pill--active');
+          btn.setAttribute('aria-checked', 'true');
+        } else {
+          btn.classList.remove('workspace-pill--active');
+          btn.setAttribute('aria-checked', 'false');
+        }
+      });
+    });
+  }
+
+  /**
+   * Open the Universal Lead Modal
+   * @param {object} [options] - Optional context overrides { hubName, cityName, serviceId }
+   */
+  function openLeadModal(options = {}) {
+    const modalEl = document.getElementById('lead-modal');
+    if (!modalEl) return;
+
+    const modalTitleEl = document.getElementById('modal-form-title');
+    const locationBadge = document.getElementById('modal-location-badge');
+    const locationNameEl = document.getElementById('modal-location-name');
+    const modalMicroMarketInput = document.getElementById('modal-lead-micromarket');
+
+    // Dynamically adjust modal title and target location if opened from a location card
+    if (options.hubName) {
+      const city = options.cityName || (activeResolution ? activeResolution.city.name : 'Noida');
+      if (modalTitleEl) {
+        modalTitleEl.textContent = `Get Shortlist for ${options.hubName}`;
+      }
+      if (locationBadge && locationNameEl) {
+        locationNameEl.textContent = `${options.hubName}, ${city}`;
+        locationBadge.style.display = 'block';
+      }
+      if (modalMicroMarketInput) {
+        modalMicroMarketInput.value = options.hubName;
+      }
+    } else {
+      if (modalTitleEl) {
+        modalTitleEl.textContent = 'Get Your Free Shortlist — Ready in 24 Hours';
+      }
+      if (locationBadge) {
+        locationBadge.style.display = 'none';
+      }
+      if (modalMicroMarketInput) {
+        modalMicroMarketInput.value = activeResolution && activeResolution.micromarket
+          ? activeResolution.micromarket.name
+          : '';
+      }
+    }
+
+    // Pre-fill modal with any values already entered in the hero form
+    const heroName = (document.getElementById('lead-name')?.value || '').trim();
+    const heroPhone = (document.getElementById('lead-phone')?.value || '').trim();
+    const heroEmail = (document.getElementById('lead-email')?.value || '').trim();
+    const heroTeamSize = (document.getElementById('lead-teamsize')?.value || '').trim();
+    const heroDecisionMaker = (document.getElementById('lead-decisionmaker')?.value || '').trim();
+
+    const modalName = document.getElementById('modal-lead-name');
+    const modalPhone = document.getElementById('modal-lead-phone');
+    const modalEmail = document.getElementById('modal-lead-email');
+    const modalTeamSize = document.getElementById('modal-lead-teamsize');
+    const modalDecisionMaker = document.getElementById('modal-lead-decisionmaker');
+
+    if (modalName && !modalName.value && heroName) modalName.value = heroName;
+    if (modalPhone && !modalPhone.value && heroPhone) modalPhone.value = heroPhone;
+    if (modalEmail && !modalEmail.value && heroEmail) modalEmail.value = heroEmail;
+    if (modalTeamSize && !modalTeamSize.value && heroTeamSize) modalTeamSize.value = heroTeamSize;
+    if (modalDecisionMaker && !modalDecisionMaker.value && heroDecisionMaker) modalDecisionMaker.value = heroDecisionMaker;
+
+    // Clear any previous error styling
+    ['modal-lead-name', 'modal-lead-phone', 'modal-lead-email', 'modal-lead-teamsize', 'modal-lead-decisionmaker'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('form-control--error', 'form-select--error');
+      }
+      const err = document.getElementById(`${id}-error`);
+      if (err) {
+        err.textContent = '';
+        err.classList.remove('form-error-msg--visible');
+      }
+    });
+
+    showFormAlert(null, true);
+
+    modalEl.classList.add('lead-modal--open');
+    modalEl.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Focus first input field
+    const nameInput = document.getElementById('modal-lead-name');
+    if (nameInput) {
+      setTimeout(() => nameInput.focus(), 60);
+    }
+  }
+
+  /**
+   * Close the Universal Lead Modal
+   */
+  function closeLeadModal() {
+    const modalEl = document.getElementById('lead-modal');
+    if (!modalEl) return;
+
+    modalEl.classList.remove('lead-modal--open');
+    modalEl.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /**
+   * Setup Modal triggers, close buttons, and keyboard handlers
+   */
+  function setupModalSystem() {
+    const closeBtn = document.getElementById('modal-close-btn');
+    if (closeBtn) {
+      closeBtn.onclick = closeLeadModal;
+    }
+
+    const backdrop = document.getElementById('modal-backdrop');
+    if (backdrop) {
+      backdrop.onclick = closeLeadModal;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modalEl = document.getElementById('lead-modal');
+        if (modalEl && modalEl.classList.contains('lead-modal--open')) {
+          closeLeadModal();
+        }
+      }
+    });
+
+    // Wire up all CTA elements on the page that trigger the modal
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.open-lead-modal-btn');
+      if (trigger) {
+        e.preventDefault();
+        const hubName = trigger.getAttribute('data-hub-name');
+        const cityName = trigger.getAttribute('data-hub-city');
+        openLeadModal({ hubName, cityName });
+      }
+    });
+
+    // Modal form submit handler
+    const modalForm = document.getElementById('modal-lead-form');
+    if (modalForm) {
+      modalForm.onsubmit = (e) => handleFormSubmit(e, true);
     }
   }
 
@@ -592,43 +629,41 @@
    * Attach inline validation listeners on blur and input for all fields.
    */
   function bindFieldListeners() {
-    const fieldOrder = [
-      'fullName',
-      'phone',
-      'workEmail',
-      'companyName',
-      'service',
-      'teamSize',
-      'isDecisionMaker',
-      'preferredMicroMarket',
-      'dateOfSiteVisit',
-      'timeOfSiteVisit'
+    const forms = [
+      { prefix: 'lead-', isModal: false },
+      { prefix: 'modal-lead-', isModal: true }
     ];
 
-    fieldOrder.forEach((fieldName) => {
-      const id = getElementIdForField(fieldName);
-      const el = document.getElementById(id);
-      if (!el) return;
+    const fields = ['fullName', 'phone', 'workEmail', 'teamSize', 'isDecisionMaker'];
 
-      // Validate on blur (user leaves field)
-      el.addEventListener('blur', function () {
-        // If field has been interacted with or attempted, validate
-        if (this.value || this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
-          validateField(fieldName, this.value);
-        }
-      });
+    forms.forEach(({ prefix, isModal }) => {
+      fields.forEach((fieldName) => {
+        let inputId = `${prefix}name`;
+        if (fieldName === 'phone') inputId = `${prefix}phone`;
+        if (fieldName === 'workEmail') inputId = `${prefix}email`;
+        if (fieldName === 'teamSize') inputId = `${prefix}teamsize`;
+        if (fieldName === 'isDecisionMaker') inputId = `${prefix}decisionmaker`;
 
-      // Clear error immediately when user begins correcting
-      el.addEventListener('input', function () {
-        if (this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
-          validateField(fieldName, this.value);
-        }
-      });
+        const el = document.getElementById(inputId);
+        if (!el) return;
 
-      el.addEventListener('change', function () {
-        if (this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
-          validateField(fieldName, this.value);
-        }
+        el.addEventListener('blur', function () {
+          if (this.value || this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
+            validateField(fieldName, this.value, isModal);
+          }
+        });
+
+        el.addEventListener('input', function () {
+          if (this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
+            validateField(fieldName, this.value, isModal);
+          }
+        });
+
+        el.addEventListener('change', function () {
+          if (this.classList.contains('form-control--error') || this.classList.contains('form-select--error')) {
+            validateField(fieldName, this.value, isModal);
+          }
+        });
       });
     });
   }
@@ -641,37 +676,31 @@
   function initForm(resolved) {
     activeResolution = resolved;
 
-    const formEl = document.getElementById('lead-form');
-    if (!formEl) return;
+    // Attach event listeners exactly once to prevent duplicate listeners
+    if (!isFormInitialized) {
+      setupWorkspacePills();
+      setupModalSystem();
 
-    // 1. Populate dropdowns
-    populateServiceDropdown(resolved);
-    populateMicromarketDropdown(resolved);
-    populateTimeSlotsDropdown();
-    setMinVisitDate();
+      const heroFormEl = document.getElementById('lead-form');
+      if (heroFormEl) {
+        heroFormEl.onsubmit = (e) => handleFormSubmit(e, false);
+      }
 
-    // 2. Update dynamic CTA button text
-    const submitBtn = document.getElementById('lead-form-submit');
-    if (submitBtn) {
-      submitBtn.textContent = resolved.text.ctaText || 'Schedule Workspace Tour';
+      bindFieldListeners();
+      isFormInitialized = true;
     }
 
-    // 3. Update form card title & subtitle
-    utils.setText('#form-service-badge', resolved.service.shortLabel);
-    utils.setText('#form-city-badge', resolved.city.name);
+    // Always synchronize workspace pills with active route
+    syncPillsWithRoute(resolved);
 
-    // 4. Attach submit handler (ensure only one listener bound)
-    formEl.onsubmit = handleFormSubmit;
-
-    // 5. Attach field validation listeners
-    bindFieldListeners();
-
-    utils.logger.info(`Lead form initialized for ${resolved.service.id} in ${resolved.city.id}.`);
+    utils.logger.info(`Lead forms initialized for ${resolved.service.id} in ${resolved.city.id}.`);
   }
 
   // Export public form API
   root.LuxureNest.form = {
     initForm,
+    openLeadModal,
+    closeLeadModal,
     getFormData,
     validateCompleteForm,
     validateField,

@@ -6,6 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Inquiry Confirmed | Luxure Nest Commercial Real Estate</title>
   <meta name="robots" content="noindex, follow">
+  <!-- Base URL for Clean Route Rewriting -->
+  <base href="/">
+  <script>
+    if (window.location.protocol === 'file:') {
+      const baseEl = document.querySelector('base');
+      if (baseEl) baseEl.remove();
+    }
+  </script>
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -78,7 +86,7 @@
   <!-- Accessible Skip Navigation Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header -->
+  <!-- 
   <header class="site-header" role="banner">
     <div class="container site-header__container">
       <a href="./" class="site-logo" aria-label="Luxure Nest Home">
@@ -92,6 +100,7 @@
       </div>
     </div>
   </header>
+ -->
 
   <!-- Main Content -->
   <main id="main-content" role="main">
@@ -139,7 +148,7 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="site-footer__bottom" style="border-top: none; padding-top: 0;">
@@ -148,6 +157,7 @@
       </div>
     </div>
   </footer>
+  -->
 
 </body>
 </html>
