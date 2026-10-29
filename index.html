@@ -31,11 +31,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 
-  <!-- Modular CSS System -->
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <!-- Critical Hero Image Route-Aware Preload for Instant LCP -->
+  <script>
+    (function() {
+      try {
+        var p = (window.location.pathname || '').toLowerCase();
+        var heroMap = {
+          '/coworking/gurugram': 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp',
+          '/coworking/noida': 'assets/images/generated/noida/coworking/noida-coworking-hero.webp',
+          '/coworking/delhi': 'assets/images/generated/delhi/coworking/delhi-coworking-hero.webp',
+          '/office/gurugram': 'assets/images/generated/gurugram/office/gurugram-office-hero.webp',
+          '/office/noida': 'assets/images/generated/noida/office/noida-office-hero.webp',
+          '/office/delhi': 'assets/images/generated/delhi/office/delhi-office-hero.webp'
+        };
+        var matched = heroMap[p.replace(/\/$/, '')] || 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = matched;
+        link.type = 'image/webp';
+        link.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(link);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Modular CSS System (Versioned for Instant Production Cache-Busting) -->
+  <link rel="stylesheet" href="css/base.css?v=2.4.0">
+  <link rel="stylesheet" href="css/layout.css?v=2.4.0">
+  <link rel="stylesheet" href="css/components.css?v=2.4.0">
+  <link rel="stylesheet" href="css/responsive.css?v=2.4.0">
 </head>
 <body>
 
@@ -132,6 +157,10 @@
               <form id="lead-form" class="form-card__body" novalidate>
                 <input type="hidden" name="service" id="lead-service" value="Coworking">
                 <input type="hidden" name="preferredMicroMarket" id="lead-micromarket" value="">
+                <!-- Anti-bot honeypot field -->
+                <div style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true">
+                  <input type="text" name="_hp_company_website" id="lead-hp-field" tabindex="-1" autocomplete="off">
+                </div>
 
                 <div class="form-grid">
                   
@@ -270,7 +299,7 @@
           </h2>
         </div>
 
-        <div id="business-hubs-grid" class="grid grid--3-col">
+        <div id="business-hubs-grid" class="grid grid--4-col">
           <!-- Dynamically populated by js/dynamic-content.js with unique images -->
         </div>
       </div>
@@ -351,12 +380,20 @@
             <h3 class="amenity-card__title">Fully Equipped Pantry</h3>
           </div>
 
-          <!-- 10. Storages -->
+          <!-- 9. 24/7 Security & Access -->
           <div class="amenity-card">
             <div class="amenity-card__icon-box">
-              <img src="assets/icons/lock.svg" alt="" width="22" height="22" aria-hidden="true">
+              <img src="assets/icons/shield.svg" alt="" width="22" height="22" aria-hidden="true">
             </div>
-            <h3 class="amenity-card__title">Secure Storage & Lockers</h3>
+            <h3 class="amenity-card__title">24/7 Security & Access</h3>
+          </div>
+
+          <!-- 10. Free Tea & Coffee -->
+          <div class="amenity-card">
+            <div class="amenity-card__icon-box">
+              <img src="assets/icons/coffee.svg" alt="" width="22" height="22" aria-hidden="true">
+            </div>
+            <h3 class="amenity-card__title">Free Tea & Coffee</h3>
           </div>
 
           <!-- 12. Parking -->
@@ -500,31 +537,36 @@
             </div>
           </a>
 
-          <!-- 9. Spaces -->
-          <a href="javascript:void(0)" class="brand-card open-lead-modal-btn" aria-label="Explore Spaces workspaces">
+          <!-- 9. Urban Vault -->
+          <a href="javascript:void(0)" class="brand-card open-lead-modal-btn" aria-label="Explore Urban Vault workspaces">
             <div class="brand-card__logo-wrap">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M14 4L22.66 9V19L14 24L5.34 19V9L14 4Z" fill="#18181B"/>
-              </svg>
+              <img src="assets/images/brands/urban-vault-icon.svg" alt="Urban Vault" class="brand-card__logo-img" width="28" height="28" loading="lazy">
             </div>
             <div class="brand-card__content">
-              <h3 class="brand-card__name">Spaces</h3>
+              <h3 class="brand-card__name">Urban Vault</h3>
+              <p class="brand-card__explore">Explore 6 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+            </div>
+          </a>
+
+          <!-- 10. Indian Accelerator -->
+          <a href="javascript:void(0)" class="brand-card open-lead-modal-btn" aria-label="Explore Indian Accelerator workspaces">
+            <div class="brand-card__logo-wrap">
+              <img src="assets/images/brands/ia-logo.webp" alt="Indian Accelerator" class="brand-card__logo-img" width="30" height="30" loading="lazy">
+            </div>
+            <div class="brand-card__content">
+              <h3 class="brand-card__name">Indian Accelerator</h3>
               <p class="brand-card__explore">Explore 4 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
             </div>
           </a>
 
-          <!-- 10. India Accelerator -->
-          <a href="javascript:void(0)" class="brand-card open-lead-modal-btn" aria-label="Explore India Accelerator workspaces">
+          <!-- 11. Mooz Coworking Spaces -->
+          <a href="javascript:void(0)" class="brand-card open-lead-modal-btn" aria-label="Explore Mooz Coworking Spaces workspaces">
             <div class="brand-card__logo-wrap">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="7" y="10" width="3" height="13" fill="#DC2626"/>
-                <path d="M12 7L21 21" stroke="#4B5563" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="8.5" cy="6.5" r="1.5" fill="#DC2626"/>
-              </svg>
+              <img src="assets/images/brands/mooz.png" alt="Mooz Coworking Spaces" class="brand-card__logo-img" width="30" height="30" loading="lazy">
             </div>
             <div class="brand-card__content">
-              <h3 class="brand-card__name">India Accelerator</h3>
-              <p class="brand-card__explore">Explore 4 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
+              <h3 class="brand-card__name">Mooz Coworking Spaces</h3>
+              <p class="brand-card__explore">Explore 5 workspaces <span class="brand-card__arrow" aria-hidden="true">&#8599;</span></p>
             </div>
           </a>
         </div>
@@ -586,25 +628,46 @@
               <div class="expert-team__showcase">
                 <div class="expert-team__avatars-row" aria-label="Luxure Nest Workspace Consultants">
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-1.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-1.webp" type="image/webp">
+                      <img src="assets/images/team/member-1.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-2.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-2.webp" type="image/webp">
+                      <img src="assets/images/team/member-2.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-3.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-3.webp" type="image/webp">
+                      <img src="assets/images/team/member-3.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-4.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-4.webp" type="image/webp">
+                      <img src="assets/images/team/member-4.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-5.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-5.webp" type="image/webp">
+                      <img src="assets/images/team/member-5.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-6.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-6.webp" type="image/webp">
+                      <img src="assets/images/team/member-6.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                   <div class="expert-team__avatar-item">
-                    <img src="assets/images/team/member-7.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    <picture>
+                      <source srcset="assets/images/team/member-7.webp" type="image/webp">
+                      <img src="assets/images/team/member-7.jpg" alt="Commercial Workspace Consultant" class="expert-team__avatar-img" width="76" height="76" loading="lazy">
+                    </picture>
                   </div>
                 </div>
                 <p class="expert-team__caption">
@@ -625,9 +688,9 @@
           
           <!-- Left Column: Tag, Headline, 4 Numbered Points -->
           <div class="why-us__left">
-            <span class="why-us__tag"><span class="why-us__slash">/</span> WHY LUXURE NEST</span>
+            <span class="why-us__tag">WHY LUXURE NEST</span>
             <h2 id="why-title" class="why-us__headline">
-              Obsessed with getting it right for you.
+              Your next workspace. Found with purpose.
             </h2>
 
             <div class="why-us__items">
@@ -681,15 +744,18 @@
           <!-- Right Column: Visual Architectural Image with Badge -->
           <div class="why-us__right">
             <div class="why-us__image-wrap">
-              <img 
-                src="assets/images/about/why-luxure-nest.png" 
-                alt="Grade-A Commercial Glass Skyscraper" 
-                class="why-us__img"
-                id="why-us-landmark-img"
-                width="480" 
-                height="600" 
-                loading="lazy"
-              >
+              <picture>
+                <source srcset="assets/images/about/why-luxure-nest.webp" type="image/webp">
+                <img 
+                  src="assets/images/about/why-luxure-nest.png" 
+                  alt="Grade-A Commercial Glass Skyscraper" 
+                  class="why-us__img"
+                  id="why-us-landmark-img"
+                  width="480" 
+                  height="600" 
+                  loading="lazy"
+                >
+              </picture>
             </div>
           </div>
 
@@ -705,14 +771,17 @@
           <!-- Left Column: Team Collaboration Image -->
           <div class="how-it-works__left">
             <div class="how-it-works__image-wrap">
-              <img 
-                src="assets/images/workspace/coworking.png" 
-                alt="Workspace Collaboration and Consulting" 
-                class="how-it-works__img"
-                width="560" 
-                height="400" 
-                loading="lazy"
-              >
+              <picture>
+                <source srcset="assets/images/workspace/coworking.webp" type="image/webp">
+                <img 
+                  src="assets/images/workspace/coworking.png" 
+                  alt="Workspace Collaboration and Consulting" 
+                  class="how-it-works__img"
+                  width="560" 
+                  height="400" 
+                  loading="lazy"
+                >
+              </picture>
             </div>
           </div>
 
@@ -818,31 +887,40 @@
       </div>
     </section>
 
-    <!-- 9. FINAL CTA RIBBON BAR (Attachment 3 Style) -->
-    <section id="final-cta-bar" class="section section--white cta-bar-section" aria-labelledby="final-cta-bar-title">
-      <div class="container">
-        <div class="cta-ribbon-bar">
-          <h2 id="final-cta-bar-title" class="cta-ribbon-bar__title">Ready to Inspect Available Commercial Workspaces?</h2>
-          <a href="javascript:void(0)" class="cta-ribbon-bar__btn open-lead-modal-btn" aria-label="Request a callback to inspect available commercial workspaces">
-            <span>REQUEST A CALLBACK</span>
-            <span class="cta-ribbon-bar__arrow" aria-hidden="true">&#8599;</span>
-          </a>
-        </div>
-      </div>
-    </section>
 
     <!-- 10. PRICING SECTION -->
     <section id="pricing" class="section section--subtle pricing-section" aria-labelledby="pricing-title">
       <div class="container">
         <div class="section-header section-header--center">
-          <span class="section-header__tag"><span class="section-tag__slash">/</span> PRICING</span>
+          <span class="section-header__tag">PRICING</span>
           <h2 id="pricing-title" class="section-header__title">
             Indicative starting rates, before we negotiate them down.
           </h2>
-          <p class="section-header__subhead">
-            Real-time market averages across Gurgaon commercial centers. Our advisors typically negotiate 10%–20% below listed asking prices.
+          <p id="pricing-subhead" class="section-header__subhead">
+            Real-time market averages across Gurugram commercial centers. Our advisors typically negotiate 10%–20% below listed asking prices.
           </p>
         </div>
+
+        <!-- Interactive Location Switcher for Pricing -->
+        <div class="pricing-location-bar" aria-label="Location Filter for Pricing">
+          <div class="pricing-location-pills" role="tablist" aria-label="City pricing options">
+            <button type="button" class="pricing-pill pricing-pill--active" data-city="gurugram" role="tab" aria-selected="true">Gurugram</button>
+            <button type="button" class="pricing-pill" data-city="noida" role="tab" aria-selected="false">Noida</button>
+            <button type="button" class="pricing-pill" data-city="delhi" role="tab" aria-selected="false">Delhi</button>
+          </div>
+          <div class="pricing-location-search-wrap">
+            <span class="pricing-search-icon" aria-hidden="true">&#128269;</span>
+            <input 
+              type="text" 
+              id="pricing-location-search" 
+              class="pricing-search-input" 
+              placeholder="Filter by micro-market (e.g. Cyber City, Sector 62, Aerocity)..." 
+              aria-label="Filter pricing by micro-market or location"
+              autocomplete="off"
+            >
+          </div>
+        </div>
+        <div id="pricing-location-status" class="pricing-location-status" style="display: none;" role="status"></div>
 
         <div class="pricing-table-card">
           <div class="pricing-table-wrap">
@@ -856,7 +934,7 @@
                   <th scope="col"><span class="sr-only">Action</span></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="pricing-table-body">
                 <tr>
                   <td class="pricing-table__type">
                     <span class="pricing-type-title">Hot Desk</span>
@@ -951,7 +1029,7 @@
     <section id="gurgaon-team" class="section section--white team-showcase-section" aria-labelledby="team-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-header__tag"><span class="section-tag__slash">/</span> MEET YOUR GURGAON TEAM</span>
+          <span class="section-header__tag">MEET YOUR GURGAON TEAM</span>
           <h2 id="team-title" class="section-header__title">
             Real consultants, real track records.
           </h2>
@@ -965,41 +1043,15 @@
           <div class="team-card">
             <div class="team-card__header">
               <div class="team-card__avatar-wrap">
-                <img src="assets/images/team/Manas.jpg" alt="Manas" class="team-card__avatar" width="76" height="76" loading="lazy">
+                <picture>
+                  <source srcset="assets/images/team/Manas.webp" type="image/webp">
+                  <img src="assets/images/team/Manas.jpg" alt="Manas Sinha" class="team-card__avatar" width="76" height="76" loading="lazy">
+                </picture>
               </div>
               <div class="team-card__profile-info">
                 <h3 class="team-card__name">Manas Sinha</h3>
-                <p class="team-card__role">Founder, CEO & Managing Director</p>
-                <p class="team-card__focus">Serial entrepreneur focused on tech-enabled solutions and services that generate business profitability with maximum impact — through new-edge platforms involving AI, business analytics, blockchain, digital transformation, geo-spatial and terrain mapping.</p>
+                <p class="team-card__role">Founder, CEO &amp; Managing Director</p>
               </div>
-            </div>
-
-            <div class="team-card__divider"></div>
-            
-            <ul class="team-card__stats-list" aria-label="Akash Mandal track record stats">
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>127 Gurgaon placements</strong> closed to date</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>4.9 / 5</strong> average client rating</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text">Average shortlist delivered within <strong>3 business days</strong></span>
-              </li>
-            </ul>
-
-            <div class="team-card__bio">
-              Specialises in fast-growing startups and mid-size teams scaling from 10 to 100 seats.
-            </div>
-
-            <div class="team-card__action">
-              <button type="button" class="btn btn--outline btn--sm team-card__btn open-lead-modal-btn" aria-label="Enquire with Akash Mandal">
-                <span>Connect with Manas</span>
-                <span aria-hidden="true">&rarr;</span>
-              </button>
             </div>
           </div>
 
@@ -1007,84 +1059,31 @@
           <div class="team-card">
             <div class="team-card__header">
               <div class="team-card__avatar-wrap">
-                <img src="assets/images/team/Riya.jpg" alt="Riya" class="team-card__avatar" width="76" height="76" loading="lazy">
+                <picture>
+                  <source srcset="assets/images/team/Riya.webp" type="image/webp">
+                  <img src="assets/images/team/Riya.jpg" alt="Riya Bansal" class="team-card__avatar" width="76" height="76" loading="lazy">
+                </picture>
               </div>
               <div class="team-card__profile-info">
                 <h3 class="team-card__name">Riya Bansal</h3>
-                <p class="team-card__role">Co-Founder & Director – Business Operations</p>
-                <p class="team-card__focus">Strategic supply chain and operations leader, business development specialist, and innovative marketing strategist — with deep expertise in ERP & SAP procurement.</p>
+                <p class="team-card__role">Co-Founder &amp; Director – Business Operations</p>
               </div>
-            </div>
-
-            <div class="team-card__divider"></div>
-
-            <ul class="team-card__stats-list" aria-label="Kamal Jeet Singh track record stats">
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>64 enterprise &amp; GCC deals</strong> closed to date</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>&#8377;3.2 Cr+ negotiated</strong> in direct client savings</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text">Led onboarding for <strong>3 Fortune-500 India entries</strong></span>
-              </li>
-            </ul>
-
-            <div class="team-card__bio">
-              Specialises in large-format managed offices and hub-and-spoke enterprise accounts.
-            </div>
-
-            <div class="team-card__action">
-              <button type="button" class="btn btn--outline btn--sm team-card__btn open-lead-modal-btn" aria-label="Enquire with Kamal Jeet Singh">
-                <span>Connect with Riya</span>
-                <span aria-hidden="true">&rarr;</span>
-              </button>
             </div>
           </div>
 
-           <!-- Consultant Card 3 -->
-
-           <div class="team-card">
+          <!-- Consultant Card 3 -->
+          <div class="team-card">
             <div class="team-card__header">
               <div class="team-card__avatar-wrap">
-                <img src="assets/images/team/Simran.jpg" alt="Simran" class="team-card__avatar" width="76" height="76" loading="lazy">
+                <picture>
+                  <source srcset="assets/images/team/Simran.webp" type="image/webp">
+                  <img src="assets/images/team/Simran.jpg" alt="Simran Saggar" class="team-card__avatar" width="76" height="76" loading="lazy">
+                </picture>
               </div>
               <div class="team-card__profile-info">
                 <h3 class="team-card__name">Simran Saggar</h3>
                 <p class="team-card__role">Director – Commercial Real Estate</p>
-                <p class="team-card__focus">Simran brings the most enthusiasm to the team, leading the Commercial Real Estate engine and helping Luxure Nest ride the growth path of new digital partnerships with potential clients.</p>
               </div>
-            </div>
-
-            <div class="team-card__divider"></div>
-            
-            <ul class="team-card__stats-list" aria-label="Akash Mandal track record stats">
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>127 Gurgaon placements</strong> closed to date</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text"><strong>4.9 / 5</strong> average client rating</span>
-              </li>
-              <li class="team-card__stat-item">
-                <span class="team-card__stat-icon" aria-hidden="true">&#10003;</span>
-                <span class="team-card__stat-text">Average shortlist delivered within <strong>3 business days</strong></span>
-              </li>
-            </ul>
-
-            <div class="team-card__bio">
-              Specialises in fast-growing startups and mid-size teams scaling from 10 to 100 seats.
-            </div>
-
-            <div class="team-card__action">
-              <button type="button" class="btn btn--outline btn--sm team-card__btn open-lead-modal-btn" aria-label="Enquire with Akash Mandal">
-                <span>Connect with Simran</span>
-                <span aria-hidden="true">&rarr;</span>
-              </button>
             </div>
           </div>
         </div>
@@ -1093,6 +1092,19 @@
           <a href="javascript:void(0)" class="team-enquire-link open-lead-modal-btn">
             <span>ENQUIRE NOW</span>
             <span class="team-enquire-arrow" aria-hidden="true">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FINAL CTA RIBBON BAR (Attachment 3 Style) -->
+    <section id="final-cta-bar" class="section section--white cta-bar-section" aria-labelledby="final-cta-bar-title">
+      <div class="container">
+        <div class="cta-ribbon-bar">
+          <h2 id="final-cta-bar-title" class="cta-ribbon-bar__title">Ready to Inspect Available Commercial Workspaces?</h2>
+          <a href="javascript:void(0)" class="cta-ribbon-bar__btn open-lead-modal-btn" aria-label="Request a callback to inspect available commercial workspaces">
+            <span>REQUEST A CALLBACK</span>
+            <span class="cta-ribbon-bar__arrow" aria-hidden="true">&#8599;</span>
           </a>
         </div>
       </div>
@@ -1311,6 +1323,10 @@
             <!-- Hidden inputs -->
             <input type="hidden" id="modal-lead-service" name="service" value="Coworking">
             <input type="hidden" id="modal-lead-micromarket" name="preferredMicroMarket" value="">
+            <!-- Anti-bot honeypot field -->
+            <div style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true">
+              <input type="text" name="_hp_company_website" id="modal-lead-hp-field" tabindex="-1" autocomplete="off">
+            </div>
 
             <div class="form-grid">
               <!-- Row 1: Name & Phone (2 Columns) -->
@@ -1446,17 +1462,18 @@
     </div>
   </aside>
 
-  <!-- Script Architecture: Loaded with defer in dependency order -->
-  <script src="data/services.js" defer></script>
-  <script src="data/cities.js" defer></script>
-  <script src="data/micromarkets.js" defer></script>
-  <script src="data/images.js" defer></script>
-  <script src="js/utils.js" defer></script>
-  <script src="js/config.js" defer></script>
-  <script src="js/routing.js" defer></script>
-  <script src="js/form.js" defer></script>
-  <script src="js/dynamic-content.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <!-- Script Architecture: Loaded with defer in dependency order (Versioned for Instant Production Invalidation) -->
+  <script src="data/services.js?v=2.4.0" defer></script>
+  <script src="data/cities.js?v=2.4.0" defer></script>
+  <script src="data/micromarkets.js?v=2.4.0" defer></script>
+  <script src="data/pricing.js?v=2.4.0" defer></script>
+  <script src="data/images.js?v=2.4.0" defer></script>
+  <script src="js/utils.js?v=2.4.0" defer></script>
+  <script src="js/config.js?v=2.4.0" defer></script>
+  <script src="js/routing.js?v=2.4.0" defer></script>
+  <script src="js/form.js?v=2.4.0" defer></script>
+  <script src="js/dynamic-content.js?v=2.4.0" defer></script>
+  <script src="js/app.js?v=2.4.0" defer></script>
 
 </body>
 </html>

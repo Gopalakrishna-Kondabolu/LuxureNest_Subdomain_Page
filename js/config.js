@@ -22,11 +22,11 @@
 
   /**
    * Submission Endpoint Configuration
-   * In local/development mode, routes to /api/submit-lead on server.js.
-   * In production, this can be set to the authorized Google Apps Script Web App / Webhook URL.
-   * NOTE: Private credentials or API keys must NEVER be exposed here.
+   * Routes to /api/submit-lead (Node.js / Vercel Serverless / PHP proxy) for durable
+   * logging, honeypot validation, rate limiting, and queueing to Google Sheets.
    */
-  const SUBMISSION_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuJ31ptHdf-L_mCay2ZleRnCISmmzJnxV5VCIeTj5Cx15PYjwGZNRgz7RcbLodY_8N/exec';
+  const SUBMISSION_ENDPOINT = '/api/submit-lead';
+  const FALLBACK_DIRECT_WEBHOOK = 'https://script.google.com/macros/s/AKfycbxuJ31ptHdf-L_mCay2ZleRnCISmmzJnxV5VCIeTj5Cx15PYjwGZNRgz7RcbLodY_8N/exec';
 
   /**
    * Approved Site Visit Inspection Time Slots
@@ -268,6 +268,7 @@
     FORM_SCHEMA_CONTRACT,
     GOOGLE_SHEET_SCHEMA,
     SUBMISSION_ENDPOINT,
+    FALLBACK_DIRECT_WEBHOOK,
     VISIT_TIME_SLOTS,
     mapLeadPayload,
     getService,

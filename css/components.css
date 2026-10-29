@@ -746,6 +746,15 @@
   overflow: hidden;
 }
 
+.brand-card__logo-img {
+  max-width: 32px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
 .brand-badge {
   width: 32px;
   height: 32px;
@@ -812,6 +821,24 @@
 /* ==========================================================================
    9. BUSINESS HUBS SECTION
    ========================================================================== */
+#business-hubs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 1024px) {
+  #business-hubs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  #business-hubs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .hub-card {
   padding: 0;
   overflow: hidden;
@@ -1190,10 +1217,13 @@
 }
 
 .how-it-works__title {
-  font-size: clamp(1.25rem, 1.6vw, 1.55rem);
-  font-weight: 700;
-  color: var(--color-text-primary);
+  font-size: clamp(1.85rem, 2.6vw, 2.45rem);
+  font-family: var(--font-family-heading);
+  font-weight: 800;
+  line-height: 1.18;
   margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
 }
 
 .how-it-works__steps {
@@ -1219,20 +1249,24 @@
   justify-content: center;
   flex-shrink: 0;
   color: var(--color-brand-navy-dark);
+  margin-top: 3px;
 }
 
 .how-it-works__step-title {
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .how-it-works__step-desc {
-  font-size: 0.8125rem;
+  font-size: 0.95rem;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.55;
   margin: 0;
+  font-weight: 400;
 }
 
 .how-it-works__cta-link {
@@ -1241,7 +1275,7 @@
   gap: 0.45rem;
   color: var(--color-accent-bronze);
   font-weight: 600;
-  font-size: 0.925rem;
+  font-size: 0.95rem;
   text-decoration: none;
   border-bottom: 1.5px solid transparent;
   transition: all var(--transition-fast);
@@ -1431,10 +1465,14 @@
   left: 0;
   right: 0;
   z-index: 999;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background-color: #FFFFFF;
   border-top: 1px solid #E5E7EB;
   box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
   padding: 0.75rem 0;
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
   transform: translateY(115%);
   opacity: 0;
   visibility: hidden;
@@ -1454,6 +1492,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  width: 100%;
+  max-width: var(--container-max-width);
+  box-sizing: border-box;
 }
 
 .sticky-footer-bar__text {
@@ -1462,6 +1503,14 @@
   color: #1F2937;
   line-height: 1.4;
   letter-spacing: -0.01em;
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.sticky-footer-bar__action {
+  flex-shrink: 0;
 }
 
 .sticky-footer-bar__btn {
@@ -1497,10 +1546,11 @@ body {
 
 @media (max-width: 639px) {
   body {
-    padding-bottom: 68px;
+    padding-bottom: 72px;
   }
   .sticky-footer-bar {
     padding: 0.55rem 0;
+    padding-bottom: max(0.55rem, env(safe-area-inset-bottom, 0px));
   }
   .sticky-footer-bar__container {
     gap: 0.75rem;
@@ -1524,22 +1574,115 @@ body {
   padding-bottom: 3.5rem;
 }
 
+.pricing-location-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pricing-location-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #FFFFFF;
+  padding: 0.35rem 0.4rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pricing-pill {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pricing-pill:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-subtle);
+}
+
+.pricing-pill--active {
+  background-color: var(--color-brand-navy-dark) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.15);
+}
+
+.pricing-location-search-wrap {
+  position: relative;
+  min-width: 280px;
+  flex-grow: 1;
+  max-width: 420px;
+}
+
+.pricing-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.pricing-search-input {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.4rem;
+  font-size: 0.875rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pricing-search-input:focus {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.pricing-location-status {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--color-accent-bronze);
+  font-weight: 600;
+}
+
 .pricing-table-card {
   background-color: #FFFFFF;
   border: 1px solid var(--color-border-subtle);
   border-radius: 16px;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   overflow: hidden;
+  position: relative;
+  contain: paint;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .pricing-table-wrap {
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .pricing-table {
   width: 100%;
+  min-width: 620px;
   border-collapse: collapse;
   text-align: left;
 }
@@ -1642,7 +1785,7 @@ body {
   font-size: 0.95rem;
   flex-shrink: 0;
 }
-
+  
 /* ==========================================================================
    16. MEET YOUR GURGAON TEAM SECTION
    ========================================================================== */
@@ -1653,8 +1796,8 @@ body {
 
 .team-cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
   margin-bottom: 2rem;
 }
 
@@ -1662,10 +1805,11 @@ body {
   background-color: #FFFFFF;
   border: 1px solid var(--color-border-subtle);
   border-radius: 16px;
-  padding: 2rem 2.25rem;
+  padding: 1.85rem 2rem;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
@@ -1679,7 +1823,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
 }
 
 .team-card__avatar-wrap {
@@ -1991,6 +2135,13 @@ body {
 }
 
 /* Responsive Overrides */
+@media (max-width: 1080px) {
+  .team-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 992px) {
   .case-study-card__grid {
     grid-template-columns: 1fr;

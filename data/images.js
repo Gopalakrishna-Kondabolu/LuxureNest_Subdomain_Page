@@ -32,44 +32,44 @@
     gurugram: {
       coworking: {
         hero: {
-          src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.jpg',
+          src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp',
           alt: 'Modern collaborative coworking workspace with natural daylight and ergonomic seating in Gurugram',
           caption: 'Premium Coworking Workspace • Gurugram'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/hot-desks.jpg',
+          src: 'assets/images/generated/workspace/hot-desks.webp',
           alt: 'Flexible hot desks and collaborative zones in Gurugram coworking facility',
           caption: 'Flexible Desks • Gurugram'
         },
         meeting: {
-          src: 'assets/images/generated/workspace/private-cabin.jpg',
+          src: 'assets/images/generated/workspace/private-cabin.webp',
           alt: 'Acoustically soundproof private meeting cabin in Gurugram',
           caption: 'Private Team Cabin • Gurugram'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Grade-A coworking reception and concierge facilities in Gurugram',
           caption: 'Premium Hospitality Amenities'
         }
       },
       office: {
         hero: {
-          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.jpg',
+          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.webp',
           alt: 'Executive managed office cabins with glass architecture and natural daylight in Gurugram',
           caption: 'Managed Office Suite • Gurugram'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/managed-suite.jpg',
+          src: 'assets/images/generated/workspace/managed-suite.webp',
           alt: 'Turnkey enterprise managed office interior in Gurugram commercial building',
           caption: 'Turnkey Enterprise Suite • Gurugram'
         },
         meeting: {
-          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.jpg',
+          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.webp',
           alt: 'Executive boardroom and private cabins in Gurugram commercial tower',
           caption: 'Executive Boardroom • Gurugram'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Corporate entrance lobby and security infrastructure in Gurugram',
           caption: 'Corporate Infrastructure'
         }
@@ -77,38 +77,38 @@
       // Micro-market specific images for Gurugram commercial hubs
       micromarkets: {
         'cyber-city': {
-          src: 'assets/images/generated/locations/gurugram/cyber-city.jpg',
+          src: 'assets/images/generated/locations/gurugram/cyber-city.webp',
           alt: 'Grade-A commercial glass skyscrapers in DLF Cyber City corporate district, Gurugram',
           caption: 'DLF Cyber City, Gurugram'
         },
         'golf-course-road': {
-          src: 'assets/images/generated/locations/gurugram/golf-course-road.jpg',
+          src: 'assets/images/generated/locations/gurugram/golf-course-road.webp',
           alt: 'Contemporary corporate office towers along Golf Course Road, Gurugram',
           caption: 'Golf Course Road, Gurugram'
         },
         'golf-course-ext': {
-          src: 'assets/images/generated/locations/gurugram/golf-course-ext.png',
+          src: 'assets/images/generated/locations/gurugram/golf-course-ext.webp',
           alt: 'Modern commercial developments along Golf Course Extension Road, Gurugram',
           caption: 'Golf Course Ext. Road, Gurugram'
         },
         'sohna-road': {
-          src: 'assets/images/generated/locations/gurugram/sohna-road.png',
+          src: 'assets/images/generated/locations/gurugram/sohna-road.webp',
           alt: 'Corporate commercial hub along Sohna Road, Gurugram',
           caption: 'Sohna Road, Gurugram'
         },
         'udyog-vihar': {
-          src: 'assets/images/generated/locations/gurugram/udyog-vihar.png',
+          src: 'assets/images/generated/locations/gurugram/udyog-vihar.webp',
           alt: 'Institutional IT and corporate workspace buildings in Udyog Vihar, Gurugram',
           caption: 'Udyog Vihar, Gurugram'
         },
         'mg-road': {
-          src: 'assets/images/generated/locations/gurugram/mg-road.png',
+          src: 'assets/images/generated/locations/gurugram/mg-road.webp',
           alt: 'Commercial retail and corporate office corridor along MG Road, Gurugram',
           caption: 'MG Road, Gurugram'
         }
       },
       locationFallback: {
-        src: 'assets/images/locations/gurugram.png',
+        src: 'assets/images/locations/gurugram.webp',
         alt: 'Prominent commercial business towers and corporate corridors in Gurugram',
         caption: 'Gurugram Commercial District'
       }
@@ -120,82 +120,82 @@
     noida: {
       coworking: {
         hero: {
-          src: 'assets/images/generated/noida/coworking/noida-coworking-hero.jpg',
+          src: 'assets/images/generated/noida/coworking/noida-coworking-hero.webp',
           alt: 'Modern coworking space with natural daylight and privacy phone booths in Noida IT corridor',
           caption: 'Collaborative Workspace • Noida'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/hot-desks.jpg',
+          src: 'assets/images/generated/workspace/hot-desks.webp',
           alt: 'Open collaborative work tables in modern Noida workspace facility',
           caption: 'Flexible Desks • Noida'
         },
         meeting: {
-          src: 'assets/images/generated/workspace/private-cabin.jpg',
+          src: 'assets/images/generated/workspace/private-cabin.webp',
           alt: 'Sound-insulated private team cabin in Noida workspace',
           caption: 'Private Team Cabin • Noida'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Modern workspace reception and business lounge in Noida',
           caption: 'Modern Workspace Amenities'
         }
       },
       office: {
         hero: {
-          src: 'assets/images/generated/noida/office/noida-office-hero.jpg',
+          src: 'assets/images/generated/noida/office/noida-office-hero.webp',
           alt: 'Modern managed office floor with linear workstations and meeting pods in Noida',
           caption: 'Managed Enterprise Office • Noida'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/managed-suite.jpg',
+          src: 'assets/images/generated/workspace/managed-suite.webp',
           alt: 'Bespoke corporate team workstations in Noida commercial building',
           caption: 'Enterprise Team Suite • Noida'
         },
         meeting: {
-          src: 'assets/images/generated/noida/office/noida-office-hero.jpg',
+          src: 'assets/images/generated/noida/office/noida-office-hero.webp',
           alt: 'Executive meeting pod and conference area in Noida IT park',
           caption: 'Executive Meeting Pod • Noida'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Corporate entrance lobby and security infrastructure in Noida',
           caption: 'Corporate Infrastructure'
         }
       },
       micromarkets: {
         'sector-62': {
-          src: 'assets/images/generated/locations/noida/sector-62.png',
+          src: 'assets/images/generated/locations/noida/sector-62.webp',
           alt: 'Institutional IT campuses and business towers in Sector 62, Noida',
           caption: 'Sector 62, Noida'
         },
         'sector-16': {
-          src: 'assets/images/generated/locations/noida/sector-16.png',
+          src: 'assets/images/generated/locations/noida/sector-16.webp',
           alt: 'Commercial offices and media hub towers in Sector 16 / Film City, Noida',
           caption: 'Sector 16 / Film City, Noida'
         },
         'expressway-125': {
-          src: 'assets/images/generated/locations/noida/expressway-125.jpg',
+          src: 'assets/images/generated/locations/noida/expressway-125.webp',
           alt: 'Grade-A corporate office towers on Noida Expressway near Sector 125/126',
           caption: 'Noida Expressway (Sec 125–127)'
         },
         'sector-135': {
-          src: 'assets/images/generated/locations/noida/sector-135.jpg',
+          src: 'assets/images/generated/locations/noida/sector-135.webp',
           alt: 'Patni IT-SEZ corporate campuses and modern tech facilities in Sector 135, Noida',
           caption: 'Sector 135 / Expressways, Noida'
         },
         'sector-142': {
-          src: 'assets/images/generated/locations/noida/sector-142.jpg',
+          src: 'assets/images/generated/locations/noida/sector-142.webp',
           alt: 'Contemporary glass commercial IT towers at Sector 142 Noida',
           caption: 'Sector 142 / Advant Navis, Noida'
         },
         'sector-18': {
-          src: 'assets/images/generated/locations/noida/sector-18.png',
+          src: 'assets/images/generated/locations/noida/sector-18.webp',
           alt: 'Central commercial business district and transit hub in Sector 18, Noida',
           caption: 'Sector 18 Commercial Belt, Noida'
         }
       },
       locationFallback: {
-        src: 'assets/images/locations/noida.png',
+        src: 'assets/images/locations/noida.webp',
         alt: 'Modern IT and commercial towers across Noida Expressway and Sector 62',
         caption: 'Noida Commercial Corridor'
       }
@@ -207,82 +207,82 @@
     delhi: {
       coworking: {
         hero: {
-          src: 'assets/images/generated/delhi/coworking/delhi-coworking-hero.jpg',
+          src: 'assets/images/generated/delhi/coworking/delhi-coworking-hero.webp',
           alt: 'Upscale double-height architectural coworking space with natural daylight in Delhi',
           caption: 'Distinguished Coworking • Delhi'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/dedicated-desk.jpg',
+          src: 'assets/images/generated/workspace/dedicated-desk.webp',
           alt: 'Dedicated workspace desking in Delhi commercial center',
           caption: 'Dedicated Desks • Delhi'
         },
         meeting: {
-          src: 'assets/images/generated/delhi/office/delhi-office-hero.jpg',
+          src: 'assets/images/generated/delhi/office/delhi-office-hero.webp',
           alt: 'High-end meeting room overlooking green Delhi commercial district',
           caption: 'Executive Boardroom • Delhi'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Refined commercial reception and concierge in Delhi corporate district',
           caption: 'Hospitality Amenities'
         }
       },
       office: {
         hero: {
-          src: 'assets/images/generated/delhi/office/delhi-office-hero.jpg',
+          src: 'assets/images/generated/delhi/office/delhi-office-hero.webp',
           alt: 'Prestigious corporate boardroom and managed offices in Delhi commercial district',
           caption: 'Enterprise Corporate Office • Delhi'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/managed-suite.jpg',
+          src: 'assets/images/generated/workspace/managed-suite.webp',
           alt: 'Custom turnkey managed office reception and team zone in Delhi',
           caption: 'Managed Office Suite • Delhi'
         },
         meeting: {
-          src: 'assets/images/generated/delhi/office/delhi-office-hero.jpg',
+          src: 'assets/images/generated/delhi/office/delhi-office-hero.webp',
           alt: 'Soundproof conference boardroom with large windows in Delhi corporate district',
           caption: 'Conference Boardroom • Delhi'
         },
         amenities: {
-          src: 'assets/images/about/reception.png',
+          src: 'assets/images/about/reception.webp',
           alt: 'Prestigious corporate entrance lobby in Delhi commercial tower',
           caption: 'Corporate Infrastructure'
         }
       },
       micromarkets: {
         'connaught-place': {
-          src: 'assets/images/generated/locations/delhi/connaught-place.png',
+          src: 'assets/images/generated/locations/delhi/connaught-place.webp',
           alt: 'Iconic Central Business District commercial colonnades in Connaught Place, Delhi',
           caption: 'Connaught Place (CP), Delhi'
         },
         'barakhamba-road': {
-          src: 'assets/images/generated/locations/delhi/barakhamba-road.jpg',
+          src: 'assets/images/generated/locations/delhi/barakhamba-road.webp',
           alt: 'Statesman House architectural commercial skyscraper along Barakhamba Road, Central Delhi',
           caption: 'Barakhamba Road, Delhi'
         },
         'aerocity': {
-          src: 'assets/images/generated/locations/delhi/aerocity.jpg',
+          src: 'assets/images/generated/locations/delhi/aerocity.webp',
           alt: 'Worldmark commercial corporate buildings in Aerocity Hospitality District, Delhi',
           caption: 'Aerocity Hospitality District, Delhi'
         },
         'nehru-place': {
-          src: 'assets/images/generated/locations/delhi/nehru-place.png',
+          src: 'assets/images/generated/locations/delhi/nehru-place.webp',
           alt: 'Major commercial and financial commercial center in Nehru Place, South Delhi',
           caption: 'Nehru Place, South Delhi'
         },
         'saket-district': {
-          src: 'assets/images/generated/locations/delhi/saket-district.jpg',
+          src: 'assets/images/generated/locations/delhi/saket-district.webp',
           alt: 'Select Citywalk and Grade-A commercial office complex at Saket District Centre, South Delhi',
           caption: 'Saket District Centre, South Delhi'
         },
         'jasola': {
-          src: 'assets/images/generated/locations/delhi/jasola.jpg',
+          src: 'assets/images/generated/locations/delhi/jasola.webp',
           alt: 'US Complex commercial business towers at Jasola District Centre, South Delhi',
           caption: 'Jasola District Centre, Delhi'
         }
       },
       locationFallback: {
-        src: 'assets/images/locations/delhi.png',
+        src: 'assets/images/locations/delhi.webp',
         alt: 'Prestigious commercial office architecture in Delhi business districts',
         caption: 'Delhi Central Business District'
       }
@@ -294,58 +294,58 @@
     serviceFallbacks: {
       coworking: {
         hero: {
-          src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.jpg',
+          src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp',
           alt: 'Premium flexible coworking space in Delhi NCR',
           caption: 'Premium Coworking Workspace'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/hot-desks.jpg',
+          src: 'assets/images/generated/workspace/hot-desks.webp',
           alt: 'Modern flexible desks in collaborative workspace',
           caption: 'Flexible Desks'
         },
         options: [
           {
             title: 'Hot Desks',
-            src: 'assets/images/generated/workspace/hot-desks.jpg',
+            src: 'assets/images/generated/workspace/hot-desks.webp',
             alt: 'Hot desk workstation in open collaborative workspace with daylight'
           },
           {
             title: 'Dedicated Desks',
-            src: 'assets/images/generated/workspace/dedicated-desk.jpg',
+            src: 'assets/images/generated/workspace/dedicated-desk.webp',
             alt: 'Dedicated personal desk with ergonomic chair and secure storage'
           },
           {
             title: 'Private Cabins',
-            src: 'assets/images/generated/workspace/private-cabin.jpg',
+            src: 'assets/images/generated/workspace/private-cabin.webp',
             alt: 'Private team office cabin with sound-insulated glass partition'
           }
         ]
       },
       office: {
         hero: {
-          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.jpg',
+          src: 'assets/images/generated/gurugram/office/gurugram-office-hero.webp',
           alt: 'Custom managed corporate office in Delhi NCR',
           caption: 'Managed Corporate Office'
         },
         workspace: {
-          src: 'assets/images/generated/workspace/managed-suite.jpg',
+          src: 'assets/images/generated/workspace/managed-suite.webp',
           alt: 'Turnkey enterprise managed suite with contemporary furnishings',
           caption: 'Managed Enterprise Suite'
         },
         options: [
           {
             title: 'Managed Offices',
-            src: 'assets/images/generated/workspace/managed-suite.jpg',
+            src: 'assets/images/generated/workspace/managed-suite.webp',
             alt: 'Turnkey managed office suite customized for enterprise teams'
           },
           {
             title: 'Commercial Office Leasing',
-            src: 'assets/images/generated/gurugram/office/gurugram-office-hero.jpg',
+            src: 'assets/images/generated/gurugram/office/gurugram-office-hero.webp',
             alt: 'Grade-A commercial office space for long-term lease'
           },
           {
             title: 'Enterprise Built-to-Suit',
-            src: 'assets/images/generated/delhi/office/delhi-office-hero.jpg',
+            src: 'assets/images/generated/delhi/office/delhi-office-hero.webp',
             alt: 'Enterprise built-to-suit commercial office floor plate'
           }
         ]
@@ -357,27 +357,27 @@
     // =========================================================================
     globalSections: {
       hero: {
-        src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.jpg',
+        src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp',
         alt: 'Curated premium commercial workspace in Delhi NCR',
         caption: 'Commercial Real Estate Advisory'
       },
       workspace: {
-        src: 'assets/images/generated/workspace/hot-desks.jpg',
+        src: 'assets/images/generated/workspace/hot-desks.webp',
         alt: 'Contemporary commercial office workspace in Delhi NCR',
         caption: 'Commercial Workspaces'
       },
       amenities: {
-        src: 'assets/images/about/reception.png',
+        src: 'assets/images/about/reception.webp',
         alt: 'Grade-A corporate reception and workspace hospitality amenities',
         caption: 'Enterprise Amenities'
       },
       whyUs: {
-        src: 'assets/images/about/why-luxure-nest.png',
+        src: 'assets/images/about/why-luxure-nest.webp',
         alt: 'Luxure Nest tenant representation and commercial lease advisory',
         caption: 'Tenant-First CRE Advisory'
       },
       finalCta: {
-        src: 'assets/images/about/footer-architecture.png',
+        src: 'assets/images/about/footer-architecture.webp',
         alt: 'Landmark commercial office tower and business district architecture',
         caption: 'Find Your Ideal Workspace'
       }
@@ -450,7 +450,7 @@
 
     // 5. Safe Ultimate Fallback (Never returns broken URL or undefined)
     return {
-      src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.jpg',
+      src: 'assets/images/generated/gurugram/coworking/gurugram-coworking-hero.webp',
       alt: 'Premium commercial workspace advisory in Delhi NCR',
       caption: 'Luxure Nest Commercial Real Estate'
     };
@@ -473,7 +473,7 @@
 
     // Fallback if index out of bounds
     return {
-      src: 'assets/images/generated/workspace/hot-desks.jpg',
+      src: 'assets/images/generated/workspace/hot-desks.webp',
       alt: 'Commercial workspace solution'
     };
   }
@@ -504,7 +504,7 @@
 
     // Global fallback
     return {
-      src: 'assets/images/generated/locations/gurugram/cyber-city.jpg',
+      src: 'assets/images/generated/locations/gurugram/cyber-city.webp',
       alt: 'Commercial corporate business hub',
       caption: 'Commercial Business Hub'
     };
@@ -520,17 +520,17 @@
     const normCity = (cityId || '').toLowerCase().trim();
     const landmarks = {
       delhi: {
-        src: 'assets/images/landmarks/delhi-india-gate.jpg',
+        src: 'assets/images/landmarks/delhi-india-gate.webp',
         alt: 'Iconic India Gate monument in New Delhi',
         caption: 'New Delhi Landmark • India Gate'
       },
       gurugram: {
-        src: 'assets/images/landmarks/gurugram-cyber-city.jpg',
+        src: 'assets/images/landmarks/gurugram-cyber-city.webp',
         alt: 'DLF Cyber City and modern commercial skyline in Gurugram',
         caption: 'Gurugram Skyline • Cyber City'
       },
       noida: {
-        src: 'assets/images/landmarks/noida-expressway-skyline.jpg',
+        src: 'assets/images/landmarks/noida-expressway-skyline.webp',
         alt: 'Noida Expressway modern corporate towers and expressway corridor',
         caption: 'Noida Commercial Corridor'
       }

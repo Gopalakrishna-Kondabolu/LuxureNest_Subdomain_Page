@@ -11,32 +11,11 @@
 /* ==========================================================================
    1. TABLET BREAKPOINT (max-width: 1023px)
    ========================================================================== */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   :root {
     --container-padding: 1.25rem;
     --space-3xl: 3.5rem;
     --space-4xl: 4.5rem;
-  }
-
-  /* Hero Split maintains 2-columns on 13"/14" laptops & medium viewports */
-  .hero-split {
-    grid-template-columns: 1fr 480px;
-    gap: var(--space-md);
-    align-items: center;
-    max-width: 100%;
-  }
-
-  .hero__form-slot {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-
-  .form-card {
-    max-width: 520px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   /* 4-column grids collapse to 2-column on tablet */
@@ -77,17 +56,75 @@
   }
 }
 
-/* Hero Split collapses to 1-column on narrow screens (<= 880px) */
-@media (max-width: 880px) {
+  /* Hero Split on Tablet Landscape (901px – 1024px): Balanced 2 columns */
+  @media (max-width: 1024px) and (min-width: 901px) {
+    .hero-split {
+      grid-template-columns: 1fr 480px;
+      gap: 1.75rem;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .hero__content {
+      max-width: 100%;
+    }
+
+    .hero__form-slot {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+
+    .form-card {
+      max-width: 480px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  /* Hero Split collapses to 1-column on all viewports <= 900px */
+  @media (max-width: 900px) {
   .hero-split {
     grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    gap: 2.25rem;
+    max-width: 100%;
   }
 
   .hero__form-slot {
     display: flex;
     justify-content: center;
     width: 100%;
+  }
+}
+
+/* Tablet Portrait (640px – 900px): Centered single column balance */
+@media (max-width: 900px) and (min-width: 640px) {
+  .hero__content {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .hero__headline {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__highlights {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+
+  .hero__highlights-list {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.5rem;
   }
 
   .form-card {
@@ -163,6 +200,12 @@
     gap: var(--space-xs);
   }
 
+  /* Key Commercial Hubs on mobile viewports */
+  #business-hubs-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
   /* Brand Network on Mobile */
   .brand-card__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -206,13 +249,34 @@
     padding-bottom: var(--space-2xl);
   }
 
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .hero__content {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+
   .hero__headline {
     font-size: clamp(1.75rem, 6vw, 2.25rem);
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .hero__subhead {
     font-size: var(--font-size-base);
     margin-bottom: var(--space-lg);
+  }
+
+  .hero__form-slot {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .section--hero::before {
@@ -226,7 +290,12 @@
 
   /* Form Card on Mobile */
   .form-card {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     padding: var(--space-lg);
+    box-sizing: border-box;
   }
 
   .form-grid {
@@ -245,8 +314,39 @@
     padding: var(--space-lg);
   }
 
-  .expert-team__avatars {
+  .expert-team__avatars-row {
     flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .expert-team__avatar-item {
+    width: 44px;
+    height: 44px;
+    margin-left: -8px;
+  }
+
+  .expert-team__avatar-item:first-child {
+    margin-left: 0;
+  }
+
+  /* Pricing location bar on mobile */
+  .pricing-location-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .pricing-location-pills {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pricing-location-search-wrap {
+    width: 100%;
+  }
+
+  .pricing-location-search {
+    width: 100%;
   }
 
   /* Footer on mobile */

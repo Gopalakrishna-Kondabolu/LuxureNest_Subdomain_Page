@@ -298,6 +298,178 @@
   }
 
   /**
+   * Render Dynamic Pricing Section based on route and active location selection.
+   */
+  function renderPricing(resolved, explicitCityId, explicitMicromarketKey) {
+    if (!root.LuxureNest.pricing || typeof root.LuxureNest.pricing.getPricingData !== 'function') {
+      return;
+    }
+
+    const serviceId = resolved && resolved.service ? resolved.service.id : 'coworking';
+    const cityId = explicitCityId || (resolved && resolved.city ? resolved.city.id : 'gurugram');
+    const mmKey = explicitMicromarketKey || (resolved && resolved.micromarket ? resolved.micromarket.slug : null);
+
+    const pricingData = root.LuxureNest.pricing.getPricingData(serviceId, cityId, mmKey);
+    if (!pricingData) return;
+
+    // Update section subhead
+    const subheadEl = document.getElementById('pricing-subhead');
+    if (subheadEl) {
+      subheadEl.textContent = pricingData.subhead;
+    }
+
+    // Update active state on location pills
+    const pills = document.querySelectorAll('.pricing-pill');
+    pills.forEach(pill => {
+      const pillCity = pill.getAttribute('data-city');
+      const isActive = pillCity === pricingData.cityId && !pricingData.isSpecificMicroMarket;
+      pill.classList.toggle('pricing-pill--active', isActive);
+      pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Update table rows
+    const tbody = document.getElementById('pricing-table-body');
+    if (tbody) {
+      tbody.textContent = '';
+      pricingData.plans.forEach(plan => {
+        const tr = document.createElement('tr');
+
+        // Type column
+        const tdType = document.createElement('td');
+        tdType.className = 'pricing-table__type';
+        const spanTitle = document.createElement('span');
+        spanTitle.className = 'pricing-type-title';
+        spanTitle.textContent = plan.typeTitle;
+        const spanDesc = document.createElement('span');
+        spanDesc.className = 'pricing-type-desc';
+        spanDesc.textContent = plan.typeDesc;
+        tdType.appendChild(spanTitle);
+        tdType.appendChild(spanDesc);
+
+        // Price column
+        const tdPrice = document.createElement('td');
+        tdPrice.className = 'pricing-table__price';
+        const spanVal = document.createElement('span');
+        spanVal.className = 'pricing-val';
+        spanVal.textContent = plan.startingPrice;
+        tdPrice.appendChild(spanVal);
+        if (plan.unit) {
+          const spanUnit = document.createElement('span');
+          spanUnit.className = 'pricing-unit';
+          spanUnit.textContent = ` ${plan.unit}`;
+          tdPrice.appendChild(spanUnit);
+        }
+
+        // Range column
+        const tdRange = document.createElement('td');
+        tdRange.className = 'pricing-table__range';
+        tdRange.textContent = plan.typicalRange;
+
+        // Micro-markets column
+        const tdMarkets = document.createElement('td');
+        tdMarkets.className = 'pricing-table__markets';
+        tdMarkets.textContent = plan.keyMarkets;
+
+        // Action CTA column
+        const tdAction = document.createElement('td');
+        tdAction.className = 'pricing-table__action';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = (plan.id === 'managed-office' || plan.id === 'built-to-suit')
+          ? 'btn btn--primary btn--sm open-lead-modal-btn'
+          : 'btn btn--outline btn--sm open-lead-modal-btn';
+        btn.setAttribute('aria-label', `Enquire about ${plan.typeTitle} in ${pricingData.activeLocationName}`);
+        btn.setAttribute('data-hub-city', pricingData.activeLocationName);
+        btn.textContent = plan.actionLabel || 'Enquire';
+        tdAction.appendChild(btn);
+
+        tr.appendChild(tdType);
+        tr.appendChild(tdPrice);
+        tr.appendChild(tdRange);
+        tr.appendChild(tdMarkets);
+        tr.appendChild(tdAction);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Status message handling
+    const statusEl = document.getElementById('pricing-location-status');
+    if (statusEl) {
+      if (pricingData.isSpecificMicroMarket) {
+        statusEl.textContent = `Showing verified benchmark rates for ${pricingData.activeLocationName}`;
+        statusEl.style.display = 'block';
+      } else {
+        statusEl.style.display = 'none';
+      }
+    }
+  }
+
+  /**
+   * Bind interactive listeners for pricing location pills, search input, and hub card triggers.
+   */
+  let pricingListenersBound = false;
+  function setupPricingInteractions(resolved) {
+    if (pricingListenersBound) return;
+    pricingListenersBound = true;
+
+    // 1. Location Pill Buttons (Gurugram, Noida, Delhi)
+    const pillsContainer = document.querySelector('.pricing-location-pills');
+    if (pillsContainer) {
+      pillsContainer.addEventListener('click', (e) => {
+        const btn = e.target.closest('.pricing-pill');
+        if (!btn) return;
+        const targetCity = btn.getAttribute('data-city');
+        const searchInput = document.getElementById('pricing-location-search');
+        if (searchInput) searchInput.value = '';
+        renderPricing(resolved, targetCity, null);
+      });
+    }
+
+    // 2. Micro-Market Search Input
+    const searchInput = document.getElementById('pricing-location-search');
+    const statusEl = document.getElementById('pricing-location-status');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim();
+        if (!query) {
+          if (statusEl) statusEl.style.display = 'none';
+          renderPricing(resolved, null, null);
+          return;
+        }
+
+        if (root.LuxureNest.pricing && typeof root.LuxureNest.pricing.resolveLocationQuery === 'function') {
+          const match = root.LuxureNest.pricing.resolveLocationQuery(query);
+          if (match) {
+            renderPricing(resolved, match.cityId, match.micromarketKey);
+          } else if (query.length >= 3) {
+            if (statusEl) {
+              statusEl.textContent = `Pricing for "${query}" is scoped on demand. Our advisors negotiate direct developer rates across all NCR commercial hubs.`;
+              statusEl.style.display = 'block';
+            }
+          }
+        }
+      });
+    }
+
+    // 3. Commercial Hub Card Click Listener to Sync Pricing
+    document.addEventListener('click', (e) => {
+      const hubCard = e.target.closest('.hub-card');
+      if (hubCard) {
+        const hubName = hubCard.getAttribute('data-hub-name');
+        if (hubName && root.LuxureNest.pricing && typeof root.LuxureNest.pricing.resolveLocationQuery === 'function') {
+          const match = root.LuxureNest.pricing.resolveLocationQuery(hubName);
+          if (match) {
+            const searchInputEl = document.getElementById('pricing-location-search');
+            if (searchInputEl) searchInputEl.value = hubName;
+            renderPricing(resolved, match.cityId, match.micromarketKey);
+          }
+        }
+      }
+    });
+  }
+
+  /**
    * Master render method: updates all dynamic components across the page.
    * @param {object} resolved - Fully resolved configuration object
    */
@@ -315,6 +487,8 @@
       renderExpertTeam(resolved);
       renderBusinessHubs(resolved);
       renderWhyLuxureNest(resolved);
+      renderPricing(resolved);
+      setupPricingInteractions(resolved);
       renderStickyFooter(resolved);
       renderFallbackNotice(resolved);
 
@@ -326,7 +500,9 @@
 
   root.LuxureNest.dynamicContent = {
     renderPage,
-    updateSEOMetadata
+    updateSEOMetadata,
+    renderPricing
   };
 
 })(typeof window !== 'undefined' ? window : this);
+

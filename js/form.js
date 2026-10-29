@@ -98,6 +98,7 @@
 
       utils.logger.info('Submitting lead payload to endpoint:', {
         endpoint,
+        idempotencyKey: payload.idempotencyKey,
         googleSheetRow: payload.googleSheetRow,
         leadSummary: {
           name: payload.completeLeadRecord.fullName,
@@ -108,43 +109,49 @@
         }
       });
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15-second timeout
+
       try {
-        const isGoogleAppsScript = endpoint.includes('script.google.com');
-        const headers = isGoogleAppsScript
-          ? { 'Content-Type': 'text/plain;charset=utf-8' }
-          : { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+        const headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        };
+        if (payload.idempotencyKey) {
+          headers['x-idempotency-key'] = payload.idempotencyKey;
+        }
 
         const response = await fetch(endpoint, {
           method: 'POST',
           headers,
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: controller.signal
         });
 
-        // Handle Google Apps Script 302 redirects or opaque CORS responses
-        if (isGoogleAppsScript && response.type === 'opaque') {
-          return { success: true, message: 'Submission accepted by Google Apps Script', status: 200 };
+        clearTimeout(timeoutId);
+
+        if (response.status === 429) {
+          throw new Error('Our servers are currently experiencing high traffic. Please wait 10 seconds and click Submit again.');
         }
 
         if (!response.ok) {
-          const errorBody = await response.text().catch(() => '');
-          throw new Error(`Server returned HTTP ${response.status}: ${errorBody || response.statusText}`);
+          const errBody = await response.json().catch(() => ({}));
+          throw new Error(errBody.error || `Server responded with HTTP ${response.status}. Your lead could not be saved.`);
         }
 
-        const data = await response.json().catch(() => ({ success: true }));
+        const data = await response.json().catch(() => null);
+
+        if (!data || data.success !== true || !data.leadId) {
+          throw new Error((data && data.error) || 'Submission was not verified by the server. Please try again.');
+        }
+
         return data;
 
       } catch (networkErr) {
-        // Fallback for local development if server script is not running
-        const isLocalHost = typeof window !== 'undefined' && (
-          window.location.hostname === 'localhost' ||
-          window.location.hostname === '127.0.0.1' ||
-          window.location.hostname === ''
-        );
+        clearTimeout(timeoutId);
 
-        if (isLocalHost) {
-          utils.logger.warn('[Local Dev Preview] Network fetch could not reach backend, simulating successful submission for local testing:', networkErr);
-          await new Promise(resolve => setTimeout(resolve, 400));
-          return { success: true, message: 'Local dev simulation: lead recorded', leadId: 'LN-DEV-' + Date.now() };
+        if (networkErr.name === 'AbortError') {
+          throw new Error('Submission timed out. Please check your internet connection and try again.');
         }
 
         throw networkErr;
@@ -375,10 +382,18 @@
             }
           };
 
+      // Read anti-bot honeypot field
+      const hpField = document.getElementById(isModal ? 'modal-lead-hp-field' : 'lead-hp-field');
+      const hpVal = hpField ? hpField.value : '';
+      payload._hp_company_website = hpVal;
+
+      // Unique idempotency key to prevent double-charging or duplicate rows on retry
+      payload.idempotencyKey = 'ik_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
       const response = await submissionService.submitLead(payload);
 
-      if (response && response.success) {
-        utils.logger.info('Lead submission confirmed successful. Redirecting to Thank You page...');
+      if (response && response.success && response.leadId) {
+        utils.logger.info(`Lead submission confirmed successful (ID: ${response.leadId}). Redirecting to Thank You page...`);
         const isStaticDevEnvironment = typeof window !== 'undefined' && (
           window.location.protocol === 'file:' ||
           window.location.pathname.endsWith('.html') ||
@@ -392,13 +407,13 @@
           window.location.href = '/thank-you';
         }
       } else {
-        throw new Error((response && response.message) || 'Submission was not confirmed by the server.');
+        throw new Error((response && response.message) || 'Submission was not verified by the server.');
       }
 
     } catch (err) {
       utils.logger.error('Lead submission failed:', err);
       showFormAlert(
-        'Unable to submit your inquiry at this moment. Please check your connection and try again.',
+        err.message || 'Unable to submit your inquiry at this moment. Please check your connection and try again.',
         isModal
       );
       setSubmittingState(false, isModal, originalText);

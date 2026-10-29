@@ -15,10 +15,10 @@
     }
   </script>
 
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/base.css?v=2.4.0">
+  <link rel="stylesheet" href="css/layout.css?v=2.4.0">
+  <link rel="stylesheet" href="css/components.css?v=2.4.0">
+  <link rel="stylesheet" href="css/responsive.css?v=2.4.0">
 
   <style>
     .thank-you-card {
@@ -90,7 +90,10 @@
   <header class="site-header" role="banner">
     <div class="container site-header__container">
       <a href="./" class="site-logo" aria-label="Luxure Nest Home">
-        <img src="assets/logo/luxure-nest-logo.svg" alt="Luxure Nest" width="220" height="56" class="site-logo__mark">
+        <picture>
+          <source srcset="assets/logo/luxure-nest-logo.webp" type="image/webp">
+          <img src="assets/logo/luxure-nest-logo-72.png" alt="Luxure Nest" width="220" height="56" class="site-logo__mark">
+        </picture>
       </a>
       <div class="site-header__actions">
         <a href="tel:+919876543210" class="site-header__phone">

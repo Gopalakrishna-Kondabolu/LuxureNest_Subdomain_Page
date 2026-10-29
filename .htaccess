@@ -11,27 +11,59 @@
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # 2. Thank You page rewrite
+  # 2. API Endpoint Rewrite (Maps /api/submit-lead to submit-lead.php on Apache/cPanel)
+  RewriteRule ^api/submit-lead/?$ submit-lead.php [L,QSA]
+
+  # 3. Thank You page rewrite
   RewriteRule ^thank-you/?$ thank-you.html [L,QSA]
 
-  # 3. Clean routes for all 6 target workspace URLs:
+  # 4. Clean routes for all 6 target workspace URLs:
   #    /coworking/gurugram, /coworking/noida, /coworking/delhi
   #    /office/gurugram, /office/noida, /office/delhi
   RewriteRule ^(coworking|office)(/.*)?$ index.html [L,QSA]
 
-  # 4. If requested resource is not an existing file or directory, serve index.html
+  # 5. If requested resource is not an existing file or directory, serve index.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
+
+# Security: Deny direct browser access to sensitive data, logs, backup files, and internal docs
+<FilesMatch "(\.(jsonl|log|md|sh|py|env|git.*)|server\.js|package\.json|vercel\.json)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
+</FilesMatch>
 
 # Caching & Compression Optimization
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
 </IfModule>
 
-# Content Security Policy (Allow Google Apps Script on GoDaddy)
+# Cache-Control Strategy (Prevents Stale Production Rendering & Enables Versioned Invalidation)
 <IfModule mod_headers.c>
+  # 1. HTML files: Never cache aggressively so visitors always receive the latest DOM & asset links
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+
+  # 2. Static CSS and JS assets: Allow caching with must-revalidate (bustable via ?v= query string)
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800, must-revalidate"
+  </FilesMatch>
+
+  # 3. Media assets (Images/Fonts): Standard caching
+  <FilesMatch "\.(jpg|jpeg|png|gif|svg|ico|webp|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # Content Security Policy (Allow Google Apps Script on GoDaddy)
   Header always unset Content-Security-Policy
   Header unset Content-Security-Policy
   Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self' https: data:;"

@@ -24,10 +24,9 @@
   max-width: 100%;
 }
 
-/* Smooth Scroll Snap & Base Layout */
+/* Base Document Scrolling & Layout */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 /* ==========================================================================
@@ -38,7 +37,6 @@ html {
   padding-bottom: 1.85rem;
   position: relative;
   scroll-margin-top: calc(var(--header-height) + 8px);
-  scroll-snap-align: start;
 }
 
 .section--sm {
@@ -88,7 +86,6 @@ html {
   background-repeat: no-repeat;
   background-attachment: scroll;
   scroll-margin-top: 0;
-  scroll-snap-align: start;
   box-sizing: border-box;
 }
 
